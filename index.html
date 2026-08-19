@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" style="--bg: #20407e;"><head>
+<html lang="fr" style=""><head><script src="chrome-extension://gehmmocbbkpblljhkekmfhjpfbkclbph/content/pageScripts/dashlane-webkit-animation-page-script.js" id="dashlane_webkit_animation"></script><script src="chrome-extension://gehmmocbbkpblljhkekmfhjpfbkclbph/content/pageScripts/dashlane-shadow-dom-page-script.js" id="dashlane_shadow_dom"></script><script src="chrome-extension://gehmmocbbkpblljhkekmfhjpfbkclbph/content/pageScripts/dashlane-top-layer-page-script.js" id="dashlane_top_layer"></script><script src="chrome-extension://gehmmocbbkpblljhkekmfhjpfbkclbph/content/pageScripts/dashlane-webauthn-page-script.js" id="dashlane_webauthn" name="forward_webauthn_ready"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ma bibliothèque de films</title>
@@ -470,490 +470,303 @@
     margin-bottom:14px;
   }
 </style>
-</head>
-<body>
+<link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><style lang="en" type="text/css" id="dark-mode-custom-style"></style><style lang="en" type="text/css" id="dark-mode-native-style"></style><style lang="en" type="text/css" id="dark-mode-native-sheet"></style></head>
+<body data-dashlane-rid="4b9b2703f416eba8">
 
 <header>
   <h1>🎬 Ma bibliothèque de films</h1>
   <div class="stats" id="stats">1158 films au total · 37 non identifiés</div>
   <div class="search-wrap">
-    <input id="search" type="search" placeholder="Rechercher un titre..." autocomplete="off">
+    <input id="search" type="search" placeholder="Rechercher un titre..." autocomplete="off" data-dashlane-rid="a6facd8a37009528">
     <button class="clear-btn" id="clearBtn" aria-label="Effacer">✕</button>
   </div>
   <div class="sort-row">
     <span class="sort-label">Trier les films :</span>
     <div class="sort-toggle" role="group" aria-label="Ordre de tri des films">
-      <button class="sort-btn active" id="sortAlphaBtn" type="button" data-sort="alpha">A → Z</button>
-      <button class="sort-btn" id="sortChronoBtn" type="button" data-sort="chrono">📅 Année</button>
+      <button class="sort-btn active" id="sortAlphaBtn" type="button" data-sort="alpha" data-dashlane-label="true" data-dashlane-rid="e84646821359ac24">A → Z</button>
+      <button class="sort-btn" id="sortChronoBtn" type="button" data-sort="chrono" data-dashlane-label="true" data-dashlane-rid="434f5dbcd96cb1fc">📅 Année</button>
     </div>
   </div>
   <div class="toolbar">
-    <button class="tool-btn" id="updateBtn" type="button" title="Demander à Claude de mettre à jour la bibliothèque">🔄 Mise à jour</button>
-    <button class="tool-btn" id="updateUnknownBtn" type="button" title="Demander à Claude d'identifier uniquement les films marqués « non identifié »">🔎 Films inconnus</button>
-    <button class="tool-btn" id="folderBtn" type="button" title="Changer le dossier des films">📁 Dossier</button>
-    <button class="tool-btn" id="githubBtn" type="button" title="Publier cette page sur GitHub (Alt+clic : reconfigurer)">⬆️ GitHub</button>
-    <button class="tool-btn" id="bgSettingsBtn" type="button" title="Personnaliser le fond">🎨 Fond</button>
+    <button class="tool-btn" id="updateBtn" type="button" title="Demander à Claude de mettre à jour la bibliothèque" data-dashlane-label="true" data-dashlane-rid="fba879cff898f93d">🔄 Mise à jour</button>
+    <button class="tool-btn" id="updateUnknownBtn" type="button" title="Demander à Claude d'identifier uniquement les films marqués « non identifié »" data-dashlane-label="true" data-dashlane-rid="958e360fd876d812">🔎 Films inconnus</button>
+    <button class="tool-btn" id="folderBtn" type="button" title="Changer le dossier des films" data-dashlane-label="true" data-dashlane-rid="f35f76092625e0c1">📁 Dossier</button>
+    <button class="tool-btn" id="githubBtn" type="button" title="Publier cette page sur GitHub (Alt+clic : reconfigurer)" data-dashlane-label="true" data-dashlane-rid="460bc55fa3a03b26">⬆️ GitHub</button>
+    <button class="tool-btn" id="bgSettingsBtn" type="button" title="Personnaliser le fond" data-dashlane-label="true" data-dashlane-rid="2a1a5a2a76df6dd5">🎨 Fond</button>
   </div>
 </header>
 
-<main id="main"><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+<main id="main"><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="3cdbf1c4fe2fc188">
       <span class="folder-title-text">
         <span></span>
         <span class="folder-count">227 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="39c273929e5dd7e2">
       <span class="folder-title-text">
         <span>_nouveau pour Morgane</span>
         <span class="folder-count">19 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="84021f6752c702a5">
       <span class="folder-title-text">
         <span>3D</span>
         <span class="folder-count">2 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="17bc7117431f52fa">
       <span class="folder-title-text">
         <span>a trier</span>
         <span class="folder-count">200 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section open"><button type="button" class="folder-title" aria-expanded="true">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="426aef08a7228d2f">
       <span class="folder-title-text">
         <span>Adultes</span>
         <span class="folder-count">17 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">Benedetta</span>
-      <span class="movie-meta">2021 · Paul Verhoeven</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><img src="https://fr.web.img3.acsta.net/c_310_420/pictures/21/05/05/15/00/1592283.jpg" alt="" loading="lazy" onerror="this.closest('.poster-thumb').innerHTML='&lt;span class=&quot;poster-fallback&quot;&gt;🎬&lt;/span&gt;'"></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\Benedetta.2021k.avi">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/Benedetta.2021k.avi">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>Paul Verhoeven</span></div><div class="detail-row"><strong>Année</strong><span>2021</span></div><div class="detail-row"><strong>Fichier</strong><span>Benedetta.2021k.avi</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\Benedetta.2021k.avi</span></div><div class="synopsis">Au XVIIe siècle, alors que la peste ravage l'Italie, la jeune Benedetta Carlini intègre le couvent de Pescia en Toscane. Dotée de capacités mystiques depuis l'enfance, sa présence transforme profondément la communauté religieuse. Le film explore les tensions entre foi, désir et pouvoir au sein de l'institution ecclésiale.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">Choses secrètes</span>
-      <span class="movie-meta">2002 · Jean-Claude Brisseau</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><img src="https://fr.web.img6.acsta.net/c_310_420/medias/nmedia/00/02/53/24/affiche.jpg" alt="" loading="lazy" onerror="this.closest('.poster-thumb').innerHTML='&lt;span class=&quot;poster-fallback&quot;&gt;🎬&lt;/span&gt;'"></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\Choses Secretes (Secret Things,2002).avi">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/Choses%20Secretes%20(Secret%20Things%2C2002).avi">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>Jean-Claude Brisseau</span></div><div class="detail-row"><strong>Année</strong><span>2002</span></div><div class="detail-row"><strong>Fichier</strong><span>Choses Secretes (Secret Things,2002).avi</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\Choses Secretes (Secret Things,2002).avi</span></div><div class="synopsis">Deux jeunes femmes de milieux défavorisés, Sandrine et Nathalie, utilisent leur séduction pour gravir rapidement l'échelle sociale au sein d'une grande entreprise. Après avoir manipulé plusieurs cadres, elles ciblent Christophe, le fils du patron, qui les piégera à son tour.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">Et la tendresse ?... Bordel !</span>
-      <span class="movie-meta">1979 · Patrick Schulmann</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><span class="poster-fallback">🎬</span></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\Et la tendresse Bordel.1978.mkv">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/Et%20la%20tendresse%20Bordel.1978.mkv">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>Patrick Schulmann</span></div><div class="detail-row"><strong>Année</strong><span>1979</span></div><div class="detail-row"><strong>Fichier</strong><span>Et la tendresse Bordel.1978.mkv</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\Et la tendresse Bordel.1978.mkv</span></div><div class="synopsis">Le film explore les relations amoureuses à travers trois couples aux conceptions diamétralement opposées de l'amour : phallocrates, romantiques et sentimentaux. Il examine leurs malentendus conjugaux respectifs et leurs approches très différentes face aux questions d'amour et de désir.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">Happy Few</span>
-      <span class="movie-meta">2010 · Antony Cordier</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><img src="https://fr.web.img3.acsta.net/c_310_420/medias/nmedia/18/78/84/61/19491752.jpg" alt="" loading="lazy" onerror="this.closest('.poster-thumb').innerHTML='&lt;span class=&quot;poster-fallback&quot;&gt;🎬&lt;/span&gt;'"></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\Happy Few.avi">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/Happy%20Few.avi">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>Antony Cordier</span></div><div class="detail-row"><strong>Année</strong><span>2010</span></div><div class="detail-row"><strong>Fichier</strong><span>Happy Few.avi</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\Happy Few.avi</span></div><div class="synopsis">Rachel, employée dans une bijouterie, rencontre Vincent et organise un dîner réunissant leurs conjoints respectifs. Les deux couples deviennent rapidement amis avant de tomber amoureux les uns des autres, vivant leur passion sans règles ni mensonges, alors que la confusion s'installe progressivement.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">Hot Girls Wanted</span>
-      <span class="movie-meta">2015 · Jill Bauer, Ronna Gradus</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><span class="poster-fallback">🎬</span></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\Hot.Girl.Wanted.2015.avi">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/Hot.Girl.Wanted.2015.avi">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>Jill Bauer, Ronna Gradus</span></div><div class="detail-row"><strong>Année</strong><span>2015</span></div><div class="detail-row"><strong>Fichier</strong><span>Hot.Girl.Wanted.2015.avi</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\Hot.Girl.Wanted.2015.avi</span></div><div class="synopsis">Ce documentaire américain suit de jeunes femmes à peine majeures qui se lancent dans l'industrie de la pornographie amateur, et interroge les conditions et les conséquences de cet engagement sur leur vie personnelle.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">Jeune &amp; Jolie</span>
-      <span class="movie-meta">2013 · François Ozon</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><img src="https://fr.web.img2.acsta.net/c_310_420/pictures/210/059/21005923_2013051510325393.jpg" alt="" loading="lazy" onerror="this.closest('.poster-thumb').innerHTML='&lt;span class=&quot;poster-fallback&quot;&gt;🎬&lt;/span&gt;'"></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\Jeune et Jolie.avi">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/Jeune%20et%20Jolie.avi">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>François Ozon</span></div><div class="detail-row"><strong>Année</strong><span>2013</span></div><div class="detail-row"><strong>Fichier</strong><span>Jeune et Jolie.avi</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\Jeune et Jolie.avi</span></div><div class="synopsis">Le film suit Isabelle, une jeune fille de 17 ans, à travers quatre saisons de son passage à l'âge adulte. Elle découvre la sexualité et s'y engage de façon inattendue, dans un récit qui interroge les troubles identitaires et les désirs de l'adolescence.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">L'Amant</span>
-      <span class="movie-meta">1992 · Jean-Jacques Annaud</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><img src="https://fr.web.img3.acsta.net/c_310_420/img/17/49/174953b071f115c1d5d1afca8f3c279f.jpg" alt="" loading="lazy" onerror="this.closest('.poster-thumb').innerHTML='&lt;span class=&quot;poster-fallback&quot;&gt;🎬&lt;/span&gt;'"></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\L'amant.mkv">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/L'amant.mkv">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>Jean-Jacques Annaud</span></div><div class="detail-row"><strong>Année</strong><span>1992</span></div><div class="detail-row"><strong>Fichier</strong><span>L'amant.mkv</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\L'amant.mkv</span></div><div class="synopsis">En Indochine à la fin des années 1920, une jeune Française rencontre un homme riche et élégant d'origine chinoise lors d'une traversée du Mékong. Entre eux naît une passion intense qui marquera profondément leur existence respective.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">La Vie d'Adèle - Chapitres 1 et 2</span>
-      <span class="movie-meta">2013 · Abdellatif Kechiche</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><img src="https://fr.web.img3.acsta.net/c_310_420/pictures/210/359/21035935_20130903173858999.jpg" alt="" loading="lazy" onerror="this.closest('.poster-thumb').innerHTML='&lt;span class=&quot;poster-fallback&quot;&gt;🎬&lt;/span&gt;'"></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\La vie d'Adèle.avi">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/La%20vie%20d'Ad%C3%A8le.avi">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>Abdellatif Kechiche</span></div><div class="detail-row"><strong>Année</strong><span>2013</span></div><div class="detail-row"><strong>Fichier</strong><span>La vie d'Adèle.avi</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\La vie d'Adèle.avi</span></div><div class="synopsis">À quinze ans, Adèle mène une vie conventionnelle jusqu'à sa rencontre avec Emma, une jeune femme aux cheveux bleus. Cette relation lui permet de découvrir le désir et de s'affirmer en tant que femme adulte, dans un récit sur l'éveil et la maturation face aux réalités sociales.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">Les derniers jours du monde</span>
-      <span class="movie-meta">2009 · Jean-Marie Larrieu, Arnaud Larrieu</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><img src="https://fr.web.img3.acsta.net/c_310_420/medias/nmedia/18/71/42/65/19136432.jpg" alt="" loading="lazy" onerror="this.closest('.poster-thumb').innerHTML='&lt;span class=&quot;poster-fallback&quot;&gt;🎬&lt;/span&gt;'"></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\Les derniers jours du monde (2009) Mathieu Amalric, Catherine Frot.avi">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/Les%20derniers%20jours%20du%20monde%20(2009)%20Mathieu%20Amalric%2C%20Catherine%20Frot.avi">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>Jean-Marie Larrieu, Arnaud Larrieu</span></div><div class="detail-row"><strong>Année</strong><span>2009</span></div><div class="detail-row"><strong>Fichier</strong><span>Les derniers jours du monde (2009) Mathieu Amalric, Catherine Frot.avi</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\Les derniers jours du monde (2009) Mathieu Amalric, Catherine Frot.avi</span></div><div class="synopsis">Face à l'annonce imminente de la fin du monde, Robinson Laborde entreprend de se reconstruire après l'échec d'une liaison amoureuse qui l'avait poussé à quitter son épouse. Malgré la catastrophe annoncée, il se lance dans une quête sentimentale à travers la France et l'Espagne.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">Les Idiots</span>
-      <span class="movie-meta">1998 · Lars von Trier</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><img src="https://fr.web.img4.acsta.net/c_310_420/pictures/17/07/21/12/25/104359.jpg" alt="" loading="lazy" onerror="this.closest('.poster-thumb').innerHTML='&lt;span class=&quot;poster-fallback&quot;&gt;🎬&lt;/span&gt;'"></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\Les.Idiots.(Idioterne).1998.mkv">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/Les.Idiots.(Idioterne).1998.mkv">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>Lars von Trier</span></div><div class="detail-row"><strong>Année</strong><span>1998</span></div><div class="detail-row"><strong>Fichier</strong><span>Les.Idiots.(Idioterne).1998.mkv</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\Les.Idiots.(Idioterne).1998.mkv</span></div><div class="synopsis">Un groupe de jeunes gens explore les valeurs cachées de l'idiotie en dépassant les limites de la bêtise et en confrontant leurs actions à la société. Karen rencontre par hasard trois membres du groupe et devient involontairement impliquée dans leurs jeux provocateurs.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">Mademoiselle</span>
-      <span class="movie-meta">2016 · Park Chan-wook</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><img src="https://fr.web.img3.acsta.net/c_310_420/pictures/16/09/22/14/47/451429.jpg" alt="" loading="lazy" onerror="this.closest('.poster-thumb').innerHTML='&lt;span class=&quot;poster-fallback&quot;&gt;🎬&lt;/span&gt;'"></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\Mademoiselle.avi">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/Mademoiselle.avi">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>Park Chan-wook</span></div><div class="detail-row"><strong>Année</strong><span>2016</span></div><div class="detail-row"><strong>Fichier</strong><span>Mademoiselle.avi</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\Mademoiselle.avi</span></div><div class="synopsis">En Corée pendant les années 1930 sous domination japonaise, une jeune femme nommée Sookee est engagée comme servante auprès d'une riche Japonaise recluse. Elle cache un secret : elle collabore avec un escroc se faisant passer pour un comte afin de déployer un plan contre sa maîtresse, dans un récit mêlant thriller et arnaque.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">Nuit d'été en ville</span>
-      <span class="movie-meta">1990 · Michel Deville</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><img src="https://fr.web.img5.acsta.net/c_310_420/medias/nmedia/18/71/56/83/19818188.jpg" alt="" loading="lazy" onerror="this.closest('.poster-thumb').innerHTML='&lt;span class=&quot;poster-fallback&quot;&gt;🎬&lt;/span&gt;'"></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\Nuit D'été En Ville (Michel Deville, 1990).avi">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/Nuit%20D'%C3%A9t%C3%A9%20En%20Ville%20(Michel%20Deville%2C%201990).avi">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>Michel Deville</span></div><div class="detail-row"><strong>Année</strong><span>1990</span></div><div class="detail-row"><strong>Fichier</strong><span>Nuit D'été En Ville (Michel Deville, 1990).avi</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\Nuit D'été En Ville (Michel Deville, 1990).avi</span></div><div class="synopsis">Deux inconnus se rencontrent lors d'une nuit en ville et partagent des moments intimes. Entre deux étreintes, ils discutent de sujets profonds comme l'amour et le désir, et découvrent au fil de la nuit que cette rencontre pourrait être le début d'une histoire plus durable.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">Nymphomaniac - Volume 1</span>
-      <span class="movie-meta">2013 · Lars von Trier</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><img src="https://fr.web.img5.acsta.net/c_310_420/pictures/210/620/21062037_20131129102802768.jpg" alt="" loading="lazy" onerror="this.closest('.poster-thumb').innerHTML='&lt;span class=&quot;poster-fallback&quot;&gt;🎬&lt;/span&gt;'"></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\Nymphomaniac Vol_I.avi">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/Nymphomaniac%20Vol_I.avi">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>Lars von Trier</span></div><div class="detail-row"><strong>Année</strong><span>2013</span></div><div class="detail-row"><strong>Fichier</strong><span>Nymphomaniac Vol_I.avi</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\Nymphomaniac Vol_I.avi</span></div><div class="synopsis">Ce film retrace le parcours d'une femme du début de sa vie jusqu'à 50 ans. La protagoniste Joe, qui s'auto-diagnostique nymphomane, confie son histoire à Seligman, un homme qui l'a recueillie après l'avoir trouvée blessée. Le récit se déploie en huit chapitres successifs.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">Nymphomaniac - Volume 2</span>
-      <span class="movie-meta">2014 · Lars von Trier</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><img src="https://fr.web.img6.acsta.net/c_310_420/pictures/14/01/07/12/09/358282.jpg" alt="" loading="lazy" onerror="this.closest('.poster-thumb').innerHTML='&lt;span class=&quot;poster-fallback&quot;&gt;🎬&lt;/span&gt;'"></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\Nymphomaniac 2.mkv">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/Nymphomaniac%202.mkv">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>Lars von Trier</span></div><div class="detail-row"><strong>Année</strong><span>2014</span></div><div class="detail-row"><strong>Fichier</strong><span>Nymphomaniac 2.mkv</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\Nymphomaniac 2.mkv</span></div><div class="synopsis">Suite du récit du parcours d'une femme, Joe, qui se définit comme nymphomane. Recueillie blessée par un homme bienveillant, elle poursuit devant lui la confession de son histoire, présentée en huit chapitres successifs mêlant introspection psychologique et épisodes marquants de sa vie.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">Love<span class="badge-unidentified">non identifié</span></span>
-      <span class="movie-meta"></span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><span class="poster-fallback">🎬</span></span>
-      <div class="body-details"><div class="rename-row"><button type="button" class="rename-btn">✏️ Modifier le nom</button></div><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\Pickles Love 2015 VOSTFR.mp4">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/Pickles%20Love%202015%20VOSTFR.mp4">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Fichier</strong><span>Pickles Love 2015 VOSTFR.mp4</span></div><div class="detail-row proposed-title-row"><strong>Titre proposé</strong><span>Love</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\Pickles Love 2015 VOSTFR.mp4</span></div><div class="synopsis">Le nom de fichier associe deux mots ("Pickles" et "Love") sans qu'une fiche fiable correspondante n'ait pu être retrouvée avec certitude sur les sources francophones consultées (Allociné, Wikipédia). Il pourrait s'agir d'un film mal étiqueté ou d'un tag de release non identifié.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">Pornocratie</span>
-      <span class="movie-meta">2017 · Ovidie</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><img src="https://fr.web.img4.acsta.net/c_310_420/pictures/17/05/23/16/52/469557.jpg" alt="" loading="lazy" onerror="this.closest('.poster-thumb').innerHTML='&lt;span class=&quot;poster-fallback&quot;&gt;🎬&lt;/span&gt;'"></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\pornocratie.2017.doc..mkv">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/pornocratie.2017.doc..mkv">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>Ovidie</span></div><div class="detail-row"><strong>Année</strong><span>2017</span></div><div class="detail-row"><strong>Fichier</strong><span>pornocratie.2017.doc..mkv</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\pornocratie.2017.doc..mkv</span></div><div class="synopsis">Ce documentaire examine les transformations profondes du marché de la vidéo pour adultes ces dernières années. Le film met en lumière la déshumanisation des acteurs et actrices du secteur, exploités par de grandes entreprises, face à une demande croissante amplifiée par Internet.</div></div>
-    </div>
-  </div></div></div><div class="movie-card"><button class="movie-head" aria-expanded="false">
-    <span class="movie-title-line">
-      <span class="movie-title">Sous ses lèvres</span>
-      <span class="movie-meta">2017 · April Mullen</span>
-    </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-  </button><div class="movie-body"><div class="movie-body-inner">
-    <div class="body-layout">
-      <span class="poster-thumb"><span class="poster-fallback">🎬</span></span>
-      <div class="body-details"><div class="play-row"><button type="button" class="play-btn" title="\\192.168.1.254\maxtor\Films\Adultes\Sous ses levres 2017.avi">▶️ Lire</button><button type="button" class="copy-btn" title="smb://192.168.1.254/maxtor/Films/Adultes/Sous%20ses%20levres%202017.avi">📋 Copier le lien</button></div><div class="play-hint">Sous Windows : ouvre VLC qui lit le film en streaming depuis le partage réseau (le film n'est PAS copié sur le disque — seul un raccourci .m3u de quelques centaines d'octets transite par les téléchargements). Astuce : au 1er clic, faites un clic droit sur ce fichier dans la barre de téléchargements → « Toujours ouvrir ce type de fichier » pour que VLC démarre ensuite d'un seul clic. Sur Android : tente d'ouvrir un lecteur compatible réseau. Si rien ne se passe : « 📋 Copier le lien » puis collez-le dans VLC (Réseau → Ouvrir un flux réseau).</div><div class="detail-row"><strong>Réalisateur</strong><span>April Mullen</span></div><div class="detail-row"><strong>Année</strong><span>2017</span></div><div class="detail-row"><strong>Fichier</strong><span>Sous ses levres 2017.avi</span></div><div class="detail-row"><strong>Chemin réseau</strong><span class="path-code">\\192.168.1.254\maxtor\Films\Adultes\Sous ses levres 2017.avi</span></div><div class="synopsis">Thriller psychologique et sentimental canadien réalisé par April Mullen ; les sources francophones consultées ne fournissent qu'un synopsis limité pour ce film sorti directement en vidéo.</div></div>
-    </div>
-  </div></div></div></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="002b35fd6cb45f42">
       <span class="folder-title-text">
         <span>Anim</span>
         <span class="folder-count">13 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="7d108e71cb49e9d7">
       <span class="folder-title-text">
         <span>Biopics</span>
         <span class="folder-count">15 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="454a76e2c31a2e27">
       <span class="folder-title-text">
         <span>Comedies-drames</span>
         <span class="folder-count">168 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="d4f33339f004558c">
       <span class="folder-title-text">
         <span>Cultes</span>
         <span class="folder-count">103 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="ef50988ab26852c7">
       <span class="folder-title-text">
         <span>Cultes/007</span>
         <span class="folder-count">4 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="84132110633f1fbe">
       <span class="folder-title-text">
         <span>Cultes/Indiana Jones</span>
         <span class="folder-count">4 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="9fdfbbd0d2794ce9">
       <span class="folder-title-text">
         <span>Cultes/MetropolisFritzLang1927Remastered</span>
         <span class="folder-count">1 film</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="baba7f215326ce01">
       <span class="folder-title-text">
         <span>Cultes/Mission Impossible (1996-2015)</span>
         <span class="folder-count">6 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="08b9ccf85c6b88bb">
       <span class="folder-title-text">
         <span>Cultes/Rocky</span>
         <span class="folder-count">8 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="c68beea0fbd5fc08">
       <span class="folder-title-text">
         <span>Cultes/Tarantino</span>
         <span class="folder-count">5 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="51a8b25630e38e62">
       <span class="folder-title-text">
         <span>Cultes/Trilogie Men In Black</span>
         <span class="folder-count">2 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="744621b3e00ef8a3">
       <span class="folder-title-text">
         <span>Documentaires</span>
         <span class="folder-count">8 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="de7e726374d09ab1">
       <span class="folder-title-text">
         <span>Fantastique</span>
         <span class="folder-count">18 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="c5af3814ab0430ac">
       <span class="folder-title-text">
         <span>Fantastique/Le.Hobbit.Trilogie.Version.Longue</span>
         <span class="folder-count">3 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="b7c37aac9317913c">
       <span class="folder-title-text">
         <span>Fantastique/Le.Seigneur.Des.Anneaux.Trilogie.Version.Longue</span>
         <span class="folder-count">3 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="b68b3b19a1e91859">
       <span class="folder-title-text">
         <span>Films asiatiques</span>
         <span class="folder-count">33 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="9dda2368fe02efd7">
       <span class="folder-title-text">
         <span>Films musicaux</span>
         <span class="folder-count">25 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="0843fe15ac60fc50">
       <span class="folder-title-text">
         <span>Guerre</span>
         <span class="folder-count">1 film</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="49bd001edca4d0f1">
       <span class="folder-title-text">
         <span>Guerre/RAMBO INTEGRALE/John Rambo</span>
         <span class="folder-count">1 film</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="50aca27ca6e7232a">
       <span class="folder-title-text">
         <span>Guerre/RAMBO INTEGRALE/Rambo</span>
         <span class="folder-count">1 film</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="c1dca7e365465b66">
       <span class="folder-title-text">
         <span>Guerre/RAMBO INTEGRALE/Rambo 2</span>
         <span class="folder-count">1 film</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="cb80d1b73beb61dd">
       <span class="folder-title-text">
         <span>Guerre/RAMBO INTEGRALE/Rambo 3</span>
         <span class="folder-count">1 film</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="04b322284512b308">
       <span class="folder-title-text">
         <span>Horreur</span>
         <span class="folder-count">30 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="69e375bec86b2eb5">
       <span class="folder-title-text">
         <span>Humour</span>
         <span class="folder-count">5 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="972e6209fa2bd877">
       <span class="folder-title-text">
         <span>SF</span>
         <span class="folder-count">108 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="43b48cf9d576bbbc">
       <span class="folder-title-text">
         <span>SF/Alien</span>
         <span class="folder-count">4 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="43cea1b2d02a48c3">
       <span class="folder-title-text">
         <span>SF/Labyrinthe</span>
         <span class="folder-count">3 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="41cb80c36c0fa14e">
       <span class="folder-title-text">
         <span>SF/Men in Black</span>
         <span class="folder-count">2 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="2c79de38128fca94">
       <span class="folder-title-text">
         <span>SF/Retour vers le futur</span>
         <span class="folder-count">3 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="f9d5dd18d6946083">
       <span class="folder-title-text">
         <span>SF/StarTrek</span>
         <span class="folder-count">3 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="4bb373e5cdaf8055">
       <span class="folder-title-text">
         <span>SF/Terminator Intégrale</span>
         <span class="folder-count">5 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="737387996d3a05fd">
       <span class="folder-title-text">
         <span>Star Wars</span>
         <span class="folder-count">10 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="bb3f56fd02242506">
       <span class="folder-title-text">
         <span>Supers héros</span>
         <span class="folder-count">7 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="7a92d738228e23a0">
       <span class="folder-title-text">
         <span>Supers héros/DC</span>
         <span class="folder-count">21 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="561301a8a9c400fe">
       <span class="folder-title-text">
         <span>Supers héros/DC/Anim</span>
         <span class="folder-count">6 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="9a8cad217177b5d2">
       <span class="folder-title-text">
         <span>Supers héros/Marvel</span>
         <span class="folder-count">41 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="91e624e6a0657a6c">
       <span class="folder-title-text">
         <span>Supers héros/Marvel/Spiderman</span>
         <span class="folder-count">8 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="4e42337ca6665ff4">
       <span class="folder-title-text">
         <span>Supers héros/Marvel/X-Men</span>
         <span class="folder-count">8 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="ad5d3357640dab06">
       <span class="folder-title-text">
         <span>Supers héros/Marvel/Xmen</span>
         <span class="folder-count">2 films</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="595f038f95fc73ca">
       <span class="folder-title-text">
         <span>Tempête solaire 2013</span>
         <span class="folder-count">1 film</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>
-    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false">
+    </button></section><section class="folder-section"><button type="button" class="folder-title" aria-expanded="false" data-dashlane-label="true" data-dashlane-rid="5aa7684de689976a">
       <span class="folder-title-text">
         <span>Were The Millers 2013</span>
         <span class="folder-count">2 films</span>
