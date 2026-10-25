@@ -131,21 +131,58 @@
     margin-bottom:8px;
     overflow:hidden;
   }
+  /* L'en-tête de fiche tient sur une rangée : zone de titre (dépliage), pastille vu/pas vu,
+     puis chevron. Les trois sont des boutons FRÈRES et non imbriqués : un <button> dans un
+     <button> est invalide et le navigateur le sortirait de son parent à l'analyse. */
+  .movie-head-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding-right:12px;
+  }
   .movie-head{
-    width:100%;
+    flex:1;
+    min-width:0;
     text-align:left;
     background:none;
     border:none;
     color:var(--text);
-    padding:10px 14px;
+    padding:10px 0 10px 14px;
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    gap:12px;
     cursor:pointer;
     font-size:1rem;
     min-height:52px;
   }
+  .chevron-btn{
+    flex-shrink:0;
+    background:none;
+    border:none;
+    padding:6px 0;
+    color:var(--text-dim);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+  }
+  .seen-chip{
+    flex-shrink:0;
+    background:var(--bg-elev);
+    border:1px solid var(--border);
+    color:var(--text-dim);
+    font-size:0.72rem;
+    font-weight:600;
+    padding:4px 9px;
+    border-radius:7px;
+    cursor:pointer;
+    white-space:nowrap;
+    font-family:inherit;
+  }
+  .seen-chip.is-seen{
+    background:#1b3a2a;
+    border-color:#2f5c43;
+    color:#9ae6b8;
+  }
+  .seen-chip:active{opacity:0.85;}
   .movie-head:active{background:var(--card-hover);}
   .poster-thumb{
     flex-shrink:0;
@@ -326,37 +363,6 @@
     margin-left:6px;
   }
 
-  /* ===== Tag vu / pas vu ===== */
-  .badge-seen{
-    display:inline-block;
-    background:#1b3a2a;
-    color:#7fd6a0;
-    font-size:0.72rem;
-    font-weight:600;
-    padding:2px 8px;
-    border-radius:6px;
-    margin-left:6px;
-  }
-  .seen-btn{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    background:var(--bg-elev);
-    border:1px solid var(--border);
-    color:var(--text);
-    padding:8px 14px;
-    border-radius:10px;
-    font-size:0.85rem;
-    font-weight:600;
-    cursor:pointer;
-    white-space:nowrap;
-  }
-  .seen-btn.is-seen{
-    background:#1b3a2a;
-    border-color:#2f5c43;
-    color:#9ae6b8;
-  }
-  .seen-btn:active{opacity:0.85;}
   .empty-state{
     text-align:center;
     color:var(--text-dim);
@@ -419,16 +425,18 @@
      côte. Le seuil de 960 px vient de la mesure de ces trois rangées (908 px + les marges
      de l'en-tête) : en dessous, elles restent empilées comme sur téléphone. */
   @media (min-width:960px){
-    .toggle-rows{
+    .toggle-rows, .filter-rows{
       display:flex;
       align-items:center;
       gap:22px;
       margin-top:10px;
     }
-    .toggle-rows .sort-row{
+    .toggle-rows .sort-row, .filter-rows .sort-row{
       margin-top:0;
       flex-wrap:nowrap;
     }
+    /* Genre et Réalisateur se partagent la largeur à parts égales. */
+    .filter-rows .sort-row{flex:1 1 0;min-width:0;}
   }
   .sort-toggle{
     display:flex;
@@ -464,6 +472,11 @@
     font-size:0.8rem;
     font-weight:600;
     font-family:inherit;
+    /* Hauteur explicite : un <select> et un <input> de même police ne font pas spontanément
+       la même hauteur (33 px contre 31 px) et ne s'alignent donc pas côte à côte. Passer par
+       line-height ne suffit pas, Chromium imposant « line-height: normal » aux <select>. */
+    height:34px;
+    box-sizing:border-box;
     flex:1 1 auto;
     min-width:0;
   }
@@ -620,7 +633,7 @@
 
 <header>
   <h1>🎬 Ma bibliothèque de films</h1>
-  <div class="stats" id="stats">1267 films au total · 20 non identifiés</div>
+  <div class="stats" id="stats">1267 films au total · 23 vus · 20 non identifiés</div>
   <div class="search-wrap">
     <input id="search" type="search" placeholder="Rechercher un titre..." autocomplete="off">
     <button class="clear-btn" id="clearBtn" aria-label="Effacer">✕</button>
@@ -652,6 +665,8 @@
       </div>
     </div>
   </div>
+  <!-- Ces deux rangées se mettent également côte à côte sur un écran d'ordinateur. -->
+  <div class="filter-rows">
   <div class="sort-row">
     <span class="sort-label">Genre :</span>
     <select class="filter-select" id="genreFilter" aria-label="Filtrer par genre"><option value="">Tous les genres</option><option value="Action">Action (349)</option><option value="Animation">Animation (45)</option><option value="Aventure">Aventure (137)</option><option value="Biopic">Biopic (55)</option><option value="Comédie">Comédie (289)</option><option value="Documentaire">Documentaire (28)</option><option value="Drame">Drame (360)</option><option value="Fantastique">Fantastique (154)</option><option value="Guerre">Guerre (35)</option><option value="Historique">Historique (43)</option><option value="Horreur">Horreur (115)</option><option value="Musical">Musical (50)</option><option value="Policier/Thriller">Policier/Thriller (259)</option><option value="Romance">Romance (72)</option><option value="Science-fiction">Science-fiction (338)</option><option value="Spectacle">Spectacle (20)</option><option value="Non classé">Non classé (19)</option></select>
@@ -664,10 +679,11 @@
     </span>
     <datalist id="directorList"><option value="Aaron Norris"></option><option value="Abby Kohn et Marc Silverstein"></option><option value="Abdellatif Kechiche"></option><option value="Abel Ferrara"></option><option value="Adam Lipsius"></option><option value="Adam MacDonald"></option><option value="Adam McKay"></option><option value="Adam Stern"></option><option value="Adam Wingard"></option><option value="Adrian Grunberg"></option><option value="Agnès Jaoui"></option><option value="Agustín Díaz Yanes"></option><option value="Akira Kurosawa"></option><option value="Akiva Schaffer"></option><option value="Alain Berbérian"></option><option value="Alain Chabat"></option><option value="Alain Corneau"></option><option value="Alain Robbe-Grillet"></option><option value="Alan Parker"></option><option value="Alan Taylor"></option><option value="Albert Dupontel"></option><option value="Albert et Allen Hughes"></option><option value="Alejandro Agresti"></option><option value="Alejandro Amenábar"></option><option value="Alejandro González Iñárritu"></option><option value="Aleksandr Boguslavskiy et Francesco Cinquemani"></option><option value="Alex Garland"></option><option value="Alex Lutz (mise en scène)"></option><option value="Alex Proyas"></option><option value="Alexandra Leclère"></option><option value="Alexandre Aja"></option><option value="Alexandre Arcady"></option><option value="Alexandre Astier et Louis Clichy"></option><option value="Alexandre Coffre"></option><option value="Alexandre de La Patellière et Matthieu Delaporte"></option><option value="Alfonso Cuarón"></option><option value="Alfonso Gomez-Rejon"></option><option value="Amy Holden Jones"></option><option value="Anders Walter"></option><option value="André Téchiné"></option><option value="Andréa Bescond et Éric Métayer"></option><option value="Andreï Tarkovski"></option><option value="Andrés Muschietti"></option><option value="Andrew Davis"></option><option value="Andrew Dominik"></option><option value="Andrew Niccol"></option><option value="Andrew Semans"></option><option value="Andrew Stanton"></option><option value="Andrzej Sekula"></option><option value="Andy Serkis"></option><option value="Andy Tennant"></option><option value="Angel Manuel Soto"></option><option value="Angela Robinson"></option><option value="Angelin Preljocaj (chorégraphie), musique Thomas Bangalter"></option><option value="Ann Sirot et Raphaël Balboni"></option><option value="Anna Boden et Ryan Fleck"></option><option value="Anne Fletcher"></option><option value="Anne Fontaine"></option><option value="Anne Le Ny"></option><option value="Anne-Gaëlle Daval"></option><option value="Annick Blanc"></option><option value="Anthony et Joe Russo"></option><option value="Anthony Stacchi"></option><option value="Antoine Fuqua"></option><option value="Antony Cordier"></option><option value="Antony Szeto"></option><option value="Antti-Jussi Annila"></option><option value="April Mullen"></option><option value="Arnaud Lemort"></option><option value="Arthur Hiller"></option><option value="Artus"></option><option value="Atom Egoyan"></option><option value="Attila Gigor"></option><option value="Aude Léa Rapin"></option><option value="Audrey Dana"></option><option value="Aurélien Peyre"></option><option value="Axelle Laffont"></option><option value="Babak Najafi"></option><option value="Babak Payami"></option><option value="Banksy"></option><option value="Barry Levinson"></option><option value="Barry Sonnenfeld"></option><option value="Baz Luhrmann"></option><option value="Ben Stiller"></option><option value="Ben Young"></option><option value="Benoît Delépine et Gustave Kervern"></option><option value="Bertrand Blier"></option><option value="Bertrand Tavernier"></option><option value="Bibo Bergeron"></option><option value="Bong Joon-ho"></option><option value="Bouli Lanners"></option><option value="Brad Bird"></option><option value="Bradley Cooper"></option><option value="Brandon Cronenberg"></option><option value="Brett Ratner"></option><option value="Brian De Palma"></option><option value="Brian Helgeland"></option><option value="Brian Robbins"></option><option value="Brian Taylor"></option><option value="Bruce Beresford"></option><option value="Bruno Dumont"></option><option value="Bruno Podalydès"></option><option value="Bryan Singer"></option><option value="Cameron Crowe"></option><option value="Carmen Alessandrin"></option><option value="Caroline Labrèche et Steeve Léonard"></option><option value="Caroline Vigneaux"></option><option value="Cary Joji Fukunaga"></option><option value="Cate Shortland"></option><option value="Catherine Hardwicke"></option><option value="Cédric Klapisch"></option><option value="Céline Sciamma"></option><option value="Chad Stahelski"></option><option value="Chang Cheh"></option><option value="Charles Laughton"></option><option value="Charles Nemes"></option><option value="Charlotte de Turckheim"></option><option value="Chloé Zhao"></option><option value="Chris Columbus"></option><option value="Chris Weitz"></option><option value="Christelle Raynal"></option><option value="Christian Cantamessa"></option><option value="Christian Carion"></option><option value="Christian Duguay"></option><option value="Christian Faure"></option><option value="Christian Rivers"></option><option value="Christian Volckman"></option><option value="Christophe Barratier"></option><option value="Christophe Gans"></option><option value="Christophe Lamotte"></option><option value="Christopher McQuarrie"></option><option value="Christopher Nolan"></option><option value="Ciaran Foy"></option><option value="Claude Berri"></option><option value="Claude Nuridsany et Marie Pérennou"></option><option value="Claude Zidi"></option><option value="Clint Eastwood"></option><option value="Clovis Cornillac"></option><option value="Colin et Greg Strause"></option><option value="Colin Trevorrow"></option><option value="Coralie Fargeat"></option><option value="Craig Gillespie"></option><option value="Curtis Hanson"></option><option value="D.J. Viola (Kisstory) ; Jonas Åkerlund (Rammstein: Paris)"></option><option value="Damian Nieman"></option><option value="Damien Chazelle"></option><option value="Dan Trachtenberg"></option><option value="Daniel Chong"></option><option value="Daniel Kwan et Daniel Scheinert"></option><option value="Daniel Myrick et Eduardo Sánchez"></option><option value="Daniel Ragussis"></option><option value="Daniel Roby"></option><option value="Danis Tanović"></option><option value="Danny Boyle"></option><option value="Dany Boon"></option><option value="Darin Scott"></option><option value="Darren Aronofsky"></option><option value="Darren Lynn Bousman"></option><option value="David Ayer"></option><option value="David Carson"></option><option value="David Charhon"></option><option value="David Cronenberg"></option><option value="David F. Sandberg"></option><option value="David Fincher"></option><option value="David Frankel"></option><option value="David Hemmings"></option><option value="David J. Burke"></option><option value="David Lean"></option><option value="David Leitch"></option><option value="David Lynch"></option><option value="David M. Rosenthal"></option><option value="David R. Ellis"></option><option value="David Robert Mitchell"></option><option value="David Rühm"></option><option value="David S. Goyer"></option><option value="David Silverman"></option><option value="Davis Guggenheim"></option><option value="Denis Villeneuve"></option><option value="Denzel Washington"></option><option value="Destin Daniel Cretton"></option><option value="Dexter Fletcher"></option><option value="Didier Le Pêcheur"></option><option value="Didier Poiraud et Thierry Poiraud"></option><option value="Dimitri Logothetis"></option><option value="Djamel Bensalah"></option><option value="Dominique Rocher"></option><option value="Doug Liman"></option><option value="Doug Murphy"></option><option value="Douglas Attal"></option><option value="Drew Goddard"></option><option value="Drew Pearce"></option><option value="Duncan Jones"></option><option value="Edgar Wright"></option><option value="Édouard Molinaro"></option><option value="Edward Zwick"></option><option value="Elizabeth Banks"></option><option value="Elizabeth Tchoungui"></option><option value="Elliott Lester"></option><option value="Éloïse Lang"></option><option value="Elsa Bennett et Hippolyte Dard"></option><option value="Emile Ardolino"></option><option value="Emmanuel Le Ber, Théo Schuster"></option><option value="Emmanuelle Bercot, Fred Cavayé, Alexandre Courtès, Jean Dujardin, Michel Hazanavicius, Éric Lartigau, Gilles Lellouche et Jan Kounen"></option><option value="Emmanuelle Cuau"></option><option value="Eric Barbier"></option><option value="Éric Barbier"></option><option value="Éric Gravel"></option><option value="Éric Judor"></option><option value="Éric Lartigau"></option><option value="Éric Métayer"></option><option value="Éric Rochant"></option><option value="Éric Toledano et Olivier Nakache"></option><option value="Érick Zonca"></option><option value="Ernie Barbarash"></option><option value="Eva Ionesco"></option><option value="Everardo Gout"></option><option value="F. Gary Gray"></option><option value="Fabrice Du Welz"></option><option value="Fabrice Éboué"></option><option value="Fabrice Genestal"></option><option value="Fede Alvarez"></option><option value="Fede Álvarez"></option><option value="Federico Fellini"></option><option value="Fedor Bondarchuk"></option><option value="Fernando León de Aranoa"></option><option value="Fernando Meirelles et Kátia Lund"></option><option value="Florence Foresti (écrit et mis en scène par elle-même)"></option><option value="Florent-Emilio Siri"></option><option value="Francis Ford Coppola"></option><option value="Francis Lawrence"></option><option value="Francis Veber"></option><option value="Franck Vestiel"></option><option value="François Lévy-Kuentz"></option><option value="François Ozon"></option><option value="Frank Coraci"></option><option value="Frank Darabont"></option><option value="Frédéric Berthe"></option><option value="Frédéric Saint-Simon"></option><option value="Frédéric Schoendoerffer"></option><option value="Fritz Lang"></option><option value="Fumihiko Sori"></option><option value="Gabe Ibáñez"></option><option value="Gabriel Julien-Laferrière"></option><option value="Gabriele Muccino"></option><option value="Gabriele Salvatores"></option><option value="Galder Gaztelu-Urrutia"></option><option value="Gareth Edwards"></option><option value="Gareth Evans"></option><option value="Garry Marshall"></option><option value="Garth Davis"></option><option value="Garth Jennings"></option><option value="Gary Nelson"></option><option value="Gary Ross"></option><option value="Gary Shore"></option><option value="Gavin Hood"></option><option value="Gavin O'Connor"></option><option value="Gene Stupnitsky"></option><option value="Geoff Murphy"></option><option value="George Clooney"></option><option value="George Lucas"></option><option value="George Miller"></option><option value="George Pan Cosmatos"></option><option value="George Tillman Jr."></option><option value="Georges Lautner"></option><option value="Georges Méliès"></option><option value="Gerald Potterton"></option><option value="Gérard Corbiau"></option><option value="Gérard Oury"></option><option value="Gérard Pirès"></option><option value="Gianluca Jodice"></option><option value="Gil Junger"></option><option value="Gilles de Maistre"></option><option value="Gilles Lellouche"></option><option value="Giordano Gederlini"></option><option value="Giulio Callegari"></option><option value="Gordon Douglas"></option><option value="Gore Verbinski"></option><option value="Graham Guit"></option><option value="Grand Corps Malade et Mehdi Idir"></option><option value="Greg Berlanti"></option><option value="Greta Gerwig"></option><option value="Griffin Dunne"></option><option value="Guillaume Canet"></option><option value="Guillaume Gallienne"></option><option value="Guillaume Nicloux"></option><option value="Guillermo del Toro"></option><option value="Gus Van Sant"></option><option value="Gustave Kervern et Benoît Delépine"></option><option value="Guy Ritchie"></option><option value="Haifaa Al-Mansour"></option><option value="Halina Reijn"></option><option value="Harald Reinl"></option><option value="Harold Ramis"></option><option value="Hayao Miyazaki"></option><option value="Hélène Cattet et Bruno Forzani"></option><option value="Henry Joost et Ariel Schulman"></option><option value="Henry Selick"></option><option value="Herbert Ross"></option><option value="Herman Yau"></option><option value="Hideo Nakata"></option><option value="Hironobu Sakaguchi et Motonori Sakakibara"></option><option value="Howard McCain"></option><option value="Hu Mei"></option><option value="Hugo Gélin"></option><option value="Ian MacNaughton"></option><option value="Ilya Naishuller"></option><option value="Irvin Kershner"></option><option value="Isabelle Mergault"></option><option value="Ishana Night Shyamalan"></option><option value="Ivan Reitman"></option><option value="J. A. Bayona"></option><option value="J. C. Chandor"></option><option value="J.J. Abrams"></option><option value="Jaco Bouwer"></option><option value="Jacob Gentry"></option><option value="Jacques Audiard"></option><option value="Jake Castorena, Sam Liu"></option><option value="Jake Kasdan"></option><option value="Jamel Debbouze (fondateur/animateur — réalisateur TV non précisé dans les sources)"></option><option value="James Bamford"></option><option value="James Bobin"></option><option value="James Cameron"></option><option value="James DeMonaco"></option><option value="James Foley"></option><option value="James Franco et Bruce Thierry Cheung"></option><option value="James Gunn"></option><option value="James Huth"></option><option value="James Mangold"></option><option value="James McTeigue"></option><option value="James Wan"></option><option value="James Ward Byrkit"></option><option value="James Watkins"></option><option value="Jan de Bont"></option><option value="Jan Kerhart et Ulrich Stein"></option><option value="Jan Kounen"></option><option value="Jane Campion"></option><option value="Jared Hess"></option><option value="Jason Orley"></option><option value="Jaume Balagueró et Paco Plaza"></option><option value="Jaume Collet-Serra"></option><option value="Javier Ambrossi et Javier Calvo"></option><option value="Jay Chandrasekhar"></option><option value="Jay Roach"></option><option value="Jean Becker"></option><option value="Jean Girault et Louis de Funès"></option><option value="Jean-Baptiste Durand"></option><option value="Jean-Christophe Hembert (mise en scène) / Alexandre Astier (auteur-interprète)"></option><option value="Jean-Claude Brisseau"></option><option value="Jean-Daniel Verhaeghe"></option><option value="Jean-François Richet"></option><option value="Jean-Jacques Annaud"></option><option value="Jean-Jacques Beineix"></option><option value="Jean-Jacques Mantello"></option><option value="Jean-Louis Guillermou"></option><option value="Jean-Marie Larrieu, Arnaud Larrieu"></option><option value="Jean-Marie Poiré"></option><option value="Jean-Pierre Améris"></option><option value="Jean-Pierre Limosin"></option><option value="Jean-Stéphane Sauvaire"></option><option value="Jeanne Herry"></option><option value="Jeff Wadlow"></option><option value="Jeff Wamester"></option><option value="Jennifer Flackett et Mark Levin"></option><option value="Jérémie Périn"></option><option value="Jérémie Rozan"></option><option value="Jeremy Saulnier"></option><option value="Jérôme de Missolz"></option><option value="Jerzy Skolimowski"></option><option value="Jill Bauer, Ronna Gradus"></option><option value="Jim Abrahams, David Zucker, Jerry Zucker"></option><option value="Jim Henson et Frank Oz"></option><option value="Jim Jarmusch"></option><option value="Joachim Rønning"></option><option value="Joe Berlinger"></option><option value="Joe Berlinger et Bruce Sinofsky"></option><option value="Joe Carnahan"></option><option value="Joe Johnston"></option><option value="Joel Coen"></option><option value="Joel et Ethan Coen"></option><option value="Joel Schumacher"></option><option value="John Alexander et Amy Neil (série créée par Dan Sefton)"></option><option value="John Badham"></option><option value="John Boorman"></option><option value="John Carpenter"></option><option value="John G. Avildsen"></option><option value="John Huddles"></option><option value="John Hughes"></option><option value="John Krasinski"></option><option value="John Landis, Steven Spielberg, Joe Dante et George Miller"></option><option value="John McTiernan"></option><option value="John Pieplow"></option><option value="John Power"></option><option value="John R. Leonetti"></option><option value="John Woo"></option><option value="Jon Favreau"></option><option value="Jon M. Chu"></option><option value="Jon Nguyen, Rick Barnes et Olivia Neergaard-Holm"></option><option value="Jon Turteltaub"></option><option value="Jon Watts"></option><option value="Jonathan Baker et Josh Baker"></option><option value="Jonathan Demme"></option><option value="Jonathan Entwistle"></option><option value="Jonathan Frakes"></option><option value="Jonathan Glazer"></option><option value="Jonathan Helpert"></option><option value="Jonathan Hensleigh"></option><option value="Jonathan Liebesman"></option><option value="Jonathan Mostow"></option><option value="Jordan Peele"></option><option value="José Alcala"></option><option value="Josée Dayan"></option><option value="Joseph Kosinski"></option><option value="Joseph M. Newman"></option><option value="Joseph Ruben"></option><option value="Joseph Vilsmaier"></option><option value="Joshua Oppenheimer"></option><option value="Josiane Balasko"></option><option value="Joss Whedon"></option><option value="Julia Ducournau"></option><option value="Julie Manoukian"></option><option value="Julien Colonna"></option><option value="Julien Hervé et Philippe Mechelen"></option><option value="Julien Seri"></option><option value="Julius Onah"></option><option value="Just Philippot"></option><option value="Justin Baldoni"></option><option value="Justin Kurzel"></option><option value="Justin Lin"></option><option value="Justine Triet"></option><option value="Kagan McLeod"></option><option value="Kane Parsons"></option><option value="Kathryn Bigelow"></option><option value="Katsuhiro Ōtomo"></option><option value="Katsuhito Ishii"></option><option value="Kazuaki Kiriya"></option><option value="Kazuhisa Takenouchi"></option><option value="Kazuya Shiraishi"></option><option value="Keiichi Sugiyama"></option><option value="Keishi Ōtomo"></option><option value="Keith Thomas"></option><option value="Kelly Asbury et Lorna Cook"></option><option value="Kelly Blatz"></option><option value="Kenji Mizoguchi"></option><option value="Kenneth Branagh"></option><option value="Kenny Golde"></option><option value="Kenny Ortega"></option><option value="Kenta Fukasaku et Kinji Fukasaku"></option><option value="Kerry Conran"></option><option value="Kevin Connor"></option><option value="Kevin Costner"></option><option value="Kevin Fair"></option><option value="Kevin Greutert"></option><option value="Kevin Smith"></option><option value="Kim Chapiron"></option><option value="Kinji Fukasaku"></option><option value="Kornél Mundruczó"></option><option value="Kurt Wimmer"></option><option value="Lana Wachowski"></option><option value="Lana Wachowski, Tom Tykwer et Lilly Wachowski"></option><option value="Lance W. Dreesen et Clint Hutchison"></option><option value="Lars von Trier"></option><option value="Lasse Hallström"></option><option value="Lauren Montgomery"></option><option value="Laurent Cantet"></option><option value="Laurent Lafitte"></option><option value="Lee Si-myung"></option><option value="Lee Tamahori"></option><option value="Len Wiseman"></option><option value="Lennart Ruff"></option><option value="Léonor Serraille"></option><option value="Lexi Alexander"></option><option value="Liliana Cavani"></option><option value="Lionel Delplanque"></option><option value="Lionel Steketee et Fabrice Éboué"></option><option value="Lisa Azuelos"></option><option value="Lola Doillon"></option><option value="Louis Leterrier"></option><option value="Louis Leterrier et Corey Yuen"></option><option value="Louis-Julien Petit"></option><option value="Luc Besson"></option><option value="Luca Guadagnino"></option><option value="Luchino Visconti"></option><option value="Luis Valdez"></option><option value="Luke Scott"></option><option value="Luke Sparke"></option><option value="Lynne Ramsay"></option><option value="M. Night Shyamalan"></option><option value="M.J. Bassett"></option><option value="Mabrouk El Mechri"></option><option value="Maël Piriou"></option><option value="Maïwenn"></option><option value="Makoto Shinkai"></option><option value="Mamoru Oshii"></option><option value="Marc Caro et Jean-Pierre Jeunet"></option><option value="Marc Fitoussi"></option><option value="Marc Forster"></option><option value="Marc Webb"></option><option value="Mareike Engelhardt"></option><option value="Margaux Bonhomme"></option><option value="Marie Monge"></option><option value="Mario Azzopardi"></option><option value="Marjory Déjardin"></option><option value="Mark A. Z. Dippé"></option><option value="Mark Raso"></option><option value="Mark Waters"></option><option value="Martin Campbell"></option><option value="Martin Provost"></option><option value="Martin Scorsese"></option><option value="Mary Harron"></option><option value="Mathieu Amalric"></option><option value="Mathieu Kassovitz"></option><option value="Matt Peters, Christina Sotta"></option><option value="Matt Reeves"></option><option value="Matt Shakman"></option><option value="Matthew Charles Santoro"></option><option value="Matthew Vaughn"></option><option value="Maurice Pialat"></option><option value="McG"></option><option value="Megan Park"></option><option value="Mehdi Ben Attia"></option><option value="Mehdi Idir et Grand Corps Malade"></option><option value="Mel Gibson"></option><option value="Mélanie Auffret"></option><option value="Michael Anderson"></option><option value="Michael Ann"></option><option value="Michael Bay"></option><option value="Michael Benveniste et Howard Ziehm"></option><option value="Michael Crichton"></option><option value="Michael et Peter Spierig"></option><option value="Michael Gracey"></option><option value="Michael Haneke"></option><option value="Michael Moore"></option><option value="Michael Radford"></option><option value="Michael S. Ojeda"></option><option value="Michel Blanc"></option><option value="Michel Deville"></option><option value="Michel Gondry"></option><option value="Michel Hazanavicius et Dominique Mézerette"></option><option value="Michel Leclerc"></option><option value="Michel Munz et Gérard Bitton"></option><option value="Mick Jackson"></option><option value="Miguel Sapochnik"></option><option value="Mike Mills"></option><option value="Mike Nichols"></option><option value="Miloš Forman"></option><option value="Mimi Leder"></option><option value="Mitch Rouse"></option><option value="Mohamed El Khatib"></option><option value="Mohamed Hamidi"></option><option value="Morten Tyldum"></option><option value="Nagisa Ōshima"></option><option value="Natalie Musteata et Alexandre Singh"></option><option value="Nathalie Marchak"></option><option value="Neil Burger"></option><option value="Neil Jordan"></option><option value="Neill Blomkamp"></option><option value="Nessim Chikhaoui"></option><option value="Nia DaCosta"></option><option value="Nicholas Meyer"></option><option value="Nicholas Ray"></option><option value="Nick Cassavetes"></option><option value="Nick Castle"></option><option value="Nick Hamm"></option><option value="Nicolas Bedos"></option><option value="Nicolas Benamou"></option><option value="Nicolas Benamou et Philippe Lacheau"></option><option value="Nicolas Boukhrief"></option><option value="Nicolas Monette"></option><option value="Nicolas Roeg"></option><option value="Nicolas Vanier"></option><option value="Nicolas Winding Refn"></option><option value="Nicole Garcia"></option><option value="Niels Arden Oplev"></option><option value="Nikolaj Arcel"></option><option value="Nimród Antal"></option><option value="Noam Murro"></option><option value="Non précisé"></option><option value="Non précisé (présenté par Laetitia Barlerin, Jessica Serra et Thierry Bedossa, narré par Valérie Damidot)"></option><option value="Non précisé (rétrospective/compilation)"></option><option value="Nora El Hourch"></option><option value="Ol Parker"></option><option value="Ole Bornedal"></option><option value="Oliver Laxe"></option><option value="Oliver Stone"></option><option value="Olivier Baroux"></option><option value="Olivier Marchal"></option><option value="Olivier Megaton"></option><option value="Olivier Nakache et Éric Toledano"></option><option value="Olivier Van Hoofstadt"></option><option value="Orelsan et Christophe Offenstein"></option><option value="Ovidie"></option><option value="Owen Hurley"></option><option value="Panos Cosmatos"></option><option value="Paolo Sorrentino"></option><option value="Park Chan-wook"></option><option value="Park Hee-joon"></option><option value="Pascal Bourdiaux"></option><option value="Pascale Pouzadoux"></option><option value="Pasha Patriki"></option><option value="Patrice Chéreau"></option><option value="Patrice Leconte"></option><option value="Patricia Birch"></option><option value="Patrick Schulmann"></option><option value="Patty Jenkins"></option><option value="Paul Bartel"></option><option value="Paul Feig"></option><option value="Paul Greengrass"></option><option value="Paul King"></option><option value="Paul Thomas Anderson"></option><option value="Paul Verhoeven"></option><option value="Paul W. S. Anderson"></option><option value="Paul W.S. Anderson"></option><option value="Pedro Almodóvar"></option><option value="Penelope Spheeris"></option><option value="Peter Berg"></option><option value="Peter Hyams"></option><option value="Peter Jackson"></option><option value="Peter Jackson et Costa Botes"></option><option value="Peter MacDonald"></option><option value="Peter Ramsey, Bob Persichetti et Rodney Rothman"></option><option value="Peter Weir"></option><option value="Peter Yates"></option><option value="Peyton Reed"></option><option value="Philip Kaufman"></option><option value="Philippe de Broca"></option><option value="Philippe de Chauveron"></option><option value="Philippe Garrel"></option><option value="Philippe Godeau"></option><option value="Philippe Haïm"></option><option value="Philippe Lacheau"></option><option value="Philippe Le Guay"></option><option value="Philippe Martinez"></option><option value="Phillip Noyce"></option><option value="Phyllida Lloyd"></option><option value="Pierre Boutron"></option><option value="Pierre Godeau"></option><option value="Pierre Morel"></option><option value="Pierre Rambaldi"></option><option value="Pierre Salvadori"></option><option value="Pierre-François Martin-Laval"></option><option value="Pieter Jan Brugge"></option><option value="Prachya Pinkaew"></option><option value="Quentin Dupieux"></option><option value="Quentin Tarantino"></option><option value="Rachid Bouchareb"></option><option value="Ramin Bahrani"></option><option value="Ranald MacDougall"></option><option value="Randal Kleiser"></option><option value="Rawson Marshall Thurber"></option><option value="Reed Morano"></option><option value="Régis Roinsard"></option><option value="Régis Wargnier"></option><option value="Rémi Bezançon"></option><option value="Rémi Lainé et Émile Rabaté"></option><option value="Rémy Belvaux"></option><option value="René Laloux"></option><option value="Renny Harlin"></option><option value="Riad Sattouf"></option><option value="Rian Johnson"></option><option value="Ric Roman Waugh"></option><option value="Rich Peppiatt"></option><option value="Richard Curtis"></option><option value="Richard Donner"></option><option value="Richard Fleischer"></option><option value="Richard Lester"></option><option value="Richard Linklater"></option><option value="Richard Marquand"></option><option value="Richard Stanley"></option><option value="Rick Morales"></option><option value="Ridley Scott"></option><option value="Roar Uthaug"></option><option value="Rob Cohen"></option><option value="Rob Marshall"></option><option value="Rob Minkoff"></option><option value="Rob Reiner"></option><option value="Robert Altman"></option><option value="Robert Clouse"></option><option value="Robert Longo"></option><option value="Robert Rodriguez"></option><option value="Robert Rodriguez et Ethan Maniquis"></option><option value="Robert Schwentke"></option><option value="Robert Zemeckis"></option><option value="Roberto Benigni"></option><option value="Robin Campillo"></option><option value="Rod Holcomb"></option><option value="Roger Avary"></option><option value="Roger Corman"></option><option value="Roger Kumble"></option><option value="Roland Emmerich"></option><option value="Romain Gavras"></option><option value="Roman Polanski"></option><option value="Ron Howard"></option><option value="Ron Shelton"></option><option value="Rose Glass"></option><option value="Ruben Fleischer"></option><option value="Ruben Östlund"></option><option value="Rupert Sanders"></option><option value="Russell Mulcahy"></option><option value="Ryan Coogler"></option><option value="Ryûhei Kitamura"></option><option value="Sacha Gervasi"></option><option value="Sam Gorski et Niko Pueringer"></option><option value="Sam Liu"></option><option value="Sam Mendes"></option><option value="Sam Raimi"></option><option value="Scott Beck et Bryan Woods"></option><option value="Scott Derrickson"></option><option value="Scott Kalvert"></option><option value="Scott Stewart"></option><option value="Scott Wiper"></option><option value="Sebastián Lelio"></option><option value="Serge Bozon"></option><option value="Sergei Bodrov et Ivan Passer"></option><option value="Sergeiy Mokritskiy"></option><option value="Sergio Leone"></option><option value="Sergio Martino"></option><option value="Shane Abbess"></option><option value="Shane Black"></option><option value="Sharon Maguire"></option><option value="Shawn Levy"></option><option value="Sheldon Wilson"></option><option value="Shigeyasu Yamauchi"></option><option value="Shin'ya Tsukamoto"></option><option value="Shinji Aramaki"></option><option value="Shinji Higuchi"></option><option value="Shinsuke Satō"></option><option value="Shōhei Imamura"></option><option value="Shun'ya Itō"></option><option value="Shunichi Nagasaki"></option><option value="Sidney Salkow et Ubaldo Ragona"></option><option value="Simon McQuoid"></option><option value="Simon Wells"></option><option value="Simon West"></option><option value="Simon Wincer"></option><option value="Sofia Coppola"></option><option value="Sophie Fillières"></option><option value="Spike Jonze"></option><option value="Spike Lee"></option><option value="Stanley Kubrick"></option><option value="Stefan Ruzowitzky"></option><option value="Stéphan Archinard et François Prévôt-Leygonie"></option><option value="Stéphane Brizé"></option><option value="Stephen Chow"></option><option value="Stephen Hopkins"></option><option value="Stephen Norrington"></option><option value="Stephen Surjik"></option><option value="Steve Pink"></option><option value="Steven Caple Jr."></option><option value="Steven Lisberger"></option><option value="Steven S. DeKnight"></option><option value="Steven Spielberg"></option><option value="Susan Seidelman"></option><option value="Sylvain Desclous"></option><option value="Sylvester Stallone"></option><option value="Taika Waititi"></option><option value="Taika Waititi et Jemaine Clement"></option><option value="Takashi Miike"></option><option value="Takashi Yamazaki"></option><option value="Takeshi Kitano"></option><option value="Taron Lexton"></option><option value="Tarsem Singh"></option><option value="Ted Kotcheff"></option><option value="Terry George"></option><option value="Terry Gilliam"></option><option value="Terry Gilliam et Terry Jones"></option><option value="Terry Jones"></option><option value="Tetsurō Araki"></option><option value="Tetsuya Nomura, Takeshi Nozue"></option><option value="Theodore Melfi"></option><option value="Thomas Bangalter et Guy-Manuel de Homem-Christo (Daft Punk)"></option><option value="Thomas Cailley"></option><option value="Thomas Carter"></option><option value="Thomas Gilou"></option><option value="Thomas Lilti"></option><option value="Thomas Vinterberg"></option><option value="Tim Burton"></option><option value="Tim Burton et Mike Johnson"></option><option value="Tim Miller"></option><option value="Tim Sheridan"></option><option value="Tim Story"></option><option value="Timo Vuorensola"></option><option value="Timur Bekmambetov"></option><option value="Toby Haynes"></option><option value="Todd Haynes"></option><option value="Tom Hooper"></option><option value="Tom Shadyac"></option><option value="Tom Tykwer"></option><option value="Tommy Lee Jones"></option><option value="Tonino Valerii"></option><option value="Tony Bill"></option><option value="Tony Scott"></option><option value="Tony Tost"></option><option value="Toshiya Fujita"></option><option value="Tristan Carné"></option><option value="Tsutomu Kuroiwa"></option><option value="Uli Edel"></option><option value="Vadim Perelman"></option><option value="Valeria Bruni Tedeschi"></option><option value="Vaughn Stein"></option><option value="Victor Salva"></option><option value="Vincent Orst"></option><option value="Wash Westmoreland"></option><option value="Wes Anderson"></option><option value="Wes Ball"></option><option value="William Eubank"></option><option value="William Hanna et Joseph Barbera"></option><option value="William Malone"></option><option value="William Shatner"></option><option value="Wilson Yip"></option><option value="Wim Wenders"></option><option value="Wolfgang Petersen"></option><option value="Wong Jing"></option><option value="Wong Kar-wai"></option><option value="Woody Allen"></option><option value="Xavier Dolan"></option><option value="Xavier Durringer"></option><option value="Xavier Gens"></option><option value="Xavier Legrand"></option><option value="Yann Le Quellec"></option><option value="Ybao Benedetti"></option><option value="Yoon Je-kyoon"></option><option value="Yorgos Lanthimos"></option><option value="Yoshiaki Kawajiri"></option><option value="Yuen Woo-ping"></option><option value="Yves Boisset"></option><option value="Yves Robert"></option><option value="Zabou Breitman"></option><option value="Zach Cregger"></option><option value="Zack Snyder"></option><option value="Zhang Yimou"></option></datalist>
   </div>
+  </div>
   <div class="toolbar">
     <button class="tool-btn" id="updateBtn" type="button" title="Demander à Claude de mettre à jour la bibliothèque">🔄 Mise à jour</button>
     <button class="tool-btn" id="updateUnknownBtn" type="button" title="Demander à Claude d'identifier uniquement les films marqués « non identifié »">🔎 Films inconnus</button>
-    <button class="tool-btn" id="saveBtn" type="button" title="Tout est publié sur GitHub (Alt+clic : reconfigurer)">💾 Enregistrer</button>
+    <button class="tool-btn has-changes" id="saveBtn" type="button" title="23 changements « vu / pas vu » pas encore publiés sur GitHub (Alt+clic : reconfigurer)">💾 Enregistrer (23)</button>
     <button class="tool-btn" id="folderBtn" type="button" title="Changer le dossier des films">📁 Dossier</button>
     <button class="tool-btn" id="bgSettingsBtn" type="button" title="Personnaliser le fond">🎨 Fond</button>
   </div>
@@ -3883,7 +3899,7 @@ const MOVIES = [
     "resume": "Jake Sully, un ancien marine paralysé, est recruté pour piloter un avatar sur Pandora afin d'infiltrer les Na'vi et faciliter l'exploitation d'un minerai rare. Sous cette forme extraterrestre lui permettant de marcher, il découvre un monde extraordinaire et rencontre Neytiri, une Na'vi qui changera son destin. Le film mêle une quête d'aventure épique avec un message écologique puissant.",
     "fichier_original": "Avatar 2009.MULTI.VFF.1080P.BLURAY.3D.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": "https://fr.web.img2.acsta.net/c_310_420/pictures/22/08/25/09/04/2146702.jpg"
   },
   {
@@ -4208,7 +4224,7 @@ const MOVIES = [
     "resume": "Dans l'État totalitaire d'Océania, le tout-puissant Big Brother contrôle chaque aspect de la vie des citoyens. Winston Smith, fonctionnaire du gouvernement, tombe amoureux de Julia, un acte considéré comme criminel. Ensemble, ils tentent d'échapper à la surveillance permanente du régime, dans un monde divisé et en guerre où toute rébellion est brisée.",
     "fichier_original": "1984.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4344,7 +4360,7 @@ const MOVIES = [
     "resume": "Réveillée après cinquante-sept ans de sommeil cryogénique, Ellen Ripley est la seule survivante du Nostromo. Elle repart pour la planète LV-426 avec un groupe de marines spatiaux afin d'enquêter sur la disparition d'une colonie humaine, où grouille désormais une nuée de créatures extraterrestres.",
     "fichier_original": "Aliens (1986) x265r.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4373,7 +4389,7 @@ const MOVIES = [
     "resume": "Yamamoto, yakuza japonais contraint à l'exil après la dissolution de son clan, débarque à Los Angeles pour retrouver son demi-frère, petit dealer local. Il prend la tête de sa bande et la transforme méthodiquement en organisation criminelle redoutée. L'ascension rapide du groupe le met rapidement en conflit avec la mafia italienne. Premier film américain de Takeshi Kitano, qui en tient aussi le rôle principal.",
     "fichier_original": "Aniki.Mon.Frere.2000s.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4388,7 +4404,7 @@ const MOVIES = [
     "resume": "Scott Lang et Hope van Dyne, aux côtés de Hank Pym, Janet van Dyne et Cassie, se retrouvent aspirés dans le Royaume quantique. Ils y explorent des mondes étranges et affrontent Kang le Conquérant, un être aux pouvoirs redoutables qui menace de bouleverser l'univers Marvel.",
     "fichier_original": "Ant.Man.and.the.Wasp.Quantumania.2023.mp4",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4403,7 +4419,7 @@ const MOVIES = [
     "resume": "Dans un futur proche, une clinique commercialise des virus prélevés sur des célébrités pour permettre à leurs fans de partager littéralement leurs maladies. Un employé de la clinique, qui s'injecte clandestinement ces virus pour les revendre, se retrouve infecté par une souche mortelle appartenant à une star adulée, déclenchant une course contre la mort.",
     "fichier_original": "Antiviral.2012.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4418,7 +4434,7 @@ const MOVIES = [
     "resume": "Après la mort d'un adolescent, tué par des hommes déguisés en policiers, la cité Athena s'embrase. Trois frères que tout oppose vont devoir choisir leur camp entre vengeance, dialogue et trafic, tandis que la révolte grandit dans la cité assiégée par les forces de l'ordre.",
     "fichier_original": "Athena.2022.mp4",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4448,7 +4464,7 @@ const MOVIES = [
     "resume": "Romy, une cheffe d'entreprise new-yorkaise accomplie, entame une liaison risquée et passionnée avec un jeune stagiaire beaucoup plus jeune qu'elle. Cette relation la pousse à explorer des désirs qu'elle avait toujours réprimés, mettant en péril sa carrière, son mariage et l'image qu'elle projette au monde.",
     "fichier_original": "Babygirl.2024.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4625,7 +4641,7 @@ const MOVIES = [
     "resume": "Cinq tueurs à gages que tout oppose se retrouvent à bord d'un train à grande vitesse au Japon, chacun avec une mission liée à une mystérieuse mallette. Alors que leurs objectifs s'entrecroisent, le voyage tourne au chaos explosif et burlesque entre trahisons et coups du destin.",
     "fichier_original": "Bullet.Train.2022.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4745,7 +4761,7 @@ const MOVIES = [
     "resume": "Dans une Amérique déchirée par une guerre civile opposant le gouvernement fédéral à des États sécessionnistes, une équipe de journalistes traverse le pays en guerre pour rallier Washington et interviewer le président avant sa possible chute. Le film suit leur périple à travers un territoire ravagé par la violence.",
     "fichier_original": "Civil.War.2024.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4805,7 +4821,7 @@ const MOVIES = [
     "resume": "Dans une petite ville d'Afrique occidentale française des années 1930, Lucien Cordier, policier méprisé et humilié par tous, décide un jour de faire le ménage à sa manière. Il élimine méthodiquement ceux qui l'ont bafoué, dans un basculement glaçant de la lâcheté vers la violence la plus froide.",
     "fichier_original": "Coup.de.Torchon.1981.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4820,7 +4836,7 @@ const MOVIES = [
     "resume": "Dans un futur où l'humanité a évolué au point de ne plus ressentir la douleur physique, un artiste de performance utilise la mutation de ses propres organes comme matériau créatif, sous le regard d'organismes de contrôle inquiets de cette dérive de l'évolution humaine.",
     "fichier_original": "Crimes.of.the.Future.2022 - Cronenberg.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4835,7 +4851,7 @@ const MOVIES = [
     "resume": "Yo Hinomura, jeune potier japonais, est hypnotisé par une société secrète chinoise qui le transforme en tueur implacable, surnommé Crying Freeman parce qu'il pleure après chaque exécution. Emu Hino, une artiste peintre, assiste par hasard à l'un de ses meurtres et devient à son tour une cible. Premier long métrage de Christophe Gans, adapté du manga de Kazuo Koike et Ryoichi Ikegami, avec Mark Dacascos.",
     "fichier_original": "Crying_Freeman_(1995).mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4864,7 +4880,7 @@ const MOVIES = [
     "resume": "Une journaliste tente désespérément d'obtenir une interview avec Salvador Dalí, mais le peintre, fantasque et insaisissable, multiplie les caprices et les mises en scène absurdes qui repoussent sans cesse le tournage. Le film, incarné par plusieurs acteurs différents jouant tour à tour Dalí, explore avec un humour surréaliste la mégalomanie de l'artiste.",
     "fichier_original": "Daaaaaali.2024.FRENCH.1080p.WEB-DL.H264-Slay3R.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5178,7 +5194,7 @@ const MOVIES = [
     "resume": "Evelyn, propriétaire d'une laverie débordée par les impôts et les tensions familiales, découvre qu'elle doit se connecter aux versions d'elle-même dans des univers parallèles pour empêcher un être maléfique multiversel de détruire toute existence. Ce voyage vertigineux entre les mondes devient aussi celui de la réconciliation avec sa fille et son mari.",
     "fichier_original": "Everything.Everywhere.All.at.Once.2022.mp4",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5193,7 +5209,7 @@ const MOVIES = [
     "resume": "Ce film retrace l'histoire de Farinelli, chanteur castrat devenu au XVIIIe siècle un interprète d'exception, admiré du public comme des puissants pour ses qualités vocales extraordinaires. Son succès se complique lorsque rivalités et jalousies s'en mêlent, en particulier lorsqu'il tombe amoureux d'une femme, forçant des vérités longtemps cachées à refaire surface.",
     "fichier_original": "Farinelli (Farinelli - il castrato).mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5222,7 +5238,7 @@ const MOVIES = [
     "resume": "En 2065, la Terre est ravagée par des entités spectrales venues de l'espace qui déciment l'humanité réfugiée dans des cités protégées. La scientifique Aki Ross, elle-même contaminée, cherche à rassembler huit esprits capables de neutraliser la menace sans recourir aux armes. Elle s'oppose au général Hein, partisan d'une frappe destructrice. Premier long métrage entièrement réalisé en images de synthèse photoréalistes.",
     "fichier_original": "Final.Fantasy.The.Spirits.Within.2001.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5252,7 +5268,7 @@ const MOVIES = [
     "resume": "Cette parodie érotique du feuilleton de science-fiction « Flash Gordon » suit un héros envoyé sur la planète Porno pour sauver la Terre du rayon sexuel de l'empereur Wang. Le film mêle effets spéciaux artisanaux, humour potache et esthétique kitsch typique des comédies fantastiques des années 1970.",
     "fichier_original": "Flesh Gordon.avi",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5373,7 +5389,7 @@ const MOVIES = [
     "resume": "Chris, jeune homme afro-américain, accompagne sa petite amie blanche pour rencontrer ses parents dans leur propriété isolée. L'accueil, d'abord chaleureux, se révèle de plus en plus étrange et inquiétant, révélant un complot terrifiant caché derrière les bonnes manières de cette famille apparemment progressiste.",
     "fichier_original": "Get Out 2017.avi",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5388,7 +5404,7 @@ const MOVIES = [
     "resume": "Ghost Dog est un tueur à gages solitaire d'une ville américaine qui vit selon le code d'honneur des samouraïs et communique par pigeons voyageurs. Il sert loyalement un mafieux qui lui a jadis sauvé la vie. Après un contrat qui tourne mal, la famille mafieuse décide de l'éliminer. Le film mêle film de gangsters, méditation sur le Hagakure et bande originale signée RZA.",
     "fichier_original": "Ghost.Dog.The.Way.Of.The.Samurai.1999.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5449,7 +5465,7 @@ const MOVIES = [
     "resume": "Dans un Los Angeles proche du nôtre, Theodore Twombly écrit des lettres intimes pour le compte d'autrui et vit mal sa séparation. Il acquiert un système d'exploitation doté d'une intelligence artificielle, qui se choisit le nom de Samantha. Une relation amoureuse singulière naît entre l'homme et cette voix sans corps, qui bouleverse sa manière d'aimer.",
     "fichier_original": "Her.2013.MULTI.VF2.1080.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5492,7 +5508,7 @@ const MOVIES = [
     "resume": "Trois adolescentes inséparables, Amina, Djeneba et Zineb, publient sur les réseaux sociaux une vidéo dénonçant l'agresseur d'une de leurs amies. Le film explore la tension entre la préservation de leur amitié et la pression sociale intense qui s'ensuit, abordant la solidarité féminine et les violences sexuelles à l'ère numérique.",
     "fichier_original": "Hlm.Pussy.mp4",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5722,7 +5738,7 @@ const MOVIES = [
     "resume": "Dave Lizewski, adolescent passionné de comics ordinaire, décide un jour de devenir un super-héros sans le moindre pouvoir, sous le nom de Kick-Ass. Sa quête improvisée le mêle à Hit-Girl et Big Daddy, véritables vigilants surentraînés, dans une lutte sanglante contre un parrain de la pègre new-yorkaise.",
     "fichier_original": "KickAss.avi",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -20322,6 +20338,9 @@ function renderCard(m){
   const card = document.createElement('div');
   card.className = 'movie-card';
 
+  const headRow = document.createElement('div');
+  headRow.className = 'movie-head-row';
+
   const head = document.createElement('button');
   head.className = 'movie-head';
   head.setAttribute('aria-expanded','false');
@@ -20330,12 +20349,45 @@ function renderCard(m){
   const proposedTitle = unidentified ? TITLE_OVERRIDES[filmId(m)] : null;
   head.innerHTML = `
     <span class="movie-title-line">
-      <span class="movie-title">${escapeHtml(proposedTitle || m.titre)}${isWatched(m)?'<span class="badge-seen">✅ vu</span>':''}${unidentified?'<span class="badge-unidentified">non identifié</span>':''}</span>
+      <span class="movie-title">${escapeHtml(proposedTitle || m.titre)}${unidentified?'<span class="badge-unidentified">non identifié</span>':''}</span>
       <span class="movie-meta">${m.annee ? m.annee : ''}${m.annee && m.realisateur ? ' · ' : ''}${m.realisateur ? escapeHtml(m.realisateur) : ''}</span>
       ${(m.genres && m.genres.length) ? `<span class="genre-tags">${m.genres.map(g => `<span class="genre-tag">${escapeHtml(g)}</span>`).join('')}</span>` : ''}
     </span>
-    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
   `;
+
+  // Pastille vu / pas vu, à droite de la ligne de titre : visible et actionnable
+  // sans avoir à déplier la fiche.
+  const seenChip = document.createElement('button');
+  seenChip.type = 'button';
+  const refreshSeenChip = () => {
+    const s = isWatched(m);
+    seenChip.className = 'seen-chip' + (s ? ' is-seen' : '');
+    seenChip.textContent = s ? '✅ Vu' : '👁️ Pas vu';
+    seenChip.setAttribute('aria-pressed', s ? 'true' : 'false');
+    seenChip.title = s ? 'Cliquer pour le remettre en « pas vu »' : 'Cliquer pour le marquer comme vu';
+  };
+  refreshSeenChip();
+  seenChip.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleWatched(m);
+    if(seenFilter !== 'all'){
+      // La fiche ne correspond plus au filtre en cours : on redessine la liste.
+      render(searchEl.value);
+      return;
+    }
+    refreshSeenChip();
+    renderStats(lastFiltered);
+  });
+
+  const chevronBtn = document.createElement('button');
+  chevronBtn.type = 'button';
+  chevronBtn.className = 'chevron-btn';
+  chevronBtn.setAttribute('aria-label', 'Déplier ou replier la fiche');
+  chevronBtn.innerHTML = '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+
+  headRow.appendChild(head);
+  headRow.appendChild(seenChip);
+  headRow.appendChild(chevronBtn);
 
   const body = document.createElement('div');
   body.className = 'movie-body';
@@ -20426,30 +20478,7 @@ function renderCard(m){
       actionRow.appendChild(copyBtn);
     });
 
-    // Tag vu / pas vu
-    const seenBtn = document.createElement('button');
-    seenBtn.type = 'button';
-    const refreshSeenBtn = () => {
-      const s = isWatched(m);
-      seenBtn.className = 'seen-btn' + (s ? ' is-seen' : '');
-      seenBtn.textContent = s ? '✅ Vu' : '👁️ Pas vu';
-      seenBtn.setAttribute('aria-pressed', s ? 'true' : 'false');
-      seenBtn.title = s ? 'Cliquer pour le remettre en « pas vu »' : 'Cliquer pour le marquer comme vu';
-    };
-    refreshSeenBtn();
-    seenBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleWatched(m);
-      if(seenFilter !== 'all'){
-        // La fiche ne correspond plus au filtre en cours : on redessine la liste.
-        render(searchEl.value);
-        return;
-      }
-      refreshSeenBtn();
-      syncSeenBadge(card, m);
-      renderStats(lastFiltered);
-    });
-    actionRow.appendChild(seenBtn);
+    // (le tag vu / pas vu est désormais sur la ligne de titre, voir seenChip plus haut)
 
     // Aide sur la lecture : repliée par défaut, dépliable au besoin.
     if(playTargets.length){
@@ -20493,7 +20522,8 @@ function renderCard(m){
     bodyDetailsEl.insertBefore(renameRow, bodyDetailsEl.firstChild);
   }
 
-  head.addEventListener('click', () => {
+  // La zone de titre et le chevron déplient tous deux la fiche.
+  const toggleCard = () => {
     const isOpen = card.classList.contains('open');
     // referme toute autre fiche ouverte (un seul film déplié à la fois)
     document.querySelectorAll('.movie-card.open').forEach(openCard => {
@@ -20503,36 +20533,15 @@ function renderCard(m){
         if(openHead) openHead.setAttribute('aria-expanded','false');
       }
     });
-    if(isOpen){
-      card.classList.remove('open');
-      head.setAttribute('aria-expanded','false');
-    } else {
-      card.classList.add('open');
-      head.setAttribute('aria-expanded','true');
-    }
-  });
+    card.classList.toggle('open', !isOpen);
+    head.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+  };
+  head.addEventListener('click', toggleCard);
+  chevronBtn.addEventListener('click', toggleCard);
 
-  card.appendChild(head);
+  card.appendChild(headRow);
   card.appendChild(body);
   return card;
-}
-
-// Ajoute ou retire la pastille « vu » dans l'en-tête replié d'une fiche, sans redessiner
-// toute la liste (ce qui refermerait la fiche ouverte et ferait sauter le défilement).
-function syncSeenBadge(cardEl, m){
-  const titleEl = cardEl.querySelector('.movie-title');
-  if(!titleEl) return;
-  const existing = titleEl.querySelector('.badge-seen');
-  if(isWatched(m)){
-    if(!existing){
-      const b = document.createElement('span');
-      b.className = 'badge-seen';
-      b.textContent = '✅ vu';
-      titleEl.insertBefore(b, titleEl.querySelector('.badge-unidentified'));
-    }
-  } else if(existing){
-    existing.remove();
-  }
 }
 
 function escapeHtml(s){
