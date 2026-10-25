@@ -415,6 +415,21 @@
   .sort-label{
     flex-shrink:0;
   }
+  /* Sur un écran d'ordinateur, « Regrouper par », « Trier » et « Afficher » tiennent côte à
+     côte. Le seuil de 960 px vient de la mesure de ces trois rangées (908 px + les marges
+     de l'en-tête) : en dessous, elles restent empilées comme sur téléphone. */
+  @media (min-width:960px){
+    .toggle-rows{
+      display:flex;
+      align-items:center;
+      gap:22px;
+      margin-top:10px;
+    }
+    .toggle-rows .sort-row{
+      margin-top:0;
+      flex-wrap:nowrap;
+    }
+  }
   .sort-toggle{
     display:flex;
     border:1px solid var(--border);
@@ -605,33 +620,36 @@
 
 <header>
   <h1>🎬 Ma bibliothèque de films</h1>
-  <div class="stats" id="stats">1267 films au total · 21 vus · 20 non identifiés</div>
+  <div class="stats" id="stats">1267 films au total · 20 non identifiés</div>
   <div class="search-wrap">
     <input id="search" type="search" placeholder="Rechercher un titre..." autocomplete="off">
     <button class="clear-btn" id="clearBtn" aria-label="Effacer">✕</button>
   </div>
-  <div class="sort-row">
-    <span class="sort-label">Regrouper par :</span>
-    <div class="sort-toggle" role="group" aria-label="Mode d'affichage">
-      <button class="sort-btn active" id="groupDossierBtn" type="button" data-group="dossier">Dossier</button>
-      <button class="sort-btn" id="groupNomBtn" type="button" data-group="nom">Nom</button>
-      <button class="sort-btn" id="groupDateBtn" type="button" data-group="date">Date</button>
-      <button class="sort-btn" id="groupTypeBtn" type="button" data-group="type">Type</button>
+  <!-- Ces trois rangées se mettent côte à côte sur un écran d'ordinateur (voir .toggle-rows). -->
+  <div class="toggle-rows">
+    <div class="sort-row">
+      <span class="sort-label">Regrouper par :</span>
+      <div class="sort-toggle" role="group" aria-label="Mode d'affichage">
+        <button class="sort-btn active" id="groupDossierBtn" type="button" data-group="dossier">Dossier</button>
+        <button class="sort-btn" id="groupNomBtn" type="button" data-group="nom">Nom</button>
+        <button class="sort-btn" id="groupDateBtn" type="button" data-group="date">Date</button>
+        <button class="sort-btn" id="groupTypeBtn" type="button" data-group="type">Type</button>
+      </div>
     </div>
-  </div>
-  <div class="sort-row">
-    <span class="sort-label">Trier les films :</span>
-    <div class="sort-toggle" role="group" aria-label="Ordre de tri des films">
-      <button class="sort-btn active" id="sortAlphaBtn" type="button" data-sort="alpha">A → Z</button>
-      <button class="sort-btn" id="sortChronoBtn" type="button" data-sort="chrono">📅 Année</button>
+    <div class="sort-row">
+      <span class="sort-label">Trier les films :</span>
+      <div class="sort-toggle" role="group" aria-label="Ordre de tri des films">
+        <button class="sort-btn active" id="sortAlphaBtn" type="button" data-sort="alpha">A → Z</button>
+        <button class="sort-btn" id="sortChronoBtn" type="button" data-sort="chrono">📅 Année</button>
+      </div>
     </div>
-  </div>
-  <div class="sort-row">
-    <span class="sort-label">Afficher :</span>
-    <div class="sort-toggle" role="group" aria-label="Filtrer selon les films déjà vus">
-      <button class="sort-btn active" id="seenAllBtn" type="button" data-seen="all">Tous</button>
-      <button class="sort-btn" id="seenYesBtn" type="button" data-seen="seen">✅ Vus</button>
-      <button class="sort-btn" id="seenNoBtn" type="button" data-seen="unseen">👁️ Pas vus</button>
+    <div class="sort-row">
+      <span class="sort-label">Afficher :</span>
+      <div class="sort-toggle" role="group" aria-label="Filtrer selon les films déjà vus">
+        <button class="sort-btn active" id="seenAllBtn" type="button" data-seen="all">Tous</button>
+        <button class="sort-btn" id="seenYesBtn" type="button" data-seen="seen">✅ Vus</button>
+        <button class="sort-btn" id="seenNoBtn" type="button" data-seen="unseen">👁️ Pas vus</button>
+      </div>
     </div>
   </div>
   <div class="sort-row">
@@ -649,7 +667,7 @@
   <div class="toolbar">
     <button class="tool-btn" id="updateBtn" type="button" title="Demander à Claude de mettre à jour la bibliothèque">🔄 Mise à jour</button>
     <button class="tool-btn" id="updateUnknownBtn" type="button" title="Demander à Claude d'identifier uniquement les films marqués « non identifié »">🔎 Films inconnus</button>
-    <button class="tool-btn has-changes" id="saveBtn" type="button" title="21 changements « vu / pas vu » pas encore publiés sur GitHub (Alt+clic : reconfigurer)">💾 Enregistrer (21)</button>
+    <button class="tool-btn" id="saveBtn" type="button" title="Tout est publié sur GitHub (Alt+clic : reconfigurer)">💾 Enregistrer</button>
     <button class="tool-btn" id="folderBtn" type="button" title="Changer le dossier des films">📁 Dossier</button>
     <button class="tool-btn" id="bgSettingsBtn" type="button" title="Personnaliser le fond">🎨 Fond</button>
   </div>
@@ -3865,7 +3883,7 @@ const MOVIES = [
     "resume": "Jake Sully, un ancien marine paralysé, est recruté pour piloter un avatar sur Pandora afin d'infiltrer les Na'vi et faciliter l'exploitation d'un minerai rare. Sous cette forme extraterrestre lui permettant de marcher, il découvre un monde extraordinaire et rencontre Neytiri, une Na'vi qui changera son destin. Le film mêle une quête d'aventure épique avec un message écologique puissant.",
     "fichier_original": "Avatar 2009.MULTI.VFF.1080P.BLURAY.3D.mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": "https://fr.web.img2.acsta.net/c_310_420/pictures/22/08/25/09/04/2146702.jpg"
   },
   {
@@ -3881,7 +3899,7 @@ const MOVIES = [
     "resume": "Un jeune garçon dubitatif face à l'existence du Père Noël embarque dans un train énigmatique se dirigeant vers le pôle Nord. À mesure que le convoi traverse des régions enchanteresses, l'aventure se dessine et les jeunes passagers découvrent l'étendue de leurs capacités respectives, confrontés aux mystères et à la magie des fêtes de fin d'année.",
     "fichier_original": "The Polar Express (2004) 3D.mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": "https://fr.web.img6.acsta.net/c_310_420/medias/nmedia/18/35/31/37/18396720.jpg"
   },
   {
@@ -4190,7 +4208,7 @@ const MOVIES = [
     "resume": "Dans l'État totalitaire d'Océania, le tout-puissant Big Brother contrôle chaque aspect de la vie des citoyens. Winston Smith, fonctionnaire du gouvernement, tombe amoureux de Julia, un acte considéré comme criminel. Ensemble, ils tentent d'échapper à la surveillance permanente du régime, dans un monde divisé et en guerre où toute rébellion est brisée.",
     "fichier_original": "1984.mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -4326,7 +4344,7 @@ const MOVIES = [
     "resume": "Réveillée après cinquante-sept ans de sommeil cryogénique, Ellen Ripley est la seule survivante du Nostromo. Elle repart pour la planète LV-426 avec un groupe de marines spatiaux afin d'enquêter sur la disparition d'une colonie humaine, où grouille désormais une nuée de créatures extraterrestres.",
     "fichier_original": "Aliens (1986) x265r.mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -4370,7 +4388,7 @@ const MOVIES = [
     "resume": "Scott Lang et Hope van Dyne, aux côtés de Hank Pym, Janet van Dyne et Cassie, se retrouvent aspirés dans le Royaume quantique. Ils y explorent des mondes étranges et affrontent Kang le Conquérant, un être aux pouvoirs redoutables qui menace de bouleverser l'univers Marvel.",
     "fichier_original": "Ant.Man.and.the.Wasp.Quantumania.2023.mp4",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -4400,7 +4418,7 @@ const MOVIES = [
     "resume": "Après la mort d'un adolescent, tué par des hommes déguisés en policiers, la cité Athena s'embrase. Trois frères que tout oppose vont devoir choisir leur camp entre vengeance, dialogue et trafic, tandis que la révolte grandit dans la cité assiégée par les forces de l'ordre.",
     "fichier_original": "Athena.2022.mp4",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -4607,7 +4625,7 @@ const MOVIES = [
     "resume": "Cinq tueurs à gages que tout oppose se retrouvent à bord d'un train à grande vitesse au Japon, chacun avec une mission liée à une mystérieuse mallette. Alors que leurs objectifs s'entrecroisent, le voyage tourne au chaos explosif et burlesque entre trahisons et coups du destin.",
     "fichier_original": "Bullet.Train.2022.mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -4727,7 +4745,7 @@ const MOVIES = [
     "resume": "Dans une Amérique déchirée par une guerre civile opposant le gouvernement fédéral à des États sécessionnistes, une équipe de journalistes traverse le pays en guerre pour rallier Washington et interviewer le président avant sa possible chute. Le film suit leur périple à travers un territoire ravagé par la violence.",
     "fichier_original": "Civil.War.2024.mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -4787,7 +4805,7 @@ const MOVIES = [
     "resume": "Dans une petite ville d'Afrique occidentale française des années 1930, Lucien Cordier, policier méprisé et humilié par tous, décide un jour de faire le ménage à sa manière. Il élimine méthodiquement ceux qui l'ont bafoué, dans un basculement glaçant de la lâcheté vers la violence la plus froide.",
     "fichier_original": "Coup.de.Torchon.1981.mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -4802,7 +4820,7 @@ const MOVIES = [
     "resume": "Dans un futur où l'humanité a évolué au point de ne plus ressentir la douleur physique, un artiste de performance utilise la mutation de ses propres organes comme matériau créatif, sous le regard d'organismes de contrôle inquiets de cette dérive de l'évolution humaine.",
     "fichier_original": "Crimes.of.the.Future.2022 - Cronenberg.mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -4846,7 +4864,7 @@ const MOVIES = [
     "resume": "Une journaliste tente désespérément d'obtenir une interview avec Salvador Dalí, mais le peintre, fantasque et insaisissable, multiplie les caprices et les mises en scène absurdes qui repoussent sans cesse le tournage. Le film, incarné par plusieurs acteurs différents jouant tour à tour Dalí, explore avec un humour surréaliste la mégalomanie de l'artiste.",
     "fichier_original": "Daaaaaali.2024.FRENCH.1080p.WEB-DL.H264-Slay3R.mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -5160,7 +5178,7 @@ const MOVIES = [
     "resume": "Evelyn, propriétaire d'une laverie débordée par les impôts et les tensions familiales, découvre qu'elle doit se connecter aux versions d'elle-même dans des univers parallèles pour empêcher un être maléfique multiversel de détruire toute existence. Ce voyage vertigineux entre les mondes devient aussi celui de la réconciliation avec sa fille et son mari.",
     "fichier_original": "Everything.Everywhere.All.at.Once.2022.mp4",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -5175,7 +5193,7 @@ const MOVIES = [
     "resume": "Ce film retrace l'histoire de Farinelli, chanteur castrat devenu au XVIIIe siècle un interprète d'exception, admiré du public comme des puissants pour ses qualités vocales extraordinaires. Son succès se complique lorsque rivalités et jalousies s'en mêlent, en particulier lorsqu'il tombe amoureux d'une femme, forçant des vérités longtemps cachées à refaire surface.",
     "fichier_original": "Farinelli (Farinelli - il castrato).mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -5234,7 +5252,7 @@ const MOVIES = [
     "resume": "Cette parodie érotique du feuilleton de science-fiction « Flash Gordon » suit un héros envoyé sur la planète Porno pour sauver la Terre du rayon sexuel de l'empereur Wang. Le film mêle effets spéciaux artisanaux, humour potache et esthétique kitsch typique des comédies fantastiques des années 1970.",
     "fichier_original": "Flesh Gordon.avi",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -5355,7 +5373,7 @@ const MOVIES = [
     "resume": "Chris, jeune homme afro-américain, accompagne sa petite amie blanche pour rencontrer ses parents dans leur propriété isolée. L'accueil, d'abord chaleureux, se révèle de plus en plus étrange et inquiétant, révélant un complot terrifiant caché derrière les bonnes manières de cette famille apparemment progressiste.",
     "fichier_original": "Get Out 2017.avi",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -5385,7 +5403,7 @@ const MOVIES = [
     "resume": "David Dunn, l'homme increvable révélé dans « Incassable », traque Kevin Wendell Crumb et ses multiples personnalités, dont la redoutable « Bête ». Leur affrontement les conduit dans un hôpital psychiatrique où le mystérieux Elijah Price, alias Mr Glass, orchestre en coulisses un plan destiné à révéler au monde l'existence réelle des super-héros.",
     "fichier_original": "Glass 2019.mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -5400,7 +5418,7 @@ const MOVIES = [
     "resume": "Le détective Benoit Blanc est invité sur une île privée grecque par un milliardaire de la tech pour participer à un jeu de meurtre entre amis. Lorsqu'un vrai meurtre survient parmi ce groupe d'amis aux liens troubles et intéressés, Blanc doit démêler mensonges et rivalités pour découvrir la vérité.",
     "fichier_original": "Glass.Onion.A.Knives.Out.Mystery.2022.mp4",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -5474,7 +5492,7 @@ const MOVIES = [
     "resume": "Trois adolescentes inséparables, Amina, Djeneba et Zineb, publient sur les réseaux sociaux une vidéo dénonçant l'agresseur d'une de leurs amies. Le film explore la tension entre la préservation de leur amitié et la pression sociale intense qui s'ensuit, abordant la solidarité féminine et les violences sexuelles à l'ère numérique.",
     "fichier_original": "Hlm.Pussy.mp4",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -5704,7 +5722,7 @@ const MOVIES = [
     "resume": "Dave Lizewski, adolescent passionné de comics ordinaire, décide un jour de devenir un super-héros sans le moindre pouvoir, sous le nom de Kick-Ass. Sa quête improvisée le mêle à Hit-Girl et Big Daddy, véritables vigilants surentraînés, dans une lutte sanglante contre un parrain de la pègre new-yorkaise.",
     "fichier_original": "KickAss.avi",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -5955,7 +5973,7 @@ const MOVIES = [
     "resume": "Un scientifique excentrique invente un dispositif de téléportation qu'il teste sur lui-même, sans remarquer qu'une mouche s'est glissée dans la cabine. Leurs deux organismes fusionnent progressivement à l'échelle génétique, transformant peu à peu le chercheur en une créature hybride monstrueuse, sous le regard impuissant de la femme qu'il aime.",
     "fichier_original": "La Mouche (1986) (The Fly) - Cronenberg.mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -6326,7 +6344,7 @@ const MOVIES = [
     "resume": "Dans l'Ouest américain des années 1850, Eli et Charlie Sisters, deux frères tueurs à gages redoutés, sont chargés de traquer un chercheur d'or convoité pour un secret qu'il détient. Ce western d'auteur, tourné en anglais, mêle violence, fraternité et quête de rédemption sur les routes poussiéreuses de la ruée vers l'or.",
     "fichier_original": "Les freres Sisters.VOSTFR.2018.x265.mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -19631,8 +19649,14 @@ function buildLibraryHtml(){
   const movies = JSON.stringify(MOVIES, null, 2)
     .replace(/<\/script/gi, '<\\/script');   // sécurité : ne jamais clore la balise par accident
   const html = buildExportHtml();
-  const updated = html.replace(/const MOVIES = \[[\s\S]*?\n\];/, 'const MOVIES = ' + movies + ';');
-  return updated === html ? null : updated;
+  const bloc = /const MOVIES = \[[\s\S]*?\n\];/;
+  // On teste explicitement la présence du bloc. Comparer le avant/après ne marche pas :
+  // quand rien n'a changé depuis la génération du fichier, le remplacement redonne un texte
+  // identique, ce qui serait pris à tort pour un bloc introuvable.
+  if(!bloc.test(html)) return null;
+  // Remplacement par fonction : sinon un « $& » ou « $1 » présent dans un titre ou un résumé
+  // serait interprété comme un motif de substitution et corromprait les données.
+  return html.replace(bloc, () => 'const MOVIES = ' + movies + ';');
 }
 
 // Repli local : utilisé seulement si la publication GitHub échoue.
