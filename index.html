@@ -408,6 +408,9 @@
     margin-top:10px;
     font-size:0.82rem;
     color:var(--text-dim);
+    /* Sans ceci, une rangée de boutons trop large pour l'écran est rognée par le
+       overflow:hidden de .sort-toggle et ses premiers boutons deviennent inatteignables. */
+    flex-wrap:wrap;
   }
   .sort-label{
     flex-shrink:0;
@@ -602,10 +605,19 @@
 
 <header>
   <h1>🎬 Ma bibliothèque de films</h1>
-  <div class="stats" id="stats">1213 films au total · 6 vus · 20 non identifiés</div>
+  <div class="stats" id="stats">1267 films au total · 21 vus · 20 non identifiés</div>
   <div class="search-wrap">
     <input id="search" type="search" placeholder="Rechercher un titre..." autocomplete="off">
     <button class="clear-btn" id="clearBtn" aria-label="Effacer">✕</button>
+  </div>
+  <div class="sort-row">
+    <span class="sort-label">Regrouper par :</span>
+    <div class="sort-toggle" role="group" aria-label="Mode d'affichage">
+      <button class="sort-btn active" id="groupDossierBtn" type="button" data-group="dossier">Dossier</button>
+      <button class="sort-btn" id="groupNomBtn" type="button" data-group="nom">Nom</button>
+      <button class="sort-btn" id="groupDateBtn" type="button" data-group="date">Date</button>
+      <button class="sort-btn" id="groupTypeBtn" type="button" data-group="type">Type</button>
+    </div>
   </div>
   <div class="sort-row">
     <span class="sort-label">Trier les films :</span>
@@ -624,7 +636,7 @@
   </div>
   <div class="sort-row">
     <span class="sort-label">Genre :</span>
-    <select class="filter-select" id="genreFilter" aria-label="Filtrer par genre"><option value="">Tous les genres</option><option value="Action">Action (341)</option><option value="Animation">Animation (42)</option><option value="Aventure">Aventure (125)</option><option value="Biopic">Biopic (53)</option><option value="Comédie">Comédie (286)</option><option value="Documentaire">Documentaire (28)</option><option value="Drame">Drame (336)</option><option value="Fantastique">Fantastique (144)</option><option value="Guerre">Guerre (34)</option><option value="Historique">Historique (41)</option><option value="Horreur">Horreur (109)</option><option value="Musical">Musical (49)</option><option value="Policier/Thriller">Policier/Thriller (249)</option><option value="Romance">Romance (65)</option><option value="Science-fiction">Science-fiction (321)</option><option value="Spectacle">Spectacle (20)</option><option value="Non classé">Non classé (19)</option></select>
+    <select class="filter-select" id="genreFilter" aria-label="Filtrer par genre"><option value="">Tous les genres</option><option value="Action">Action (349)</option><option value="Animation">Animation (45)</option><option value="Aventure">Aventure (137)</option><option value="Biopic">Biopic (55)</option><option value="Comédie">Comédie (289)</option><option value="Documentaire">Documentaire (28)</option><option value="Drame">Drame (360)</option><option value="Fantastique">Fantastique (154)</option><option value="Guerre">Guerre (35)</option><option value="Historique">Historique (43)</option><option value="Horreur">Horreur (115)</option><option value="Musical">Musical (50)</option><option value="Policier/Thriller">Policier/Thriller (259)</option><option value="Romance">Romance (72)</option><option value="Science-fiction">Science-fiction (338)</option><option value="Spectacle">Spectacle (20)</option><option value="Non classé">Non classé (19)</option></select>
   </div>
   <div class="sort-row">
     <span class="sort-label">Réalisateur :</span>
@@ -632,12 +644,12 @@
       <input class="dir-input" id="directorFilter" list="directorList" type="text" placeholder="Tous les réalisateurs" autocomplete="off" aria-label="Filtrer par réalisateur">
       <button class="dir-clear" id="directorClear" type="button" aria-label="Effacer le réalisateur">✕</button>
     </span>
-    <datalist id="directorList"><option value="Aaron Norris"></option><option value="Abby Kohn et Marc Silverstein"></option><option value="Abdellatif Kechiche"></option><option value="Abel Ferrara"></option><option value="Adam Lipsius"></option><option value="Adam MacDonald"></option><option value="Adam McKay"></option><option value="Adam Stern"></option><option value="Adam Wingard"></option><option value="Adrian Grunberg"></option><option value="Agnès Jaoui"></option><option value="Agustín Díaz Yanes"></option><option value="Akira Kurosawa"></option><option value="Akiva Schaffer"></option><option value="Alain Berbérian"></option><option value="Alain Chabat"></option><option value="Alain Corneau"></option><option value="Alan Parker"></option><option value="Alan Taylor"></option><option value="Albert Dupontel"></option><option value="Albert et Allen Hughes"></option><option value="Alejandro Agresti"></option><option value="Alejandro Amenábar"></option><option value="Alejandro González Iñárritu"></option><option value="Aleksandr Boguslavskiy et Francesco Cinquemani"></option><option value="Alex Garland"></option><option value="Alex Lutz (mise en scène)"></option><option value="Alex Proyas"></option><option value="Alexandra Leclère"></option><option value="Alexandre Aja"></option><option value="Alexandre Arcady"></option><option value="Alexandre Astier et Louis Clichy"></option><option value="Alexandre Coffre"></option><option value="Alexandre de La Patellière et Matthieu Delaporte"></option><option value="Alfonso Cuarón"></option><option value="Alfonso Gomez-Rejon"></option><option value="Anders Walter"></option><option value="André Téchiné"></option><option value="Andréa Bescond et Éric Métayer"></option><option value="Andreï Tarkovski"></option><option value="Andrés Muschietti"></option><option value="Andrew Davis"></option><option value="Andrew Dominik"></option><option value="Andrew Niccol"></option><option value="Andrew Semans"></option><option value="Andrew Stanton"></option><option value="Andrew Waller"></option><option value="Andrzej Sekula"></option><option value="Andy Serkis"></option><option value="Andy Tennant"></option><option value="Angel Manuel Soto"></option><option value="Angela Robinson"></option><option value="Angelin Preljocaj (chorégraphie), musique Thomas Bangalter"></option><option value="Ann Sirot et Raphaël Balboni"></option><option value="Anna Boden et Ryan Fleck"></option><option value="Anne Fletcher"></option><option value="Anne Fontaine"></option><option value="Anne Le Ny"></option><option value="Anne-Gaëlle Daval"></option><option value="Annick Blanc"></option><option value="Anthony et Joe Russo"></option><option value="Anthony Stacchi"></option><option value="Antoine Fuqua"></option><option value="Antony Cordier"></option><option value="Antony Szeto"></option><option value="Antti-Jussi Annila"></option><option value="April Mullen"></option><option value="Ari B. Rubinstein"></option><option value="Arnaud Lemort"></option><option value="Arthur Hiller"></option><option value="Artus"></option><option value="Atom Egoyan"></option><option value="Attila Gigor"></option><option value="Aude Léa Rapin"></option><option value="Audrey Dana"></option><option value="Aurélien Peyre"></option><option value="Axelle Laffont"></option><option value="Babak Najafi"></option><option value="Babak Payami"></option><option value="Banksy"></option><option value="Barry Levinson"></option><option value="Barry Sonnenfeld"></option><option value="Baz Luhrmann"></option><option value="Ben Stiller"></option><option value="Ben Young"></option><option value="Benoît Delépine et Gustave Kervern"></option><option value="Bertrand Blier"></option><option value="Bertrand Tavernier"></option><option value="Bibo Bergeron"></option><option value="Bong Joon-ho"></option><option value="Bouli Lanners"></option><option value="Brad Bird"></option><option value="Bradley Cooper"></option><option value="Brandon Cronenberg"></option><option value="Brett Ratner"></option><option value="Brian De Palma"></option><option value="Brian Helgeland"></option><option value="Brian Robbins"></option><option value="Brian Taylor"></option><option value="Bruce Beresford"></option><option value="Bruno Dumont"></option><option value="Bruno Podalydès"></option><option value="Bryan Singer"></option><option value="Carmen Alessandrin"></option><option value="Caroline Labrèche et Steeve Léonard"></option><option value="Caroline Vigneaux"></option><option value="Cary Joji Fukunaga"></option><option value="Cate Shortland"></option><option value="Catherine Hardwicke"></option><option value="Cédric Klapisch"></option><option value="Céline Sciamma"></option><option value="Chad Stahelski"></option><option value="Chang Cheh"></option><option value="Charles Laughton"></option><option value="Charles Nemes"></option><option value="Charlotte de Turckheim"></option><option value="Chloé Zhao"></option><option value="Chris Columbus"></option><option value="Chris Weitz"></option><option value="Christelle Raynal"></option><option value="Christian Cantamessa"></option><option value="Christian Carion"></option><option value="Christian Duguay"></option><option value="Christian Faure"></option><option value="Christian Rivers"></option><option value="Christian Volckman"></option><option value="Christophe Barratier"></option><option value="Christophe Lamotte"></option><option value="Christopher McQuarrie"></option><option value="Christopher Nolan"></option><option value="Ciaran Foy"></option><option value="Claude Berri"></option><option value="Claude Nuridsany et Marie Pérennou"></option><option value="Claude Zidi"></option><option value="Clint Eastwood"></option><option value="Clovis Cornillac"></option><option value="Colin et Greg Strause"></option><option value="Colin Trevorrow"></option><option value="Coralie Fargeat"></option><option value="Curtis Hanson"></option><option value="D.J. Viola (Kisstory) ; Jonas Åkerlund (Rammstein: Paris)"></option><option value="Damian Nieman"></option><option value="Damien Chazelle"></option><option value="Dan Trachtenberg"></option><option value="Daniel Chong"></option><option value="Daniel Kwan et Daniel Scheinert"></option><option value="Daniel Myrick et Eduardo Sánchez"></option><option value="Daniel Ragussis"></option><option value="Daniel Roby"></option><option value="Danis Tanović"></option><option value="Danny Boyle"></option><option value="Dany Boon"></option><option value="Darin Scott"></option><option value="Darren Aronofsky"></option><option value="Darren Lynn Bousman"></option><option value="David Ayer"></option><option value="David Charhon"></option><option value="David Cronenberg"></option><option value="David F. Sandberg"></option><option value="David Fincher"></option><option value="David Frankel"></option><option value="David Hemmings"></option><option value="David J. Burke"></option><option value="David Leitch"></option><option value="David Lynch"></option><option value="David M. Rosenthal"></option><option value="David R. Ellis"></option><option value="David Robert Mitchell"></option><option value="David Rühm"></option><option value="David S. Goyer"></option><option value="David Silverman"></option><option value="Davis Guggenheim"></option><option value="Denis Villeneuve"></option><option value="Denzel Washington"></option><option value="Destin Daniel Cretton"></option><option value="Dexter Fletcher"></option><option value="Didier Le Pêcheur"></option><option value="Didier Poiraud et Thierry Poiraud"></option><option value="Dimitri Logothetis"></option><option value="Djamel Bensalah"></option><option value="Dominique Rocher"></option><option value="Doug Liman"></option><option value="Doug Murphy"></option><option value="Douglas Attal"></option><option value="Drew Goddard"></option><option value="Drew Pearce"></option><option value="Duncan Jones"></option><option value="Edgar Wright"></option><option value="Édouard Molinaro"></option><option value="Edward Zwick"></option><option value="Elizabeth Banks"></option><option value="Elizabeth Tchoungui"></option><option value="Elliott Lester"></option><option value="Éloïse Lang"></option><option value="Elsa Bennett et Hippolyte Dard"></option><option value="Emile Ardolino"></option><option value="Emmanuel Le Ber, Théo Schuster"></option><option value="Emmanuelle Bercot, Fred Cavayé, Alexandre Courtès, Jean Dujardin, Michel Hazanavicius, Éric Lartigau, Gilles Lellouche et Jan Kounen"></option><option value="Emmanuelle Cuau"></option><option value="Eric Barbier"></option><option value="Éric Barbier"></option><option value="Éric Gravel"></option><option value="Éric Judor"></option><option value="Éric Lartigau"></option><option value="Éric Métayer"></option><option value="Éric Rochant"></option><option value="Éric Toledano et Olivier Nakache"></option><option value="Érick Zonca"></option><option value="Ernie Barbarash"></option><option value="Eva Ionesco"></option><option value="Everardo Gout"></option><option value="F. Gary Gray"></option><option value="Fabrice Du Welz"></option><option value="Fabrice Éboué"></option><option value="Fabrice Genestal"></option><option value="Fede Alvarez"></option><option value="Fede Álvarez"></option><option value="Federico Fellini"></option><option value="Fedor Bondarchuk"></option><option value="Fernando León de Aranoa"></option><option value="Fernando Meirelles et Kátia Lund"></option><option value="Florence Foresti (écrit et mis en scène par elle-même)"></option><option value="Florent-Emilio Siri"></option><option value="Francis Ford Coppola"></option><option value="Francis Lawrence"></option><option value="Francis Veber"></option><option value="Franck Vestiel"></option><option value="François Lévy-Kuentz"></option><option value="François Ozon"></option><option value="Frank Coraci"></option><option value="Frank Darabont"></option><option value="Frédéric Berthe"></option><option value="Frédéric Saint-Simon"></option><option value="Frédéric Schoendoerffer"></option><option value="Fritz Lang"></option><option value="Fumihiko Sori"></option><option value="Gabe Ibáñez"></option><option value="Gabriel Julien-Laferrière"></option><option value="Gabriele Muccino"></option><option value="Gabriele Salvatores"></option><option value="Galder Gaztelu-Urrutia"></option><option value="Gareth Edwards"></option><option value="Gareth Evans"></option><option value="Garry Marshall"></option><option value="Garth Davis"></option><option value="Garth Jennings"></option><option value="Gary Ross"></option><option value="Gary Shore"></option><option value="Gavin Hood"></option><option value="Gavin O'Connor"></option><option value="Gene Stupnitsky"></option><option value="George Clooney"></option><option value="George Lucas"></option><option value="George Miller"></option><option value="George Pan Cosmatos"></option><option value="George Tillman Jr."></option><option value="Georges Lautner"></option><option value="Georges Méliès"></option><option value="Gérard Corbiau"></option><option value="Gérard Oury"></option><option value="Gérard Pirès"></option><option value="Gianluca Jodice"></option><option value="Gil Junger"></option><option value="Gilles de Maistre"></option><option value="Gilles Lellouche"></option><option value="Giordano Gederlini"></option><option value="Giulio Callegari"></option><option value="Gore Verbinski"></option><option value="Graham Guit"></option><option value="Grand Corps Malade et Mehdi Idir"></option><option value="Greg Berlanti"></option><option value="Greta Gerwig"></option><option value="Griffin Dunne"></option><option value="Guillaume Canet"></option><option value="Guillaume Gallienne"></option><option value="Guillaume Nicloux"></option><option value="Guillermo del Toro"></option><option value="Gus Van Sant"></option><option value="Gustave Kervern et Benoît Delépine"></option><option value="Guy Ritchie"></option><option value="Haifaa Al-Mansour"></option><option value="Halina Reijn"></option><option value="Harald Reinl"></option><option value="Harold Ramis"></option><option value="Hayao Miyazaki"></option><option value="Hélène Cattet et Bruno Forzani"></option><option value="Henry Joost et Ariel Schulman"></option><option value="Henry Selick"></option><option value="Herbert Ross"></option><option value="Herman Yau"></option><option value="Hideo Nakata"></option><option value="Howard McCain"></option><option value="Hu Mei"></option><option value="Hugo Gélin"></option><option value="Ilya Naishuller"></option><option value="Irvin Kershner"></option><option value="Isabelle Mergault"></option><option value="Ishana Night Shyamalan"></option><option value="Ivan Reitman"></option><option value="J. A. Bayona"></option><option value="J. C. Chandor"></option><option value="J.J. Abrams"></option><option value="Jaco Bouwer"></option><option value="Jacob Gentry"></option><option value="Jacques Audiard"></option><option value="Jake Castorena, Sam Liu"></option><option value="Jake Kasdan"></option><option value="Jamel Debbouze (fondateur/animateur — réalisateur TV non précisé dans les sources)"></option><option value="James B. Rogers"></option><option value="James Bamford"></option><option value="James Bobin"></option><option value="James Cameron"></option><option value="James DeMonaco"></option><option value="James Foley"></option><option value="James Franco et Bruce Thierry Cheung"></option><option value="James Gunn"></option><option value="James Huth"></option><option value="James Mangold"></option><option value="James McTeigue"></option><option value="James Wan"></option><option value="James Ward Byrkit"></option><option value="James Watkins"></option><option value="Jan de Bont"></option><option value="Jan Kerhart et Ulrich Stein"></option><option value="Jan Kounen"></option><option value="Jared Hess"></option><option value="Jason Orley"></option><option value="Jaume Balagueró et Paco Plaza"></option><option value="Jaume Collet-Serra"></option><option value="Javier Ambrossi et Javier Calvo"></option><option value="Jay Chandrasekhar"></option><option value="Jay Roach"></option><option value="Jean Becker"></option><option value="Jean Girault et Louis de Funès"></option><option value="Jean-Baptiste Durand"></option><option value="Jean-Christophe Hembert (mise en scène) / Alexandre Astier (auteur-interprète)"></option><option value="Jean-Claude Brisseau"></option><option value="Jean-Daniel Verhaeghe"></option><option value="Jean-François Richet"></option><option value="Jean-Jacques Annaud"></option><option value="Jean-Jacques Mantello"></option><option value="Jean-Louis Guillermou"></option><option value="Jean-Marie Larrieu, Arnaud Larrieu"></option><option value="Jean-Marie Poiré"></option><option value="Jean-Pierre Améris"></option><option value="Jean-Pierre Limosin"></option><option value="Jean-Stéphane Sauvaire"></option><option value="Jeanne Herry"></option><option value="Jeff Wadlow"></option><option value="Jeff Wamester"></option><option value="Jennifer Flackett et Mark Levin"></option><option value="Jérémie Périn"></option><option value="Jérémie Rozan"></option><option value="Jeremy Saulnier"></option><option value="Jerzy Skolimowski"></option><option value="Jesse Dylan"></option><option value="Jill Bauer, Ronna Gradus"></option><option value="Joachim Rønning"></option><option value="Joe Berlinger"></option><option value="Joe Berlinger et Bruce Sinofsky"></option><option value="Joe Carnahan"></option><option value="Joe Johnston"></option><option value="Joel et Ethan Coen"></option><option value="Joel Schumacher"></option><option value="John Alexander et Amy Neil (série créée par Dan Sefton)"></option><option value="John Badham"></option><option value="John Boorman"></option><option value="John Carpenter"></option><option value="John G. Avildsen"></option><option value="John Huddles"></option><option value="John Hughes"></option><option value="John Krasinski"></option><option value="John Landis, Steven Spielberg, Joe Dante et George Miller"></option><option value="John McTiernan"></option><option value="John Pieplow"></option><option value="John Power"></option><option value="John R. Leonetti"></option><option value="John Woo"></option><option value="Jon Favreau"></option><option value="Jon M. Chu"></option><option value="Jon Nguyen, Rick Barnes et Olivia Neergaard-Holm"></option><option value="Jon Turteltaub"></option><option value="Jon Watts"></option><option value="Jonathan Baker et Josh Baker"></option><option value="Jonathan Demme"></option><option value="Jonathan Entwistle"></option><option value="Jonathan Frakes"></option><option value="Jonathan Glazer"></option><option value="Jonathan Helpert"></option><option value="Jonathan Hensleigh"></option><option value="Jonathan Liebesman"></option><option value="Jonathan Mostow"></option><option value="Jordan Peele"></option><option value="José Alcala"></option><option value="Josée Dayan"></option><option value="Joseph Kosinski"></option><option value="Joseph M. Newman"></option><option value="Joseph Ruben"></option><option value="Joseph Vilsmaier"></option><option value="Joshua Oppenheimer"></option><option value="Josiane Balasko"></option><option value="Joss Whedon"></option><option value="Julia Ducournau"></option><option value="Julie Manoukian"></option><option value="Julien Colonna"></option><option value="Julien Hervé et Philippe Mechelen"></option><option value="Julien Seri"></option><option value="Julius Onah"></option><option value="Just Philippot"></option><option value="Justin Baldoni"></option><option value="Justin Kurzel"></option><option value="Justin Lin"></option><option value="Justin Long"></option><option value="Justine Triet"></option><option value="Kagan McLeod"></option><option value="Kathryn Bigelow"></option><option value="Katsuhiro Ōtomo"></option><option value="Katsuhito Ishii"></option><option value="Kazuaki Kiriya"></option><option value="Kazuhisa Takenouchi"></option><option value="Kazuya Shiraishi"></option><option value="Keiichi Sugiyama"></option><option value="Keishi Ōtomo"></option><option value="Keith Thomas"></option><option value="Kelly Asbury et Lorna Cook"></option><option value="Kelly Blatz"></option><option value="Kenneth Branagh"></option><option value="Kenny Golde"></option><option value="Kenny Ortega"></option><option value="Kenta Fukasaku et Kinji Fukasaku"></option><option value="Kerry Conran"></option><option value="Kevin Connor"></option><option value="Kevin Costner"></option><option value="Kevin Fair"></option><option value="Kevin Greutert"></option><option value="Kevin Smith"></option><option value="Kim Chapiron"></option><option value="Kinji Fukasaku"></option><option value="Kornél Mundruczó"></option><option value="Kurt Wimmer"></option><option value="Lana Wachowski"></option><option value="Lana Wachowski, Tom Tykwer et Lilly Wachowski"></option><option value="Lance W. Dreesen et Clint Hutchison"></option><option value="Lars von Trier"></option><option value="Lasse Hallström"></option><option value="Lauren Montgomery"></option><option value="Laurent Cantet"></option><option value="Laurent Lafitte"></option><option value="Lee Si-myung"></option><option value="Lee Tamahori"></option><option value="Len Wiseman"></option><option value="Lennart Ruff"></option><option value="Léonor Serraille"></option><option value="Lexi Alexander"></option><option value="Lionel Delplanque"></option><option value="Lionel Steketee et Fabrice Éboué"></option><option value="Lisa Azuelos"></option><option value="Lola Doillon"></option><option value="Louis Leterrier"></option><option value="Louis Leterrier et Corey Yuen"></option><option value="Louis-Julien Petit"></option><option value="Luc Besson"></option><option value="Luca Guadagnino"></option><option value="Luchino Visconti"></option><option value="Luis Valdez"></option><option value="Luke Scott"></option><option value="Luke Sparke"></option><option value="Lynne Ramsay"></option><option value="M. Night Shyamalan"></option><option value="M.J. Bassett"></option><option value="Mabrouk El Mechri"></option><option value="Maël Piriou"></option><option value="Maïwenn"></option><option value="Makoto Shinkai"></option><option value="Mamoru Oshii"></option><option value="Marc Caro et Jean-Pierre Jeunet"></option><option value="Marc Fitoussi"></option><option value="Marc Forster"></option><option value="Marc Webb"></option><option value="Mareike Engelhardt"></option><option value="Margaux Bonhomme"></option><option value="Marie Monge"></option><option value="Mario Azzopardi"></option><option value="Marjory Déjardin"></option><option value="Mark Raso"></option><option value="Mark Waters"></option><option value="Martin Campbell"></option><option value="Martin Provost"></option><option value="Martin Scorsese"></option><option value="Mary Harron"></option><option value="Mathieu Amalric"></option><option value="Mathieu Kassovitz"></option><option value="Matt Peters, Christina Sotta"></option><option value="Matt Reeves"></option><option value="Matt Shakman"></option><option value="Matthew Charles Santoro"></option><option value="Matthew Vaughn"></option><option value="Maurice Pialat"></option><option value="McG"></option><option value="Megan Park"></option><option value="Mehdi Ben Attia"></option><option value="Mehdi Idir et Grand Corps Malade"></option><option value="Mel Gibson"></option><option value="Mélanie Auffret"></option><option value="Michael Anderson"></option><option value="Michael Ann"></option><option value="Michael Bay"></option><option value="Michael Benveniste et Howard Ziehm"></option><option value="Michael Crichton"></option><option value="Michael et Peter Spierig"></option><option value="Michael Gracey"></option><option value="Michael Haneke"></option><option value="Michael Moore"></option><option value="Michael Radford"></option><option value="Michael S. Ojeda"></option><option value="Michel Blanc"></option><option value="Michel Deville"></option><option value="Michel Gondry"></option><option value="Michel Hazanavicius et Dominique Mézerette"></option><option value="Michel Leclerc"></option><option value="Michel Munz et Gérard Bitton"></option><option value="Mick Jackson"></option><option value="Miguel Sapochnik"></option><option value="Mike Mills"></option><option value="Mike Nichols"></option><option value="Miloš Forman"></option><option value="Mimi Leder"></option><option value="Mitch Rouse"></option><option value="Mohamed El Khatib"></option><option value="Mohamed Hamidi"></option><option value="Morten Tyldum"></option><option value="Nagisa Ōshima"></option><option value="Natalie Musteata et Alexandre Singh"></option><option value="Nathalie Marchak"></option><option value="Neil Burger"></option><option value="Neil Jordan"></option><option value="Neill Blomkamp"></option><option value="Nessim Chikhaoui"></option><option value="Nia DaCosta"></option><option value="Nicholas Meyer"></option><option value="Nick Cassavetes"></option><option value="Nick Hamm"></option><option value="Nicolas Bedos"></option><option value="Nicolas Benamou"></option><option value="Nicolas Benamou et Philippe Lacheau"></option><option value="Nicolas Boukhrief"></option><option value="Nicolas Monette"></option><option value="Nicolas Roeg"></option><option value="Nicolas Vanier"></option><option value="Nicolas Winding Refn"></option><option value="Nicole Garcia"></option><option value="Niels Arden Oplev"></option><option value="Nikolaj Arcel"></option><option value="Nimród Antal"></option><option value="Noam Murro"></option><option value="Non précisé"></option><option value="Non précisé (présenté par Laetitia Barlerin, Jessica Serra et Thierry Bedossa, narré par Valérie Damidot)"></option><option value="Non précisé (rétrospective/compilation)"></option><option value="Nora El Hourch"></option><option value="Ol Parker"></option><option value="Ole Bornedal"></option><option value="Oliver Laxe"></option><option value="Oliver Stone"></option><option value="Olivier Baroux"></option><option value="Olivier Marchal"></option><option value="Olivier Megaton"></option><option value="Olivier Nakache et Éric Toledano"></option><option value="Olivier Van Hoofstadt"></option><option value="Orelsan et Christophe Offenstein"></option><option value="Ovidie"></option><option value="Owen Hurley"></option><option value="Panos Cosmatos"></option><option value="Paolo Sorrentino"></option><option value="Park Chan-wook"></option><option value="Park Hee-joon"></option><option value="Pascal Bourdiaux"></option><option value="Pascale Pouzadoux"></option><option value="Pasha Patriki"></option><option value="Patrice Leconte"></option><option value="Patricia Birch"></option><option value="Patrick Schulmann"></option><option value="Patty Jenkins"></option><option value="Paul Bartel"></option><option value="Paul Feig"></option><option value="Paul Greengrass"></option><option value="Paul King"></option><option value="Paul Thomas Anderson"></option><option value="Paul Verhoeven"></option><option value="Paul W. S. Anderson"></option><option value="Paul W.S. Anderson"></option><option value="Paul Weitz"></option><option value="Pedro Almodóvar"></option><option value="Penelope Spheeris"></option><option value="Peter Berg"></option><option value="Peter Hyams"></option><option value="Peter Jackson"></option><option value="Peter Jackson et Costa Botes"></option><option value="Peter MacDonald"></option><option value="Peter Ramsey, Bob Persichetti et Rodney Rothman"></option><option value="Peter Weir"></option><option value="Peyton Reed"></option><option value="Philip Kaufman"></option><option value="Philippe de Broca"></option><option value="Philippe de Chauveron"></option><option value="Philippe Garrel"></option><option value="Philippe Godeau"></option><option value="Philippe Haïm"></option><option value="Philippe Lacheau"></option><option value="Philippe Le Guay"></option><option value="Philippe Martinez"></option><option value="Phillip Noyce"></option><option value="Phyllida Lloyd"></option><option value="Pierre Boutron"></option><option value="Pierre Godeau"></option><option value="Pierre Morel"></option><option value="Pierre Rambaldi"></option><option value="Pierre Salvadori"></option><option value="Pierre-François Martin-Laval"></option><option value="Pieter Jan Brugge"></option><option value="Prachya Pinkaew"></option><option value="Quentin Dupieux"></option><option value="Quentin Tarantino"></option><option value="Rachid Bouchareb"></option><option value="Ramin Bahrani"></option><option value="Ranald MacDougall"></option><option value="Randal Kleiser"></option><option value="Rawson Marshall Thurber"></option><option value="Reed Morano"></option><option value="Régis Roinsard"></option><option value="Régis Wargnier"></option><option value="Rémi Bezançon"></option><option value="Rémi Lainé et Émile Rabaté"></option><option value="Rémy Belvaux"></option><option value="René Laloux"></option><option value="Renny Harlin"></option><option value="Riad Sattouf"></option><option value="Rian Johnson"></option><option value="Ric Roman Waugh"></option><option value="Rich Peppiatt"></option><option value="Richard Curtis"></option><option value="Richard Donner"></option><option value="Richard Fleischer"></option><option value="Richard Lester"></option><option value="Richard Linklater"></option><option value="Richard Marquand"></option><option value="Richard Stanley"></option><option value="Rick Morales"></option><option value="Ridley Scott"></option><option value="Roar Uthaug"></option><option value="Rob Cohen"></option><option value="Rob Marshall"></option><option value="Rob Minkoff"></option><option value="Rob Reiner"></option><option value="Robert Altman"></option><option value="Robert Clouse"></option><option value="Robert Longo"></option><option value="Robert Rodriguez"></option><option value="Robert Rodriguez et Ethan Maniquis"></option><option value="Robert Schwentke"></option><option value="Robert Zemeckis"></option><option value="Roberto Benigni"></option><option value="Robin Campillo"></option><option value="Rod Holcomb"></option><option value="Roger Avary"></option><option value="Roger Kumble"></option><option value="Roland Emmerich"></option><option value="Romain Gavras"></option><option value="Roman Polanski"></option><option value="Ron Howard"></option><option value="Ron Shelton"></option><option value="Rose Glass"></option><option value="Ruben Fleischer"></option><option value="Ruben Östlund"></option><option value="Rupert Sanders"></option><option value="Russell Mulcahy"></option><option value="Ryan Coogler"></option><option value="Ryûhei Kitamura"></option><option value="Sacha Gervasi"></option><option value="Sam Gorski et Niko Pueringer"></option><option value="Sam Liu"></option><option value="Sam Mendes"></option><option value="Sam Raimi"></option><option value="Scott Beck et Bryan Woods"></option><option value="Scott Derrickson"></option><option value="Scott Kalvert"></option><option value="Scott Stewart"></option><option value="Scott Wiper"></option><option value="Sebastián Lelio"></option><option value="Serge Bozon"></option><option value="Sergei Bodrov et Ivan Passer"></option><option value="Sergeiy Mokritskiy"></option><option value="Sergio Leone"></option><option value="Sergio Martino"></option><option value="Shane Abbess"></option><option value="Shane Black"></option><option value="Sharon Maguire"></option><option value="Shawn Levy"></option><option value="Sheldon Wilson"></option><option value="Shigeyasu Yamauchi"></option><option value="Shin'ya Tsukamoto"></option><option value="Shinji Aramaki"></option><option value="Shinji Higuchi"></option><option value="Shinsuke Satō"></option><option value="Shōhei Imamura"></option><option value="Shun'ya Itō"></option><option value="Shunichi Nagasaki"></option><option value="Sidney Salkow et Ubaldo Ragona"></option><option value="Simon McQuoid"></option><option value="Simon Wells"></option><option value="Simon West"></option><option value="Simon Wincer"></option><option value="Sofia Coppola"></option><option value="Sophie Fillières"></option><option value="Spike Jonze"></option><option value="Spike Lee"></option><option value="Stanley Kubrick"></option><option value="Stefan Ruzowitzky"></option><option value="Stéphan Archinard et François Prévôt-Leygonie"></option><option value="Stéphane Brizé"></option><option value="Stephen Chow"></option><option value="Stephen Hopkins"></option><option value="Stephen Norrington"></option><option value="Steve Pink"></option><option value="Steve Rash"></option><option value="Steven Caple Jr."></option><option value="Steven Lisberger"></option><option value="Steven S. DeKnight"></option><option value="Steven Spielberg"></option><option value="Susan Seidelman"></option><option value="Sylvain Desclous"></option><option value="Sylvester Stallone"></option><option value="Taika Waititi"></option><option value="Taika Waititi et Jemaine Clement"></option><option value="Takashi Miike"></option><option value="Takashi Yamazaki"></option><option value="Takeshi Kitano"></option><option value="Taron Lexton"></option><option value="Tarsem Singh"></option><option value="Ted Kotcheff"></option><option value="Terry George"></option><option value="Terry Gilliam"></option><option value="Terry Gilliam et Terry Jones"></option><option value="Terry Jones"></option><option value="Tetsurō Araki"></option><option value="Tetsuya Nomura, Takeshi Nozue"></option><option value="Theodore Melfi"></option><option value="Thomas Bangalter et Guy-Manuel de Homem-Christo (Daft Punk)"></option><option value="Thomas Cailley"></option><option value="Thomas Carter"></option><option value="Thomas Gilou"></option><option value="Thomas Lilti"></option><option value="Tim Burton"></option><option value="Tim Burton et Mike Johnson"></option><option value="Tim Miller"></option><option value="Tim Sheridan"></option><option value="Tim Story"></option><option value="Timo Vuorensola"></option><option value="Timur Bekmambetov"></option><option value="Toby Haynes"></option><option value="Todd Haynes"></option><option value="Tom Hooper"></option><option value="Tom Shadyac"></option><option value="Tom Tykwer"></option><option value="Tommy Lee Jones"></option><option value="Tony Bill"></option><option value="Tony Scott"></option><option value="Tony Tost"></option><option value="Toshiya Fujita"></option><option value="Tristan Carné"></option><option value="Tsutomu Kuroiwa"></option><option value="Vadim Perelman"></option><option value="Valeria Bruni Tedeschi"></option><option value="Vaughn Stein"></option><option value="Victor Salva"></option><option value="Vincent Orst"></option><option value="Wash Westmoreland"></option><option value="Wes Anderson"></option><option value="Wes Ball"></option><option value="William Eubank"></option><option value="William Hanna et Joseph Barbera"></option><option value="William Malone"></option><option value="Wilson Yip"></option><option value="Wim Wenders"></option><option value="Wolfgang Petersen"></option><option value="Wong Jing"></option><option value="Wong Kar-wai"></option><option value="Woody Allen"></option><option value="Xavier Dolan"></option><option value="Xavier Durringer"></option><option value="Xavier Gens"></option><option value="Xavier Legrand"></option><option value="Yann Le Quellec"></option><option value="Ybao Benedetti"></option><option value="Yoon Je-kyoon"></option><option value="Yorgos Lanthimos"></option><option value="Yoshiaki Kawajiri"></option><option value="Yuen Woo-ping"></option><option value="Yves Boisset"></option><option value="Yves Robert"></option><option value="Zabou Breitman"></option><option value="Zach Cregger"></option><option value="Zack Snyder"></option><option value="Zhang Yimou"></option></datalist>
+    <datalist id="directorList"><option value="Aaron Norris"></option><option value="Abby Kohn et Marc Silverstein"></option><option value="Abdellatif Kechiche"></option><option value="Abel Ferrara"></option><option value="Adam Lipsius"></option><option value="Adam MacDonald"></option><option value="Adam McKay"></option><option value="Adam Stern"></option><option value="Adam Wingard"></option><option value="Adrian Grunberg"></option><option value="Agnès Jaoui"></option><option value="Agustín Díaz Yanes"></option><option value="Akira Kurosawa"></option><option value="Akiva Schaffer"></option><option value="Alain Berbérian"></option><option value="Alain Chabat"></option><option value="Alain Corneau"></option><option value="Alain Robbe-Grillet"></option><option value="Alan Parker"></option><option value="Alan Taylor"></option><option value="Albert Dupontel"></option><option value="Albert et Allen Hughes"></option><option value="Alejandro Agresti"></option><option value="Alejandro Amenábar"></option><option value="Alejandro González Iñárritu"></option><option value="Aleksandr Boguslavskiy et Francesco Cinquemani"></option><option value="Alex Garland"></option><option value="Alex Lutz (mise en scène)"></option><option value="Alex Proyas"></option><option value="Alexandra Leclère"></option><option value="Alexandre Aja"></option><option value="Alexandre Arcady"></option><option value="Alexandre Astier et Louis Clichy"></option><option value="Alexandre Coffre"></option><option value="Alexandre de La Patellière et Matthieu Delaporte"></option><option value="Alfonso Cuarón"></option><option value="Alfonso Gomez-Rejon"></option><option value="Amy Holden Jones"></option><option value="Anders Walter"></option><option value="André Téchiné"></option><option value="Andréa Bescond et Éric Métayer"></option><option value="Andreï Tarkovski"></option><option value="Andrés Muschietti"></option><option value="Andrew Davis"></option><option value="Andrew Dominik"></option><option value="Andrew Niccol"></option><option value="Andrew Semans"></option><option value="Andrew Stanton"></option><option value="Andrzej Sekula"></option><option value="Andy Serkis"></option><option value="Andy Tennant"></option><option value="Angel Manuel Soto"></option><option value="Angela Robinson"></option><option value="Angelin Preljocaj (chorégraphie), musique Thomas Bangalter"></option><option value="Ann Sirot et Raphaël Balboni"></option><option value="Anna Boden et Ryan Fleck"></option><option value="Anne Fletcher"></option><option value="Anne Fontaine"></option><option value="Anne Le Ny"></option><option value="Anne-Gaëlle Daval"></option><option value="Annick Blanc"></option><option value="Anthony et Joe Russo"></option><option value="Anthony Stacchi"></option><option value="Antoine Fuqua"></option><option value="Antony Cordier"></option><option value="Antony Szeto"></option><option value="Antti-Jussi Annila"></option><option value="April Mullen"></option><option value="Arnaud Lemort"></option><option value="Arthur Hiller"></option><option value="Artus"></option><option value="Atom Egoyan"></option><option value="Attila Gigor"></option><option value="Aude Léa Rapin"></option><option value="Audrey Dana"></option><option value="Aurélien Peyre"></option><option value="Axelle Laffont"></option><option value="Babak Najafi"></option><option value="Babak Payami"></option><option value="Banksy"></option><option value="Barry Levinson"></option><option value="Barry Sonnenfeld"></option><option value="Baz Luhrmann"></option><option value="Ben Stiller"></option><option value="Ben Young"></option><option value="Benoît Delépine et Gustave Kervern"></option><option value="Bertrand Blier"></option><option value="Bertrand Tavernier"></option><option value="Bibo Bergeron"></option><option value="Bong Joon-ho"></option><option value="Bouli Lanners"></option><option value="Brad Bird"></option><option value="Bradley Cooper"></option><option value="Brandon Cronenberg"></option><option value="Brett Ratner"></option><option value="Brian De Palma"></option><option value="Brian Helgeland"></option><option value="Brian Robbins"></option><option value="Brian Taylor"></option><option value="Bruce Beresford"></option><option value="Bruno Dumont"></option><option value="Bruno Podalydès"></option><option value="Bryan Singer"></option><option value="Cameron Crowe"></option><option value="Carmen Alessandrin"></option><option value="Caroline Labrèche et Steeve Léonard"></option><option value="Caroline Vigneaux"></option><option value="Cary Joji Fukunaga"></option><option value="Cate Shortland"></option><option value="Catherine Hardwicke"></option><option value="Cédric Klapisch"></option><option value="Céline Sciamma"></option><option value="Chad Stahelski"></option><option value="Chang Cheh"></option><option value="Charles Laughton"></option><option value="Charles Nemes"></option><option value="Charlotte de Turckheim"></option><option value="Chloé Zhao"></option><option value="Chris Columbus"></option><option value="Chris Weitz"></option><option value="Christelle Raynal"></option><option value="Christian Cantamessa"></option><option value="Christian Carion"></option><option value="Christian Duguay"></option><option value="Christian Faure"></option><option value="Christian Rivers"></option><option value="Christian Volckman"></option><option value="Christophe Barratier"></option><option value="Christophe Gans"></option><option value="Christophe Lamotte"></option><option value="Christopher McQuarrie"></option><option value="Christopher Nolan"></option><option value="Ciaran Foy"></option><option value="Claude Berri"></option><option value="Claude Nuridsany et Marie Pérennou"></option><option value="Claude Zidi"></option><option value="Clint Eastwood"></option><option value="Clovis Cornillac"></option><option value="Colin et Greg Strause"></option><option value="Colin Trevorrow"></option><option value="Coralie Fargeat"></option><option value="Craig Gillespie"></option><option value="Curtis Hanson"></option><option value="D.J. Viola (Kisstory) ; Jonas Åkerlund (Rammstein: Paris)"></option><option value="Damian Nieman"></option><option value="Damien Chazelle"></option><option value="Dan Trachtenberg"></option><option value="Daniel Chong"></option><option value="Daniel Kwan et Daniel Scheinert"></option><option value="Daniel Myrick et Eduardo Sánchez"></option><option value="Daniel Ragussis"></option><option value="Daniel Roby"></option><option value="Danis Tanović"></option><option value="Danny Boyle"></option><option value="Dany Boon"></option><option value="Darin Scott"></option><option value="Darren Aronofsky"></option><option value="Darren Lynn Bousman"></option><option value="David Ayer"></option><option value="David Carson"></option><option value="David Charhon"></option><option value="David Cronenberg"></option><option value="David F. Sandberg"></option><option value="David Fincher"></option><option value="David Frankel"></option><option value="David Hemmings"></option><option value="David J. Burke"></option><option value="David Lean"></option><option value="David Leitch"></option><option value="David Lynch"></option><option value="David M. Rosenthal"></option><option value="David R. Ellis"></option><option value="David Robert Mitchell"></option><option value="David Rühm"></option><option value="David S. Goyer"></option><option value="David Silverman"></option><option value="Davis Guggenheim"></option><option value="Denis Villeneuve"></option><option value="Denzel Washington"></option><option value="Destin Daniel Cretton"></option><option value="Dexter Fletcher"></option><option value="Didier Le Pêcheur"></option><option value="Didier Poiraud et Thierry Poiraud"></option><option value="Dimitri Logothetis"></option><option value="Djamel Bensalah"></option><option value="Dominique Rocher"></option><option value="Doug Liman"></option><option value="Doug Murphy"></option><option value="Douglas Attal"></option><option value="Drew Goddard"></option><option value="Drew Pearce"></option><option value="Duncan Jones"></option><option value="Edgar Wright"></option><option value="Édouard Molinaro"></option><option value="Edward Zwick"></option><option value="Elizabeth Banks"></option><option value="Elizabeth Tchoungui"></option><option value="Elliott Lester"></option><option value="Éloïse Lang"></option><option value="Elsa Bennett et Hippolyte Dard"></option><option value="Emile Ardolino"></option><option value="Emmanuel Le Ber, Théo Schuster"></option><option value="Emmanuelle Bercot, Fred Cavayé, Alexandre Courtès, Jean Dujardin, Michel Hazanavicius, Éric Lartigau, Gilles Lellouche et Jan Kounen"></option><option value="Emmanuelle Cuau"></option><option value="Eric Barbier"></option><option value="Éric Barbier"></option><option value="Éric Gravel"></option><option value="Éric Judor"></option><option value="Éric Lartigau"></option><option value="Éric Métayer"></option><option value="Éric Rochant"></option><option value="Éric Toledano et Olivier Nakache"></option><option value="Érick Zonca"></option><option value="Ernie Barbarash"></option><option value="Eva Ionesco"></option><option value="Everardo Gout"></option><option value="F. Gary Gray"></option><option value="Fabrice Du Welz"></option><option value="Fabrice Éboué"></option><option value="Fabrice Genestal"></option><option value="Fede Alvarez"></option><option value="Fede Álvarez"></option><option value="Federico Fellini"></option><option value="Fedor Bondarchuk"></option><option value="Fernando León de Aranoa"></option><option value="Fernando Meirelles et Kátia Lund"></option><option value="Florence Foresti (écrit et mis en scène par elle-même)"></option><option value="Florent-Emilio Siri"></option><option value="Francis Ford Coppola"></option><option value="Francis Lawrence"></option><option value="Francis Veber"></option><option value="Franck Vestiel"></option><option value="François Lévy-Kuentz"></option><option value="François Ozon"></option><option value="Frank Coraci"></option><option value="Frank Darabont"></option><option value="Frédéric Berthe"></option><option value="Frédéric Saint-Simon"></option><option value="Frédéric Schoendoerffer"></option><option value="Fritz Lang"></option><option value="Fumihiko Sori"></option><option value="Gabe Ibáñez"></option><option value="Gabriel Julien-Laferrière"></option><option value="Gabriele Muccino"></option><option value="Gabriele Salvatores"></option><option value="Galder Gaztelu-Urrutia"></option><option value="Gareth Edwards"></option><option value="Gareth Evans"></option><option value="Garry Marshall"></option><option value="Garth Davis"></option><option value="Garth Jennings"></option><option value="Gary Nelson"></option><option value="Gary Ross"></option><option value="Gary Shore"></option><option value="Gavin Hood"></option><option value="Gavin O'Connor"></option><option value="Gene Stupnitsky"></option><option value="Geoff Murphy"></option><option value="George Clooney"></option><option value="George Lucas"></option><option value="George Miller"></option><option value="George Pan Cosmatos"></option><option value="George Tillman Jr."></option><option value="Georges Lautner"></option><option value="Georges Méliès"></option><option value="Gerald Potterton"></option><option value="Gérard Corbiau"></option><option value="Gérard Oury"></option><option value="Gérard Pirès"></option><option value="Gianluca Jodice"></option><option value="Gil Junger"></option><option value="Gilles de Maistre"></option><option value="Gilles Lellouche"></option><option value="Giordano Gederlini"></option><option value="Giulio Callegari"></option><option value="Gordon Douglas"></option><option value="Gore Verbinski"></option><option value="Graham Guit"></option><option value="Grand Corps Malade et Mehdi Idir"></option><option value="Greg Berlanti"></option><option value="Greta Gerwig"></option><option value="Griffin Dunne"></option><option value="Guillaume Canet"></option><option value="Guillaume Gallienne"></option><option value="Guillaume Nicloux"></option><option value="Guillermo del Toro"></option><option value="Gus Van Sant"></option><option value="Gustave Kervern et Benoît Delépine"></option><option value="Guy Ritchie"></option><option value="Haifaa Al-Mansour"></option><option value="Halina Reijn"></option><option value="Harald Reinl"></option><option value="Harold Ramis"></option><option value="Hayao Miyazaki"></option><option value="Hélène Cattet et Bruno Forzani"></option><option value="Henry Joost et Ariel Schulman"></option><option value="Henry Selick"></option><option value="Herbert Ross"></option><option value="Herman Yau"></option><option value="Hideo Nakata"></option><option value="Hironobu Sakaguchi et Motonori Sakakibara"></option><option value="Howard McCain"></option><option value="Hu Mei"></option><option value="Hugo Gélin"></option><option value="Ian MacNaughton"></option><option value="Ilya Naishuller"></option><option value="Irvin Kershner"></option><option value="Isabelle Mergault"></option><option value="Ishana Night Shyamalan"></option><option value="Ivan Reitman"></option><option value="J. A. Bayona"></option><option value="J. C. Chandor"></option><option value="J.J. Abrams"></option><option value="Jaco Bouwer"></option><option value="Jacob Gentry"></option><option value="Jacques Audiard"></option><option value="Jake Castorena, Sam Liu"></option><option value="Jake Kasdan"></option><option value="Jamel Debbouze (fondateur/animateur — réalisateur TV non précisé dans les sources)"></option><option value="James Bamford"></option><option value="James Bobin"></option><option value="James Cameron"></option><option value="James DeMonaco"></option><option value="James Foley"></option><option value="James Franco et Bruce Thierry Cheung"></option><option value="James Gunn"></option><option value="James Huth"></option><option value="James Mangold"></option><option value="James McTeigue"></option><option value="James Wan"></option><option value="James Ward Byrkit"></option><option value="James Watkins"></option><option value="Jan de Bont"></option><option value="Jan Kerhart et Ulrich Stein"></option><option value="Jan Kounen"></option><option value="Jane Campion"></option><option value="Jared Hess"></option><option value="Jason Orley"></option><option value="Jaume Balagueró et Paco Plaza"></option><option value="Jaume Collet-Serra"></option><option value="Javier Ambrossi et Javier Calvo"></option><option value="Jay Chandrasekhar"></option><option value="Jay Roach"></option><option value="Jean Becker"></option><option value="Jean Girault et Louis de Funès"></option><option value="Jean-Baptiste Durand"></option><option value="Jean-Christophe Hembert (mise en scène) / Alexandre Astier (auteur-interprète)"></option><option value="Jean-Claude Brisseau"></option><option value="Jean-Daniel Verhaeghe"></option><option value="Jean-François Richet"></option><option value="Jean-Jacques Annaud"></option><option value="Jean-Jacques Beineix"></option><option value="Jean-Jacques Mantello"></option><option value="Jean-Louis Guillermou"></option><option value="Jean-Marie Larrieu, Arnaud Larrieu"></option><option value="Jean-Marie Poiré"></option><option value="Jean-Pierre Améris"></option><option value="Jean-Pierre Limosin"></option><option value="Jean-Stéphane Sauvaire"></option><option value="Jeanne Herry"></option><option value="Jeff Wadlow"></option><option value="Jeff Wamester"></option><option value="Jennifer Flackett et Mark Levin"></option><option value="Jérémie Périn"></option><option value="Jérémie Rozan"></option><option value="Jeremy Saulnier"></option><option value="Jérôme de Missolz"></option><option value="Jerzy Skolimowski"></option><option value="Jill Bauer, Ronna Gradus"></option><option value="Jim Abrahams, David Zucker, Jerry Zucker"></option><option value="Jim Henson et Frank Oz"></option><option value="Jim Jarmusch"></option><option value="Joachim Rønning"></option><option value="Joe Berlinger"></option><option value="Joe Berlinger et Bruce Sinofsky"></option><option value="Joe Carnahan"></option><option value="Joe Johnston"></option><option value="Joel Coen"></option><option value="Joel et Ethan Coen"></option><option value="Joel Schumacher"></option><option value="John Alexander et Amy Neil (série créée par Dan Sefton)"></option><option value="John Badham"></option><option value="John Boorman"></option><option value="John Carpenter"></option><option value="John G. Avildsen"></option><option value="John Huddles"></option><option value="John Hughes"></option><option value="John Krasinski"></option><option value="John Landis, Steven Spielberg, Joe Dante et George Miller"></option><option value="John McTiernan"></option><option value="John Pieplow"></option><option value="John Power"></option><option value="John R. Leonetti"></option><option value="John Woo"></option><option value="Jon Favreau"></option><option value="Jon M. Chu"></option><option value="Jon Nguyen, Rick Barnes et Olivia Neergaard-Holm"></option><option value="Jon Turteltaub"></option><option value="Jon Watts"></option><option value="Jonathan Baker et Josh Baker"></option><option value="Jonathan Demme"></option><option value="Jonathan Entwistle"></option><option value="Jonathan Frakes"></option><option value="Jonathan Glazer"></option><option value="Jonathan Helpert"></option><option value="Jonathan Hensleigh"></option><option value="Jonathan Liebesman"></option><option value="Jonathan Mostow"></option><option value="Jordan Peele"></option><option value="José Alcala"></option><option value="Josée Dayan"></option><option value="Joseph Kosinski"></option><option value="Joseph M. Newman"></option><option value="Joseph Ruben"></option><option value="Joseph Vilsmaier"></option><option value="Joshua Oppenheimer"></option><option value="Josiane Balasko"></option><option value="Joss Whedon"></option><option value="Julia Ducournau"></option><option value="Julie Manoukian"></option><option value="Julien Colonna"></option><option value="Julien Hervé et Philippe Mechelen"></option><option value="Julien Seri"></option><option value="Julius Onah"></option><option value="Just Philippot"></option><option value="Justin Baldoni"></option><option value="Justin Kurzel"></option><option value="Justin Lin"></option><option value="Justine Triet"></option><option value="Kagan McLeod"></option><option value="Kane Parsons"></option><option value="Kathryn Bigelow"></option><option value="Katsuhiro Ōtomo"></option><option value="Katsuhito Ishii"></option><option value="Kazuaki Kiriya"></option><option value="Kazuhisa Takenouchi"></option><option value="Kazuya Shiraishi"></option><option value="Keiichi Sugiyama"></option><option value="Keishi Ōtomo"></option><option value="Keith Thomas"></option><option value="Kelly Asbury et Lorna Cook"></option><option value="Kelly Blatz"></option><option value="Kenji Mizoguchi"></option><option value="Kenneth Branagh"></option><option value="Kenny Golde"></option><option value="Kenny Ortega"></option><option value="Kenta Fukasaku et Kinji Fukasaku"></option><option value="Kerry Conran"></option><option value="Kevin Connor"></option><option value="Kevin Costner"></option><option value="Kevin Fair"></option><option value="Kevin Greutert"></option><option value="Kevin Smith"></option><option value="Kim Chapiron"></option><option value="Kinji Fukasaku"></option><option value="Kornél Mundruczó"></option><option value="Kurt Wimmer"></option><option value="Lana Wachowski"></option><option value="Lana Wachowski, Tom Tykwer et Lilly Wachowski"></option><option value="Lance W. Dreesen et Clint Hutchison"></option><option value="Lars von Trier"></option><option value="Lasse Hallström"></option><option value="Lauren Montgomery"></option><option value="Laurent Cantet"></option><option value="Laurent Lafitte"></option><option value="Lee Si-myung"></option><option value="Lee Tamahori"></option><option value="Len Wiseman"></option><option value="Lennart Ruff"></option><option value="Léonor Serraille"></option><option value="Lexi Alexander"></option><option value="Liliana Cavani"></option><option value="Lionel Delplanque"></option><option value="Lionel Steketee et Fabrice Éboué"></option><option value="Lisa Azuelos"></option><option value="Lola Doillon"></option><option value="Louis Leterrier"></option><option value="Louis Leterrier et Corey Yuen"></option><option value="Louis-Julien Petit"></option><option value="Luc Besson"></option><option value="Luca Guadagnino"></option><option value="Luchino Visconti"></option><option value="Luis Valdez"></option><option value="Luke Scott"></option><option value="Luke Sparke"></option><option value="Lynne Ramsay"></option><option value="M. Night Shyamalan"></option><option value="M.J. Bassett"></option><option value="Mabrouk El Mechri"></option><option value="Maël Piriou"></option><option value="Maïwenn"></option><option value="Makoto Shinkai"></option><option value="Mamoru Oshii"></option><option value="Marc Caro et Jean-Pierre Jeunet"></option><option value="Marc Fitoussi"></option><option value="Marc Forster"></option><option value="Marc Webb"></option><option value="Mareike Engelhardt"></option><option value="Margaux Bonhomme"></option><option value="Marie Monge"></option><option value="Mario Azzopardi"></option><option value="Marjory Déjardin"></option><option value="Mark A. Z. Dippé"></option><option value="Mark Raso"></option><option value="Mark Waters"></option><option value="Martin Campbell"></option><option value="Martin Provost"></option><option value="Martin Scorsese"></option><option value="Mary Harron"></option><option value="Mathieu Amalric"></option><option value="Mathieu Kassovitz"></option><option value="Matt Peters, Christina Sotta"></option><option value="Matt Reeves"></option><option value="Matt Shakman"></option><option value="Matthew Charles Santoro"></option><option value="Matthew Vaughn"></option><option value="Maurice Pialat"></option><option value="McG"></option><option value="Megan Park"></option><option value="Mehdi Ben Attia"></option><option value="Mehdi Idir et Grand Corps Malade"></option><option value="Mel Gibson"></option><option value="Mélanie Auffret"></option><option value="Michael Anderson"></option><option value="Michael Ann"></option><option value="Michael Bay"></option><option value="Michael Benveniste et Howard Ziehm"></option><option value="Michael Crichton"></option><option value="Michael et Peter Spierig"></option><option value="Michael Gracey"></option><option value="Michael Haneke"></option><option value="Michael Moore"></option><option value="Michael Radford"></option><option value="Michael S. Ojeda"></option><option value="Michel Blanc"></option><option value="Michel Deville"></option><option value="Michel Gondry"></option><option value="Michel Hazanavicius et Dominique Mézerette"></option><option value="Michel Leclerc"></option><option value="Michel Munz et Gérard Bitton"></option><option value="Mick Jackson"></option><option value="Miguel Sapochnik"></option><option value="Mike Mills"></option><option value="Mike Nichols"></option><option value="Miloš Forman"></option><option value="Mimi Leder"></option><option value="Mitch Rouse"></option><option value="Mohamed El Khatib"></option><option value="Mohamed Hamidi"></option><option value="Morten Tyldum"></option><option value="Nagisa Ōshima"></option><option value="Natalie Musteata et Alexandre Singh"></option><option value="Nathalie Marchak"></option><option value="Neil Burger"></option><option value="Neil Jordan"></option><option value="Neill Blomkamp"></option><option value="Nessim Chikhaoui"></option><option value="Nia DaCosta"></option><option value="Nicholas Meyer"></option><option value="Nicholas Ray"></option><option value="Nick Cassavetes"></option><option value="Nick Castle"></option><option value="Nick Hamm"></option><option value="Nicolas Bedos"></option><option value="Nicolas Benamou"></option><option value="Nicolas Benamou et Philippe Lacheau"></option><option value="Nicolas Boukhrief"></option><option value="Nicolas Monette"></option><option value="Nicolas Roeg"></option><option value="Nicolas Vanier"></option><option value="Nicolas Winding Refn"></option><option value="Nicole Garcia"></option><option value="Niels Arden Oplev"></option><option value="Nikolaj Arcel"></option><option value="Nimród Antal"></option><option value="Noam Murro"></option><option value="Non précisé"></option><option value="Non précisé (présenté par Laetitia Barlerin, Jessica Serra et Thierry Bedossa, narré par Valérie Damidot)"></option><option value="Non précisé (rétrospective/compilation)"></option><option value="Nora El Hourch"></option><option value="Ol Parker"></option><option value="Ole Bornedal"></option><option value="Oliver Laxe"></option><option value="Oliver Stone"></option><option value="Olivier Baroux"></option><option value="Olivier Marchal"></option><option value="Olivier Megaton"></option><option value="Olivier Nakache et Éric Toledano"></option><option value="Olivier Van Hoofstadt"></option><option value="Orelsan et Christophe Offenstein"></option><option value="Ovidie"></option><option value="Owen Hurley"></option><option value="Panos Cosmatos"></option><option value="Paolo Sorrentino"></option><option value="Park Chan-wook"></option><option value="Park Hee-joon"></option><option value="Pascal Bourdiaux"></option><option value="Pascale Pouzadoux"></option><option value="Pasha Patriki"></option><option value="Patrice Chéreau"></option><option value="Patrice Leconte"></option><option value="Patricia Birch"></option><option value="Patrick Schulmann"></option><option value="Patty Jenkins"></option><option value="Paul Bartel"></option><option value="Paul Feig"></option><option value="Paul Greengrass"></option><option value="Paul King"></option><option value="Paul Thomas Anderson"></option><option value="Paul Verhoeven"></option><option value="Paul W. S. Anderson"></option><option value="Paul W.S. Anderson"></option><option value="Pedro Almodóvar"></option><option value="Penelope Spheeris"></option><option value="Peter Berg"></option><option value="Peter Hyams"></option><option value="Peter Jackson"></option><option value="Peter Jackson et Costa Botes"></option><option value="Peter MacDonald"></option><option value="Peter Ramsey, Bob Persichetti et Rodney Rothman"></option><option value="Peter Weir"></option><option value="Peter Yates"></option><option value="Peyton Reed"></option><option value="Philip Kaufman"></option><option value="Philippe de Broca"></option><option value="Philippe de Chauveron"></option><option value="Philippe Garrel"></option><option value="Philippe Godeau"></option><option value="Philippe Haïm"></option><option value="Philippe Lacheau"></option><option value="Philippe Le Guay"></option><option value="Philippe Martinez"></option><option value="Phillip Noyce"></option><option value="Phyllida Lloyd"></option><option value="Pierre Boutron"></option><option value="Pierre Godeau"></option><option value="Pierre Morel"></option><option value="Pierre Rambaldi"></option><option value="Pierre Salvadori"></option><option value="Pierre-François Martin-Laval"></option><option value="Pieter Jan Brugge"></option><option value="Prachya Pinkaew"></option><option value="Quentin Dupieux"></option><option value="Quentin Tarantino"></option><option value="Rachid Bouchareb"></option><option value="Ramin Bahrani"></option><option value="Ranald MacDougall"></option><option value="Randal Kleiser"></option><option value="Rawson Marshall Thurber"></option><option value="Reed Morano"></option><option value="Régis Roinsard"></option><option value="Régis Wargnier"></option><option value="Rémi Bezançon"></option><option value="Rémi Lainé et Émile Rabaté"></option><option value="Rémy Belvaux"></option><option value="René Laloux"></option><option value="Renny Harlin"></option><option value="Riad Sattouf"></option><option value="Rian Johnson"></option><option value="Ric Roman Waugh"></option><option value="Rich Peppiatt"></option><option value="Richard Curtis"></option><option value="Richard Donner"></option><option value="Richard Fleischer"></option><option value="Richard Lester"></option><option value="Richard Linklater"></option><option value="Richard Marquand"></option><option value="Richard Stanley"></option><option value="Rick Morales"></option><option value="Ridley Scott"></option><option value="Roar Uthaug"></option><option value="Rob Cohen"></option><option value="Rob Marshall"></option><option value="Rob Minkoff"></option><option value="Rob Reiner"></option><option value="Robert Altman"></option><option value="Robert Clouse"></option><option value="Robert Longo"></option><option value="Robert Rodriguez"></option><option value="Robert Rodriguez et Ethan Maniquis"></option><option value="Robert Schwentke"></option><option value="Robert Zemeckis"></option><option value="Roberto Benigni"></option><option value="Robin Campillo"></option><option value="Rod Holcomb"></option><option value="Roger Avary"></option><option value="Roger Corman"></option><option value="Roger Kumble"></option><option value="Roland Emmerich"></option><option value="Romain Gavras"></option><option value="Roman Polanski"></option><option value="Ron Howard"></option><option value="Ron Shelton"></option><option value="Rose Glass"></option><option value="Ruben Fleischer"></option><option value="Ruben Östlund"></option><option value="Rupert Sanders"></option><option value="Russell Mulcahy"></option><option value="Ryan Coogler"></option><option value="Ryûhei Kitamura"></option><option value="Sacha Gervasi"></option><option value="Sam Gorski et Niko Pueringer"></option><option value="Sam Liu"></option><option value="Sam Mendes"></option><option value="Sam Raimi"></option><option value="Scott Beck et Bryan Woods"></option><option value="Scott Derrickson"></option><option value="Scott Kalvert"></option><option value="Scott Stewart"></option><option value="Scott Wiper"></option><option value="Sebastián Lelio"></option><option value="Serge Bozon"></option><option value="Sergei Bodrov et Ivan Passer"></option><option value="Sergeiy Mokritskiy"></option><option value="Sergio Leone"></option><option value="Sergio Martino"></option><option value="Shane Abbess"></option><option value="Shane Black"></option><option value="Sharon Maguire"></option><option value="Shawn Levy"></option><option value="Sheldon Wilson"></option><option value="Shigeyasu Yamauchi"></option><option value="Shin'ya Tsukamoto"></option><option value="Shinji Aramaki"></option><option value="Shinji Higuchi"></option><option value="Shinsuke Satō"></option><option value="Shōhei Imamura"></option><option value="Shun'ya Itō"></option><option value="Shunichi Nagasaki"></option><option value="Sidney Salkow et Ubaldo Ragona"></option><option value="Simon McQuoid"></option><option value="Simon Wells"></option><option value="Simon West"></option><option value="Simon Wincer"></option><option value="Sofia Coppola"></option><option value="Sophie Fillières"></option><option value="Spike Jonze"></option><option value="Spike Lee"></option><option value="Stanley Kubrick"></option><option value="Stefan Ruzowitzky"></option><option value="Stéphan Archinard et François Prévôt-Leygonie"></option><option value="Stéphane Brizé"></option><option value="Stephen Chow"></option><option value="Stephen Hopkins"></option><option value="Stephen Norrington"></option><option value="Stephen Surjik"></option><option value="Steve Pink"></option><option value="Steven Caple Jr."></option><option value="Steven Lisberger"></option><option value="Steven S. DeKnight"></option><option value="Steven Spielberg"></option><option value="Susan Seidelman"></option><option value="Sylvain Desclous"></option><option value="Sylvester Stallone"></option><option value="Taika Waititi"></option><option value="Taika Waititi et Jemaine Clement"></option><option value="Takashi Miike"></option><option value="Takashi Yamazaki"></option><option value="Takeshi Kitano"></option><option value="Taron Lexton"></option><option value="Tarsem Singh"></option><option value="Ted Kotcheff"></option><option value="Terry George"></option><option value="Terry Gilliam"></option><option value="Terry Gilliam et Terry Jones"></option><option value="Terry Jones"></option><option value="Tetsurō Araki"></option><option value="Tetsuya Nomura, Takeshi Nozue"></option><option value="Theodore Melfi"></option><option value="Thomas Bangalter et Guy-Manuel de Homem-Christo (Daft Punk)"></option><option value="Thomas Cailley"></option><option value="Thomas Carter"></option><option value="Thomas Gilou"></option><option value="Thomas Lilti"></option><option value="Thomas Vinterberg"></option><option value="Tim Burton"></option><option value="Tim Burton et Mike Johnson"></option><option value="Tim Miller"></option><option value="Tim Sheridan"></option><option value="Tim Story"></option><option value="Timo Vuorensola"></option><option value="Timur Bekmambetov"></option><option value="Toby Haynes"></option><option value="Todd Haynes"></option><option value="Tom Hooper"></option><option value="Tom Shadyac"></option><option value="Tom Tykwer"></option><option value="Tommy Lee Jones"></option><option value="Tonino Valerii"></option><option value="Tony Bill"></option><option value="Tony Scott"></option><option value="Tony Tost"></option><option value="Toshiya Fujita"></option><option value="Tristan Carné"></option><option value="Tsutomu Kuroiwa"></option><option value="Uli Edel"></option><option value="Vadim Perelman"></option><option value="Valeria Bruni Tedeschi"></option><option value="Vaughn Stein"></option><option value="Victor Salva"></option><option value="Vincent Orst"></option><option value="Wash Westmoreland"></option><option value="Wes Anderson"></option><option value="Wes Ball"></option><option value="William Eubank"></option><option value="William Hanna et Joseph Barbera"></option><option value="William Malone"></option><option value="William Shatner"></option><option value="Wilson Yip"></option><option value="Wim Wenders"></option><option value="Wolfgang Petersen"></option><option value="Wong Jing"></option><option value="Wong Kar-wai"></option><option value="Woody Allen"></option><option value="Xavier Dolan"></option><option value="Xavier Durringer"></option><option value="Xavier Gens"></option><option value="Xavier Legrand"></option><option value="Yann Le Quellec"></option><option value="Ybao Benedetti"></option><option value="Yoon Je-kyoon"></option><option value="Yorgos Lanthimos"></option><option value="Yoshiaki Kawajiri"></option><option value="Yuen Woo-ping"></option><option value="Yves Boisset"></option><option value="Yves Robert"></option><option value="Zabou Breitman"></option><option value="Zach Cregger"></option><option value="Zack Snyder"></option><option value="Zhang Yimou"></option></datalist>
   </div>
   <div class="toolbar">
     <button class="tool-btn" id="updateBtn" type="button" title="Demander à Claude de mettre à jour la bibliothèque">🔄 Mise à jour</button>
     <button class="tool-btn" id="updateUnknownBtn" type="button" title="Demander à Claude d'identifier uniquement les films marqués « non identifié »">🔎 Films inconnus</button>
-    <button class="tool-btn" id="saveBtn" type="button" title="Tout est publié sur GitHub (Alt+clic : reconfigurer)">💾 Enregistrer</button>
+    <button class="tool-btn has-changes" id="saveBtn" type="button" title="21 changements « vu / pas vu » pas encore publiés sur GitHub (Alt+clic : reconfigurer)">💾 Enregistrer (21)</button>
     <button class="tool-btn" id="folderBtn" type="button" title="Changer le dossier des films">📁 Dossier</button>
     <button class="tool-btn" id="bgSettingsBtn" type="button" title="Personnaliser le fond">🎨 Fond</button>
   </div>
@@ -645,7 +657,7 @@
 
 <main id="main"></main>
 
-<footer>Bibliothèque générée automatiquement à partir de votre disque — dernière mise à jour : <span id="lastUpdate">23/08/2026</span></footer>
+<footer>Bibliothèque générée automatiquement à partir de votre disque — dernière mise à jour : <span id="lastUpdate">25/10/2026</span></footer>
 
 <div class="modal-overlay" id="bgModal" hidden="">
   <div class="modal-panel">
@@ -731,104 +743,6 @@ const MOVIES = [
     ],
     "resume": "Une équipe de mercenaires est recrutée par les services secrets français pour une mission risquée impliquant la livraison d'armes à un dictateur africain, en réalité destinée à l'éliminer. Ce thriller d'action réunit une distribution internationale dans un scénario truffé de trahisons.",
     "fichier_original": "Agents Secrets - (Monica Bellucci, Vincent Cassel) French Dvdsr.avi",
-    "statut": "identifié",
-    "vu": false,
-    "affiche": null
-  },
-  {
-    "dossier": "",
-    "titre": "American Pie",
-    "annee": 1999,
-    "realisateur": "Paul Weitz",
-    "genres": [
-      "Comédie"
-    ],
-    "resume": "Quatre lycéens américains se lancent un pacte : perdre leur virginité avant la fin du lycée, quitte à multiplier les stratagèmes les plus embarrassants. Cette comédie adolescente devenue culte a lancé toute une franchise sur le passage à l'âge adulte.",
-    "fichier_original": "American Pie 1 - HD.avi",
-    "statut": "identifié",
-    "vu": false,
-    "affiche": null
-  },
-  {
-    "dossier": "",
-    "titre": "American Pie 2",
-    "annee": 2001,
-    "realisateur": "James B. Rogers",
-    "genres": [
-      "Comédie"
-    ],
-    "resume": "Un an après la remise des diplômes, la bande d'amis se retrouve pour un été mémorable dans une maison au bord d'un lac, entre nouvelles aventures amoureuses et gags toujours plus embarrassants.",
-    "fichier_original": "American Pie 2 - HD.avi",
-    "statut": "identifié",
-    "vu": false,
-    "affiche": null
-  },
-  {
-    "dossier": "",
-    "titre": "American Pie 3 : Marions-les !",
-    "annee": 2003,
-    "realisateur": "Jesse Dylan",
-    "genres": [
-      "Comédie"
-    ],
-    "resume": "Jim et Michelle, sur le point de se marier, doivent gérer les préparatifs chaotiques de leur mariage tandis que leurs amis multiplient les catastrophes en tentant de les aider, dans ce troisième volet qui referme la trilogie originale.",
-    "fichier_original": "American Pie 3 - HD.avi",
-    "statut": "identifié",
-    "vu": false,
-    "affiche": null
-  },
-  {
-    "dossier": "",
-    "titre": "American Pie présente : Le Book des sex commandements",
-    "annee": 2009,
-    "realisateur": "Andrew Waller",
-    "genres": [
-      "Comédie"
-    ],
-    "resume": "Un adolescent découvre un ancien manuel érotique laissé par des générations de lycéens de son établissement, censé garantir le succès amoureux. Ce spin-off tardif de la franchise American Pie reprend les codes de la comédie potache pour ados.",
-    "fichier_original": "American Pie 8 - Les Sex Commandements - HD.avi",
-    "statut": "identifié",
-    "vu": false,
-    "affiche": null
-  },
-  {
-    "dossier": "",
-    "titre": "American Pie présente : Le Camp",
-    "annee": 2005,
-    "realisateur": "Steve Rash",
-    "genres": [
-      "Comédie"
-    ],
-    "resume": "Un adolescent maladroit passe l'été dans un camp de vacances où il tente désespérément de séduire une fille, sous les conseils avisés (et douteux) de son grand frère, figure emblématique de la saga American Pie.",
-    "fichier_original": "American Pie 7 Campus en Folie - HD.avi",
-    "statut": "identifié",
-    "vu": false,
-    "affiche": null
-  },
-  {
-    "dossier": "",
-    "titre": "American Pie présente : les Sorties de la promo",
-    "annee": 2006,
-    "realisateur": "Justin Long",
-    "genres": [
-      "Comédie"
-    ],
-    "resume": "Une nouvelle génération de lycéens vit une soirée de bal de promo mouvementée, dans ce spin-off direct-to-video reprenant l'esprit potache et embarrassant de la franchise originale avec de nouveaux personnages.",
-    "fichier_original": "American Pie 4 - HD.avi",
-    "statut": "identifié",
-    "vu": false,
-    "affiche": null
-  },
-  {
-    "dossier": "",
-    "titre": "American Pie présente : Une virée en camping-car",
-    "annee": 2006,
-    "realisateur": "Ari B. Rubinstein",
-    "genres": [
-      "Comédie"
-    ],
-    "resume": "Un groupe d'adolescents part en road trip dans un camping-car pour assister à un concert, multipliant péripéties gênantes et rencontres improbables tout au long du voyage, dans ce nouveau spin-off de la franchise.",
-    "fichier_original": "American Pie 6 String Academy - HD.avi",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -3967,7 +3881,7 @@ const MOVIES = [
     "resume": "Un jeune garçon dubitatif face à l'existence du Père Noël embarque dans un train énigmatique se dirigeant vers le pôle Nord. À mesure que le convoi traverse des régions enchanteresses, l'aventure se dessine et les jeunes passagers découvrent l'étendue de leurs capacités respectives, confrontés aux mystères et à la magie des fêtes de fin d'année.",
     "fichier_original": "The Polar Express (2004) 3D.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": "https://fr.web.img6.acsta.net/c_310_420/medias/nmedia/18/35/31/37/18396720.jpg"
   },
   {
@@ -4276,7 +4190,7 @@ const MOVIES = [
     "resume": "Dans l'État totalitaire d'Océania, le tout-puissant Big Brother contrôle chaque aspect de la vie des citoyens. Winston Smith, fonctionnaire du gouvernement, tombe amoureux de Julia, un acte considéré comme criminel. Ensemble, ils tentent d'échapper à la surveillance permanente du régime, dans un monde divisé et en guerre où toute rébellion est brisée.",
     "fichier_original": "1984.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4289,6 +4203,21 @@ const MOVIES = [
     ],
     "resume": "Près de trente ans après le déclenchement du virus de la rage qui a ravagé la Grande-Bretagne, une petite communauté de survivants vit isolée sur une île reliée au continent par une chaussée protégée. Lorsqu'un des leurs part explorer le continent infesté, il découvre que le virus et ses hôtes ont évolué de façon inattendue. Le film relance la saga initiée par « 28 jours plus tard » avec une nouvelle génération de survivants.",
     "fichier_original": "28.Years.Later.2025.mp4",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "37°2 le matin",
+    "annee": 1986,
+    "realisateur": "Jean-Jacques Beineix",
+    "genres": [
+      "Drame",
+      "Romance"
+    ],
+    "resume": "Zorg vit tranquillement en bord de mer, où il entretient des bungalows et écrit en secret. Sa rencontre avec Betty, jeune femme libre et incandescente, bouleverse son existence. Convaincue de son talent, elle le pousse à publier son manuscrit, tandis que son propre équilibre vacille de plus en plus. Adapté du roman de Philippe Djian, le film révéla Béatrice Dalle.",
+    "fichier_original": "37.2 le matin.1986.avi",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -4416,6 +4345,21 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Aniki, mon frère",
+    "annee": 2000,
+    "realisateur": "Takeshi Kitano",
+    "genres": [
+      "Policier/Thriller",
+      "Drame"
+    ],
+    "resume": "Yamamoto, yakuza japonais contraint à l'exil après la dissolution de son clan, débarque à Los Angeles pour retrouver son demi-frère, petit dealer local. Il prend la tête de sa bande et la transforme méthodiquement en organisation criminelle redoutée. L'ascension rapide du groupe le met rapidement en conflit avec la mafia italienne. Premier film américain de Takeshi Kitano, qui en tient aussi le rôle principal.",
+    "fichier_original": "Aniki.Mon.Frere.2000s.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "Ant-Man et la Guêpe : Quantumania",
     "annee": 2023,
     "realisateur": "Peyton Reed",
@@ -4426,7 +4370,7 @@ const MOVIES = [
     "resume": "Scott Lang et Hope van Dyne, aux côtés de Hank Pym, Janet van Dyne et Cassie, se retrouvent aspirés dans le Royaume quantique. Ils y explorent des mondes étranges et affrontent Kang le Conquérant, un être aux pouvoirs redoutables qui menace de bouleverser l'univers Marvel.",
     "fichier_original": "Ant.Man.and.the.Wasp.Quantumania.2023.mp4",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4456,7 +4400,7 @@ const MOVIES = [
     "resume": "Après la mort d'un adolescent, tué par des hommes déguisés en policiers, la cité Athena s'embrase. Trois frères que tout oppose vont devoir choisir leur camp entre vengeance, dialogue et trafic, tandis que la révolte grandit dans la cité assiégée par les forces de l'ordre.",
     "fichier_original": "Athena.2022.mp4",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4485,6 +4429,36 @@ const MOVIES = [
     ],
     "resume": "Romy, une cheffe d'entreprise new-yorkaise accomplie, entame une liaison risquée et passionnée avec un jeune stagiaire beaucoup plus jeune qu'elle. Cette relation la pousse à explorer des désirs qu'elle avait toujours réprimés, mettant en péril sa carrière, son mariage et l'image qu'elle projette au monde.",
     "fichier_original": "Babygirl.2024.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Backrooms",
+    "annee": 2026,
+    "realisateur": "Kane Parsons",
+    "genres": [
+      "Horreur",
+      "Science-fiction"
+    ],
+    "resume": "Une porte inquiétante apparaît dans le sous-sol d'un magasin de meubles. Un jeune cinéaste bascule à travers elle dans une autre dimension : un dédale sans fin de bureaux vides à la lumière jaunâtre, peut-être habité par des présences hostiles. Adapté de la série found footage virale de Kane Parsons, elle-même née d'une creepypasta, ce premier long métrage produit par A24 réunit Chiwetel Ejiofor et Renate Reinsve.",
+    "fichier_original": "Backrooms.2026.Multi.VfqR.mp4",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Bad Lieutenant",
+    "annee": 1992,
+    "realisateur": "Abel Ferrara",
+    "genres": [
+      "Drame",
+      "Policier/Thriller"
+    ],
+    "resume": "À New York, un lieutenant de police sans nom sombre dans la drogue, l'alcool et les paris, détournant son autorité à son seul profit. Croulant sous les dettes auprès de ses bookmakers, il est chargé d'enquêter sur le viol d'une jeune religieuse. La capacité de la victime à pardonner le renvoie brutalement à sa propre déchéance. Harvey Keitel y livre une interprétation restée célèbre.",
+    "fichier_original": "Bad_Lieutenant.1992.mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -4633,7 +4607,7 @@ const MOVIES = [
     "resume": "Cinq tueurs à gages que tout oppose se retrouvent à bord d'un train à grande vitesse au Japon, chacun avec une mission liée à une mystérieuse mallette. Alors que leurs objectifs s'entrecroisent, le voyage tourne au chaos explosif et burlesque entre trahisons et coups du destin.",
     "fichier_original": "Bullet.Train.2022.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4753,7 +4727,7 @@ const MOVIES = [
     "resume": "Dans une Amérique déchirée par une guerre civile opposant le gouvernement fédéral à des États sécessionnistes, une équipe de journalistes traverse le pays en guerre pour rallier Washington et interviewer le président avant sa possible chute. Le film suit leur périple à travers un territoire ravagé par la violence.",
     "fichier_original": "Civil.War.2024.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4813,7 +4787,7 @@ const MOVIES = [
     "resume": "Dans une petite ville d'Afrique occidentale française des années 1930, Lucien Cordier, policier méprisé et humilié par tous, décide un jour de faire le ménage à sa manière. Il élimine méthodiquement ceux qui l'ont bafoué, dans un basculement glaçant de la lâcheté vers la violence la plus froide.",
     "fichier_original": "Coup.de.Torchon.1981.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -4827,6 +4801,21 @@ const MOVIES = [
     ],
     "resume": "Dans un futur où l'humanité a évolué au point de ne plus ressentir la douleur physique, un artiste de performance utilise la mutation de ses propres organes comme matériau créatif, sous le regard d'organismes de contrôle inquiets de cette dérive de l'évolution humaine.",
     "fichier_original": "Crimes.of.the.Future.2022 - Cronenberg.mkv",
+    "statut": "identifié",
+    "vu": true,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Crying Freeman",
+    "annee": 1995,
+    "realisateur": "Christophe Gans",
+    "genres": [
+      "Action",
+      "Policier/Thriller"
+    ],
+    "resume": "Yo Hinomura, jeune potier japonais, est hypnotisé par une société secrète chinoise qui le transforme en tueur implacable, surnommé Crying Freeman parce qu'il pleure après chaque exécution. Emu Hino, une artiste peintre, assiste par hasard à l'un de ses meurtres et devient à son tour une cible. Premier long métrage de Christophe Gans, adapté du manga de Kazuo Koike et Ryoichi Ikegami, avec Mark Dacascos.",
+    "fichier_original": "Crying_Freeman_(1995).mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -4856,6 +4845,36 @@ const MOVIES = [
     ],
     "resume": "Une journaliste tente désespérément d'obtenir une interview avec Salvador Dalí, mais le peintre, fantasque et insaisissable, multiplie les caprices et les mises en scène absurdes qui repoussent sans cesse le tournage. Le film, incarné par plusieurs acteurs différents jouant tour à tour Dalí, explore avec un humour surréaliste la mégalomanie de l'artiste.",
     "fichier_original": "Daaaaaali.2024.FRENCH.1080p.WEB-DL.H264-Slay3R.mkv",
+    "statut": "identifié",
+    "vu": true,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Dans la peau de John Malkovich",
+    "annee": 1999,
+    "realisateur": "Spike Jonze",
+    "genres": [
+      "Comédie",
+      "Fantastique"
+    ],
+    "resume": "Craig Schwartz, marionnettiste raté, accepte un emploi de classeur au septième étage et demi d'un immeuble new-yorkais. Derrière un classeur, il découvre un tunnel qui permet d'entrer pendant quinze minutes dans la tête de l'acteur John Malkovich. Avec sa collègue Maxine, il décide d'en faire commerce, au grand dam de sa femme Lotte. Premier film de Spike Jonze sur un scénario de Charlie Kaufman.",
+    "fichier_original": "Dans.la.peau.de.John.Malkovich.Being.John.Malkovich.1999.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Dark Crystal",
+    "annee": 1982,
+    "realisateur": "Jim Henson et Frank Oz",
+    "genres": [
+      "Fantastique",
+      "Aventure"
+    ],
+    "resume": "Sur la planète Thra, le cristal sacré s'est fêlé mille ans plus tôt, livrant le monde aux cruels Skeksès. Jen, dernier Gelfling élevé par les sages Mystiques, part en quête de l'éclat manquant afin de réparer le cristal avant la conjonction des trois soleils. Il rencontre en chemin Kira, une autre survivante de son peuple. Le film est entièrement interprété par des marionnettes et des créatures animatroniques.",
+    "fichier_original": "The.Dark.Crystal.1982s.mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -4994,6 +5013,21 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Dogma",
+    "annee": 1999,
+    "realisateur": "Kevin Smith",
+    "genres": [
+      "Comédie",
+      "Fantastique"
+    ],
+    "resume": "Bartleby et Loki, deux anges déchus bannis du paradis, découvrent une faille théologique qui pourrait leur permettre de rentrer au ciel — au prix de l'annulation de toute la Création. Pour les en empêcher, une employée de clinique du nom de Bethany est désignée malgré elle, épaulée par un treizième apôtre oublié, une muse et deux prophètes improbables, Jay et Silent Bob. Comédie irrévérencieuse de Kevin Smith, avec Ben Affleck, Matt Damon et Alan Rickman.",
+    "fichier_original": "Dogma.avi",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "Dominique",
     "annee": 2024,
     "realisateur": "Michael S. Ojeda",
@@ -5018,6 +5052,22 @@ const MOVIES = [
     ],
     "resume": "Cette comédie musicale contemporaine réinvente le mythe classique avec un twist inattendu : plutôt qu'un séducteur invétéré, le protagoniste Laurent devient obsédé par une seule femme qui l'a quitté. Mêlant musique et danse, le film explore l'amour, le narcissisme et le rejet à travers une relecture résolument féministe de la légende.",
     "fichier_original": "Don Juan 1.avi",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Dracula",
+    "annee": 1992,
+    "realisateur": "Francis Ford Coppola",
+    "genres": [
+      "Fantastique",
+      "Horreur",
+      "Romance"
+    ],
+    "resume": "En 1462, le prince Vlad Dracula renie Dieu après le suicide de sa fiancée et devient un mort-vivant. Quatre siècles plus tard, il quitte la Transylvanie pour Londres, attiré par Mina Murray, qui est le portrait de son amour perdu. Le professeur Van Helsing se lance à sa poursuite tandis que le comte sème la terreur dans la capitale anglaise.",
+    "fichier_original": "Dracula.1992.mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -5110,7 +5160,7 @@ const MOVIES = [
     "resume": "Evelyn, propriétaire d'une laverie débordée par les impôts et les tensions familiales, découvre qu'elle doit se connecter aux versions d'elle-même dans des univers parallèles pour empêcher un être maléfique multiversel de détruire toute existence. Ce voyage vertigineux entre les mondes devient aussi celui de la réconciliation avec sa fille et son mari.",
     "fichier_original": "Everything.Everywhere.All.at.Once.2022.mp4",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5124,6 +5174,35 @@ const MOVIES = [
     ],
     "resume": "Ce film retrace l'histoire de Farinelli, chanteur castrat devenu au XVIIIe siècle un interprète d'exception, admiré du public comme des puissants pour ses qualités vocales extraordinaires. Son succès se complique lorsque rivalités et jalousies s'en mêlent, en particulier lorsqu'il tombe amoureux d'une femme, forçant des vérités longtemps cachées à refaire surface.",
     "fichier_original": "Farinelli (Farinelli - il castrato).mkv",
+    "statut": "identifié",
+    "vu": true,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Festen",
+    "annee": 1998,
+    "realisateur": "Thomas Vinterberg",
+    "genres": [
+      "Drame"
+    ],
+    "resume": "La famille Klingenfeldt se réunit dans un manoir danois pour fêter les soixante ans du patriarche Helge. Au moment du discours, son fils aîné Christian prend la parole et révèle devant tous les convives un secret longtemps enfoui. La fête bascule alors en un règlement de comptes familial. Premier film labellisé Dogme95, tourné caméra à l'épaule en lumière naturelle.",
+    "fichier_original": "Festen 1998.avi",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Final Fantasy : Les Créatures de l'esprit",
+    "annee": 2001,
+    "realisateur": "Hironobu Sakaguchi et Motonori Sakakibara",
+    "genres": [
+      "Animation",
+      "Science-fiction"
+    ],
+    "resume": "En 2065, la Terre est ravagée par des entités spectrales venues de l'espace qui déciment l'humanité réfugiée dans des cités protégées. La scientifique Aki Ross, elle-même contaminée, cherche à rassembler huit esprits capables de neutraliser la menace sans recourir aux armes. Elle s'oppose au général Hein, partisan d'une frappe destructrice. Premier long métrage entièrement réalisé en images de synthèse photoréalistes.",
+    "fichier_original": "Final.Fantasy.The.Spirits.Within.2001.mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -5155,7 +5234,7 @@ const MOVIES = [
     "resume": "Cette parodie érotique du feuilleton de science-fiction « Flash Gordon » suit un héros envoyé sur la planète Porno pour sauver la Terre du rayon sexuel de l'empereur Wang. Le film mêle effets spéciaux artisanaux, humour potache et esthétique kitsch typique des comédies fantastiques des années 1970.",
     "fichier_original": "Flesh Gordon.avi",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5237,6 +5316,20 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Fête sanglante",
+    "annee": 1982,
+    "realisateur": "Amy Holden Jones",
+    "genres": [
+      "Horreur"
+    ],
+    "resume": "Une lycéenne de Los Angeles profite de l'absence de ses parents pour organiser une soirée pyjama avec ses camarades de l'équipe de basket. Au même moment, un tueur récemment évadé rôde dans le quartier, armé d'une perceuse électrique. La soirée tourne au carnage. Écrit par la romancière Rita Mae Brown, le film détourne avec ironie les codes du slasher.",
+    "fichier_original": "The.Slumber.Party.Massacre.1982n.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "Gaia",
     "annee": 2021,
     "realisateur": "Jaco Bouwer",
@@ -5262,6 +5355,21 @@ const MOVIES = [
     "resume": "Chris, jeune homme afro-américain, accompagne sa petite amie blanche pour rencontrer ses parents dans leur propriété isolée. L'accueil, d'abord chaleureux, se révèle de plus en plus étrange et inquiétant, révélant un complot terrifiant caché derrière les bonnes manières de cette famille apparemment progressiste.",
     "fichier_original": "Get Out 2017.avi",
     "statut": "identifié",
+    "vu": true,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Ghost Dog : la voie du samouraï",
+    "annee": 1999,
+    "realisateur": "Jim Jarmusch",
+    "genres": [
+      "Policier/Thriller",
+      "Drame"
+    ],
+    "resume": "Ghost Dog est un tueur à gages solitaire d'une ville américaine qui vit selon le code d'honneur des samouraïs et communique par pigeons voyageurs. Il sert loyalement un mafieux qui lui a jadis sauvé la vie. Après un contrat qui tourne mal, la famille mafieuse décide de l'éliminer. Le film mêle film de gangsters, méditation sur le Hagakure et bande originale signée RZA.",
+    "fichier_original": "Ghost.Dog.The.Way.Of.The.Samurai.1999.mkv",
+    "statut": "identifié",
     "vu": false,
     "affiche": null
   },
@@ -5277,7 +5385,7 @@ const MOVIES = [
     "resume": "David Dunn, l'homme increvable révélé dans « Incassable », traque Kevin Wendell Crumb et ses multiples personnalités, dont la redoutable « Bête ». Leur affrontement les conduit dans un hôpital psychiatrique où le mystérieux Elijah Price, alias Mr Glass, orchestre en coulisses un plan destiné à révéler au monde l'existence réelle des super-héros.",
     "fichier_original": "Glass 2019.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5292,7 +5400,7 @@ const MOVIES = [
     "resume": "Le détective Benoit Blanc est invité sur une île privée grecque par un milliardaire de la tech pour participer à un jeu de meurtre entre amis. Lorsqu'un vrai meurtre survient parmi ce groupe d'amis aux liens troubles et intéressés, Blanc doit démêler mensonges et rivalités pour découvrir la vérité.",
     "fichier_original": "Glass.Onion.A.Knives.Out.Mystery.2022.mp4",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5307,6 +5415,21 @@ const MOVIES = [
     ],
     "resume": "Dans les Appalaches des années 1950, Hellboy et une jeune agente du B.P.R.D. se retrouvent confrontés à une sorcière et à une entité maléfique ancestrale, le Crooked Man, qui hante les habitants d'une région rurale isolée. Ce reboot indépendant renoue avec l'esthétique horrifique des comics originaux.",
     "fichier_original": "Hellboy.The.Crooked.Man.2024.mp4",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Her",
+    "annee": 2013,
+    "realisateur": "Spike Jonze",
+    "genres": [
+      "Romance",
+      "Science-fiction"
+    ],
+    "resume": "Dans un Los Angeles proche du nôtre, Theodore Twombly écrit des lettres intimes pour le compte d'autrui et vit mal sa séparation. Il acquiert un système d'exploitation doté d'une intelligence artificielle, qui se choisit le nom de Samantha. Une relation amoureuse singulière naît entre l'homme et cette voix sans corps, qui bouleverse sa manière d'aimer.",
+    "fichier_original": "Her.2013.MULTI.VF2.1080.mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -5351,7 +5474,7 @@ const MOVIES = [
     "resume": "Trois adolescentes inséparables, Amina, Djeneba et Zineb, publient sur les réseaux sociaux une vidéo dénonçant l'agresseur d'une de leurs amies. Le film explore la tension entre la préservation de leur amitié et la pression sociale intense qui s'ensuit, abordant la solidarité féminine et les violences sexuelles à l'ère numérique.",
     "fichier_original": "Hlm.Pussy.mp4",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5397,6 +5520,21 @@ const MOVIES = [
     ],
     "resume": "Une reine passe un pacte avec la puissante sorcière Gray Alys pour récupérer un trésor magique susceptible de lui conférer un pouvoir immense. Alys et son guide Boyce entreprennent un périlleux voyage à travers des terres hostiles, affrontant démons et adversaires, dans cette adaptation d'une nouvelle de George R. R. Martin.",
     "fichier_original": "In.The.Lost.Lands.mp4",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "J'aimerais pas crever un dimanche",
+    "annee": 1998,
+    "realisateur": "Didier Le Pêcheur",
+    "genres": [
+      "Drame",
+      "Romance"
+    ],
+    "resume": "Ben travaille de nuit dans une morgue parisienne où il réceptionne les corps. Une nuit lui est amenée Teresa, jeune femme déclarée morte après une rave ; elle revient à la vie. Entre ces deux êtres cabossés commence une liaison fiévreuse, sur fond de deuil et de musique électronique.",
+    "fichier_original": "Jaimerais.Pas.Crever.Un.Dimanche.avi",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -5449,6 +5587,22 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Jumpers",
+    "annee": 2026,
+    "realisateur": "Daniel Chong",
+    "genres": [
+      "Animation",
+      "Aventure",
+      "Comédie"
+    ],
+    "resume": "Mabel, une adolescente passionnée par les animaux, teste une technologie qui lui permet de transférer son esprit dans un castor robotisé. Elle peut enfin dialoguer avec la faune sauvage et découvre un monde animal bien plus organisé qu'elle ne l'imaginait. Sa double vie se complique lorsque les intérêts des habitants de sa ville entrent en conflit avec ceux de la forêt. Long métrage d'animation Pixar sorti en France en mars 2026.",
+    "fichier_original": "Jumpers.2026.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "Jurassic World: Dominion",
     "annee": 2022,
     "realisateur": "Colin Trevorrow",
@@ -5495,6 +5649,21 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Karate Kid 3",
+    "annee": 1989,
+    "realisateur": "John G. Avildsen",
+    "genres": [
+      "Action",
+      "Drame"
+    ],
+    "resume": "Daniel LaRusso est poussé à défendre son titre de champion de karaté, mais monsieur Miyagi refuse de l'y entraîner. Un industriel sans scrupules, allié de l'ancien professeur rival Kreese, en profite pour manipuler l'adolescent et lui opposer un combattant redoutable. Daniel se retrouve partagé entre la soif de victoire et l'enseignement de son maître. Troisième volet de la série Karate Kid.",
+    "fichier_original": "The.Karate.Kid.Part.III.1989.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "Karate Kid: Legends",
     "annee": 2025,
     "realisateur": "Jonathan Entwistle",
@@ -5535,7 +5704,7 @@ const MOVIES = [
     "resume": "Dave Lizewski, adolescent passionné de comics ordinaire, décide un jour de devenir un super-héros sans le moindre pouvoir, sous le nom de Kick-Ass. Sa quête improvisée le mêle à Hit-Girl et Big Daddy, véritables vigilants surentraînés, dans une lutte sanglante contre un parrain de la pègre new-yorkaise.",
     "fichier_original": "KickAss.avi",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5570,6 +5739,21 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Krull",
+    "annee": 1983,
+    "realisateur": "Peter Yates",
+    "genres": [
+      "Fantastique",
+      "Aventure"
+    ],
+    "resume": "Sur la planète Krull, la Bête et ses Slayers envahissent le royaume et enlèvent la princesse Lyssa le jour de ses noces. Le prince Colwyn part la délivrer, accompagné d'une troupe hétéroclite de brigands, d'un magicien et d'un cyclope. Il doit d'abord retrouver le Glaive, arme légendaire à cinq lames, puis atteindre la forteresse mouvante de la Bête.",
+    "fichier_original": "Krull.1983.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "L'Amour ouf",
     "annee": 2024,
     "realisateur": "Gilles Lellouche",
@@ -5585,6 +5769,21 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "L'Attaque des crabes géants",
+    "annee": 1957,
+    "realisateur": "Roger Corman",
+    "genres": [
+      "Science-fiction",
+      "Horreur"
+    ],
+    "resume": "Une équipe de scientifiques débarque sur une île isolée du Pacifique pour enquêter sur la disparition d'une précédente expédition, envoyée après des essais nucléaires. Ils y découvrent des crabes géants mutants, doués d'intelligence et capables d'absorber l'esprit de leurs victimes. Piégés sur l'île dont les terres s'effondrent peu à peu, les survivants cherchent un moyen de riposter. Classique de la série B américaine produit et réalisé par Roger Corman.",
+    "fichier_original": "Attack.of.the.Crab.Monsters.1957s.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "L'Empire",
     "annee": 2024,
     "realisateur": "Bruno Dumont",
@@ -5594,6 +5793,21 @@ const MOVIES = [
     ],
     "resume": "Dans le Nord de la France, deux clans rivaux venus d'un autre monde, le Bien et le Mal, s'affrontent secrètement à travers des humains ordinaires qu'ils habitent. Ce mélange de science-fiction et de comédie rurale, inspiré librement de « Star Wars », transpose la lutte cosmique entre le bien et le mal dans un village de pêcheurs.",
     "fichier_original": "L.Empire.2024.mp4",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "L'Insoutenable Légèreté de l'être",
+    "annee": 1988,
+    "realisateur": "Philip Kaufman",
+    "genres": [
+      "Drame",
+      "Romance"
+    ],
+    "resume": "À Prague en 1968, Tomas, chirurgien séducteur, partage sa vie entre la libre Sabina et la fragile Tereza, qu'il finit par épouser. L'invasion de la Tchécoslovaquie par les troupes du pacte de Varsovie bouleverse leur existence et les pousse à l'exil. Adaptation du roman de Milan Kundera, le film confronte les désirs individuels au poids de l'Histoire.",
+    "fichier_original": "L.Insoutenable.Legerete.De.L.Etre.1988L.mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -5702,6 +5916,35 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "La Fureur de vivre",
+    "annee": 1955,
+    "realisateur": "Nicholas Ray",
+    "genres": [
+      "Drame"
+    ],
+    "resume": "Jim Stark, adolescent fraîchement arrivé dans une nouvelle ville, étouffe entre un père effacé et une mère dominatrice. Au lycée, il se heurte à une bande de garçons et se lie avec Judy et le jeune Platon, aussi mal aimés que lui. Un défi automobile au bord d'une falaise fait basculer leurs vies en une nuit. Rôle emblématique de James Dean sur le malaise de la jeunesse américaine.",
+    "fichier_original": "La fureur de vivre.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "La Leçon de piano",
+    "annee": 1993,
+    "realisateur": "Jane Campion",
+    "genres": [
+      "Drame",
+      "Romance"
+    ],
+    "resume": "Au milieu du XIXe siècle, Ada, Écossaise muette depuis l'enfance, débarque en Nouvelle-Zélande avec sa fille et son piano pour épouser un colon qu'elle n'a jamais vu. Son mari abandonne l'instrument sur la plage ; un voisin, Baines, le récupère et propose à Ada de le racheter touche après touche, en échange de leçons particulières. Un trouble s'installe entre eux. Palme d'or à Cannes en 1993.",
+    "fichier_original": "La.Leçon.de.Piano.1993.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "La Mouche",
     "annee": 1986,
     "realisateur": "David Cronenberg",
@@ -5711,6 +5954,95 @@ const MOVIES = [
     ],
     "resume": "Un scientifique excentrique invente un dispositif de téléportation qu'il teste sur lui-même, sans remarquer qu'une mouche s'est glissée dans la cabine. Leurs deux organismes fusionnent progressivement à l'échelle génétique, transformant peu à peu le chercheur en une créature hybride monstrueuse, sous le regard impuissant de la femme qu'il aime.",
     "fichier_original": "La Mouche (1986) (The Fly) - Cronenberg.mkv",
+    "statut": "identifié",
+    "vu": true,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "La Mécanique des femmes",
+    "annee": 2000,
+    "realisateur": "Jérôme de Missolz",
+    "genres": [
+      "Drame"
+    ],
+    "resume": "Adapté du récit de Louis Calaferte, le film suit un homme confronté au désir des femmes qu'il rencontre. À travers une succession de liaisons, il tente de percer ce qui lie le corps, le plaisir et le besoin d'affection. Œuvre d'auteur à la sensualité crue, sortie en salles interdite aux moins de 16 ans.",
+    "fichier_original": "La mécanique des femmes.avi",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "La Première Folie des Monty Python",
+    "annee": 1971,
+    "realisateur": "Ian MacNaughton",
+    "genres": [
+      "Comédie"
+    ],
+    "resume": "Premier long métrage des Monty Python, le film reprend et retourne pour le cinéma les meilleurs sketches de la série télévisée Monty Python's Flying Circus. On y retrouve notamment le perroquet mort, le bûcheron canadien ou l'autodéfense contre les fruits frais, reliés par les collages animés de Terry Gilliam. Il s'agit d'une anthologie sans intrigue continue, destinée à faire connaître la troupe hors du Royaume-Uni.",
+    "fichier_original": "La.Premiere.Folie.Des.Monty.Python.(1971).mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "La Reine Margot",
+    "annee": 1994,
+    "realisateur": "Patrice Chéreau",
+    "genres": [
+      "Historique",
+      "Drame"
+    ],
+    "resume": "Paris, 1572 : pour sceller la paix entre catholiques et protestants, Marguerite de Valois est mariée contre son gré au roi de Navarre, Henri de Bourbon, huguenot. Quelques jours plus tard, la cour bascule dans le massacre de la Saint-Barthélemy. Prise entre les intrigues de sa mère Catherine de Médicis et de ses frères, Margot cherche sa propre voie et s'éprend du protestant La Môle. Adapté du roman d'Alexandre Dumas.",
+    "fichier_original": "La_Reine_Margot_1994.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "La Venue de l'avenir",
+    "annee": 2025,
+    "realisateur": "Cédric Klapisch",
+    "genres": [
+      "Comédie",
+      "Drame"
+    ],
+    "resume": "Une trentaine de membres d'une même famille apprennent qu'ils héritent d'une maison normande abandonnée depuis des décennies. Quatre d'entre eux, Seb, Abdel, Céline et Guy, sont chargés d'en faire l'état des lieux et y exhument les traces d'une ancêtre, Adèle, partie pour Paris en 1895. Le récit alterne entre 2025 et la fin du XIXe siècle, au moment de l'essor de la photographie et de la naissance de l'impressionnisme. Ce voyage généalogique conduit les quatre cousins à réinterroger leur propre présent.",
+    "fichier_original": "La.Venue.De.L.Avenir.2025.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Lawrence d'Arabie",
+    "annee": 1962,
+    "realisateur": "David Lean",
+    "genres": [
+      "Aventure",
+      "Historique",
+      "Biopic"
+    ],
+    "resume": "Pendant la Première Guerre mondiale, le lieutenant britannique T. E. Lawrence est envoyé en Arabie pour évaluer les chances de la révolte arabe contre l'Empire ottoman. Officier atypique, il gagne la confiance des tribus bédouines et prend la tête d'opérations audacieuses dans le désert, dont la prise d'Aqaba. Sa légende naissante se heurte peu à peu aux calculs diplomatiques des puissances européennes et à ses propres contradictions.",
+    "fichier_original": "Lawrence_D'arabie_(1962).mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Le Bon, la Brute et le Truand",
+    "annee": 1966,
+    "realisateur": "Sergio Leone",
+    "genres": [
+      "Aventure",
+      "Action"
+    ],
+    "resume": "Pendant la guerre de Sécession, trois hommes sans scrupules se lancent sur la piste d'un coffre d'or confédéré enterré dans un cimetière. Blondin, le chasseur de primes, Tuco, le bandit bavard, et Sentenza, le tueur méthodique, détiennent chacun une partie du secret et sont donc condamnés à se supporter autant qu'à se trahir. Leur course traverse un Ouest ravagé par les combats jusqu'à une confrontation finale.",
+    "fichier_original": "Le Bon la Brute et le Truand.1966.avi",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -5742,6 +6074,21 @@ const MOVIES = [
     ],
     "resume": "En France au XIVe siècle, un chevalier accuse son ancien ami d'avoir violé sa femme et exige un duel à mort pour laver l'honneur du couple, seule issue légale reconnue à l'époque pour départager les deux hommes. Le récit est raconté trois fois, selon le point de vue de chacun des trois protagonistes, révélant les vérités contradictoires de l'affaire.",
     "fichier_original": "Le dernier duel 2021.avi",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Le Dernier Survivant",
+    "annee": 1985,
+    "realisateur": "Geoff Murphy",
+    "genres": [
+      "Science-fiction",
+      "Drame"
+    ],
+    "resume": "Le scientifique Zac Hobson se réveille un matin pour constater que toute vie humaine a disparu de la surface de la Terre. Il soupçonne le projet énergétique international auquel il participait d'être à l'origine du phénomène. Après des journées d'errance solitaire et de folie naissante, il rencontre deux autres survivants, Joanne et Api. Film néo-zélandais adapté du roman de Craig Harrison.",
+    "fichier_original": "The.Quiet.Earth.1985.mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -5786,6 +6133,20 @@ const MOVIES = [
     ],
     "resume": "Un concepteur de jeux vidéo nommé Kirill découvre son appartement occupé par une mystérieuse femme, Renata, dont l'existence a été effacée de toutes les mémoires. Renata agit pour une organisation ayant désigné Kirill comme « gardien des mondes », chargé d'ouvrir les portes vers des univers parallèles, tandis que sa fiancée est menacée par des forces venues du légendaire Arkan.",
     "fichier_original": "Le gardien des Mondes 2018.avi",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Le Grand Saut",
+    "annee": 1994,
+    "realisateur": "Joel Coen",
+    "genres": [
+      "Comédie"
+    ],
+    "resume": "New York, 1958 : à la mort du fondateur de la toute-puissante société Hudsucker, le conseil d'administration décide de placer à sa tête un parfait incompétent pour faire chuter l'action et racheter l'entreprise à bas prix. Le choix se porte sur Norville Barnes, jeune diplômé naïf fraîchement embauché au courrier. Contre toute attente, son invention loufoque rencontre un succès foudroyant, tandis qu'une journaliste s'infiltre pour percer le secret de son ascension.",
+    "fichier_original": "Le.Grand.Saut.1994s.mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -5851,6 +6212,21 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Le Prix du danger",
+    "annee": 1983,
+    "realisateur": "Yves Boisset",
+    "genres": [
+      "Science-fiction",
+      "Policier/Thriller"
+    ],
+    "resume": "Dans une société dominée par l'audimat, une chaîne de télévision diffuse « Le Prix du danger », un jeu où un candidat doit traverser la ville en échappant à cinq tueurs professionnels pendant plusieurs heures. François Jacquemard, chômeur, accepte de participer pour empocher la prime. Traqué en direct sous l'œil des caméras et d'un animateur cynique, il découvre jusqu'où le spectacle est prêt à aller. Adapté d'une nouvelle de Robert Sheckley.",
+    "fichier_original": "Le.Prix.Du.Danger.1983.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "Le Roi Singe",
     "annee": 2023,
     "realisateur": "Anthony Stacchi",
@@ -5895,6 +6271,21 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Le Trou noir",
+    "annee": 1979,
+    "realisateur": "Gary Nelson",
+    "genres": [
+      "Science-fiction",
+      "Aventure"
+    ],
+    "resume": "À la fin du XXe siècle, l'équipage du vaisseau d'exploration Palomino détecte un trou noir d'une puissance exceptionnelle. À sa lisière flotte le Cygnus, un immense vaisseau porté disparu vingt ans plus tôt, maintenu à distance de l'abîme par une zone d'apesanteur. À bord, l'équipage découvre le docteur Reinhardt, son unique survivant humain, entouré de robots et habité par un projet obsessionnel.",
+    "fichier_original": "Le_Trou_Noir.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "Le Voyage dans la Lune",
     "annee": 1902,
     "realisateur": "Georges Méliès",
@@ -5904,6 +6295,21 @@ const MOVIES = [
     ],
     "resume": "Ce court métrage pionnier de la science-fiction suit le professeur Barbenfouillis et six autres savants organisant une expédition vers la Lune. Considéré comme le premier film de science-fiction de l'histoire, il déploie des trucages révolutionnaires pour l'époque et s'inspire du roman de Jules Verne. Le millésime 2018 présent dans le nom du fichier correspond probablement à une édition ou une captation restaurée, non à l'année de production du film (1902).",
     "fichier_original": "Le Voyage Dans la Lune 2018.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Les Contes de la lune vague après la pluie",
+    "annee": 1953,
+    "realisateur": "Kenji Mizoguchi",
+    "genres": [
+      "Drame",
+      "Fantastique"
+    ],
+    "resume": "Dans le Japon ravagé par les guerres civiles du XVIe siècle, deux paysans quittent leur village pour faire fortune : Genjuro veut vendre ses poteries, Tobei rêve de devenir samouraï. Leurs ambitions les éloignent de leurs épouses et les entraînent vers des chemins funestes. Genjuro tombe sous le charme d'une mystérieuse et noble dame Wakasa. Un chef-d'œuvre entre chronique réaliste et conte de fantômes, adapté d'Ueda Akinari.",
+    "fichier_original": "Ugetsu_monogatari_(Les_Contes_de_la_lune_vague_après_la_pluie)_1953_[1080p]_VOSTFR.mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -5920,7 +6326,7 @@ const MOVIES = [
     "resume": "Dans l'Ouest américain des années 1850, Eli et Charlie Sisters, deux frères tueurs à gages redoutés, sont chargés de traquer un chercheur d'or convoité pour un secret qu'il détient. Ce western d'auteur, tourné en anglais, mêle violence, fraternité et quête de rédemption sur les routes poussiéreuses de la ruée vers l'or.",
     "fichier_original": "Les freres Sisters.VOSTFR.2018.x265.mkv",
     "statut": "identifié",
-    "vu": false,
+    "vu": true,
     "affiche": null
   },
   {
@@ -5980,6 +6386,21 @@ const MOVIES = [
     ],
     "resume": "Dans un univers rétro-futuriste des années 1960, Reed Richards, Sue Storm, Johnny Storm et Ben Grimm doivent protéger la Terre d'une menace cosmique tout en apprenant à concilier leur vie de super-héros avec leur vie de famille naissante, dans cette relecture des origines des Quatre Fantastiques au sein du Marvel Cinematic Universe.",
     "fichier_original": "The.Fantastic.Four.First.Steps.2025.mp4",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Les Tommyknockers",
+    "annee": 1993,
+    "realisateur": "John Power",
+    "genres": [
+      "Science-fiction",
+      "Horreur"
+    ],
+    "resume": "À Haven, petite ville du Maine, l'écrivaine Bobbi Anderson bute sur un objet métallique enfoui dans les bois : un vaisseau extraterrestre. À mesure qu'elle le dégage, les habitants développent une intelligence et des inventions prodigieuses, au prix de leur santé et de leur humanité. Seul son compagnon poète, porteur d'une plaque métallique dans le crâne, semble échapper à l'emprise. Adaptation du roman de Stephen King, diffusée à l'origine comme téléfilm en deux parties.",
+    "fichier_original": "The Tommyknockers.1993.avi",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -6120,6 +6541,21 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Marsupilami",
+    "annee": 2026,
+    "realisateur": "Philippe Lacheau",
+    "genres": [
+      "Comédie",
+      "Aventure"
+    ],
+    "resume": "Pour conserver son emploi, David accepte de rapporter d'Amérique du Sud un colis mystérieux. Il se retrouve sur un bateau de croisière avec son ex-compagne Tess, son fils Léo et son maladroit collègue Stéphane, à qui il fait porter le paquet. Quand celui-ci l'ouvre par accident, un bébé Marsupilami en surgit et la croisière vire au chaos. Sortie en salles en France le 4 février 2026.",
+    "fichier_original": "Marsupilami.2026.H265.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "Matrix Resurrections",
     "annee": 2021,
     "realisateur": "Lana Wachowski",
@@ -6240,6 +6676,36 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Moi, Christiane F., 13 ans, droguée, prostituée…",
+    "annee": 1981,
+    "realisateur": "Uli Edel",
+    "genres": [
+      "Drame",
+      "Biopic"
+    ],
+    "resume": "Berlin-Ouest, à la fin des années 1970. Christiane, adolescente de treize ans qui s'ennuie dans sa cité, fréquente la discothèque Sound et y découvre un milieu où la drogue circule librement. Entraînée par son amour pour Detlev, elle passe des premières pilules à l'héroïne, puis à la prostitution autour de la gare du Zoo pour financer sa dépendance. Le film est adapté du récit autobiographique de Christiane Felscherinow.",
+    "fichier_original": "Moi.Christiane.F.13.Ans.Droguée.Prostituée.1981.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Mon nom est Personne",
+    "annee": 1973,
+    "realisateur": "Tonino Valerii",
+    "genres": [
+      "Aventure",
+      "Comédie"
+    ],
+    "resume": "Jack Beauregard, légendaire pistolero vieillissant, ne rêve plus que d'embarquer pour l'Europe et de prendre sa retraite. Un jeune homme fantasque qui se fait appeler Personne, fervent admirateur de ses exploits, s'attache à ses pas. Il veut offrir à son idole une sortie digne de la légende : affronter seul la Horde sauvage, une bande de cent cinquante hommes. Western spaghetti produit et supervisé par Sergio Leone.",
+    "fichier_original": "mon_nom_est_personne.avi",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "Monsieur Aznavour",
     "annee": 2024,
     "realisateur": "Mehdi Idir et Grand Corps Malade",
@@ -6263,6 +6729,36 @@ const MOVIES = [
     ],
     "resume": "Cette suite de sketches satiriques des Monty Python explore, avec un humour absurde et souvent grivois, les grandes étapes de l'existence humaine : la naissance, la guerre, l'amour, la vieillesse et la mort. Le film alterne saynètes délirantes et pastiches, dans la veine burlesque caractéristique de la troupe britannique.",
     "fichier_original": "Monty.Python.Le.sens.de.la.vie.1983.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Mortal Kombat 2",
+    "annee": 2026,
+    "realisateur": "Simon McQuoid",
+    "genres": [
+      "Action",
+      "Fantastique"
+    ],
+    "resume": "Les champions de la Terre, rejoints par la star de cinéma Johnny Cage, doivent se préparer à affronter les forces d'Outreterre menées par le tyrannique Shao Kahn, bien décidé à étendre son emprise. Entre alliances fragiles, rivalités personnelles et soif de vengeance, le tournoi doit décider du sort de l'humanité. Suite de « Mortal Kombat » (2021), sortie en France le 6 mai 2026.",
+    "fichier_original": "Mortal.Kombat.II.2026.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Métal hurlant",
+    "annee": 1981,
+    "realisateur": "Gerald Potterton",
+    "genres": [
+      "Animation",
+      "Science-fiction"
+    ],
+    "resume": "Film d'animation à sketches inspiré du magazine de bande dessinée « Métal hurlant » et de son édition américaine « Heavy Metal ». Un orbe vert maléfique, le Loc-Nar, se présente comme la somme de tout le mal de l'univers et raconte à une fillette terrifiée les histoires qu'il a provoquées à travers l'espace et le temps. S'enchaînent ainsi des récits de science-fiction et de fantastique, portés par une bande originale rock.",
+    "fichier_original": "Métal_hurlant_1981.mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -6485,6 +6981,36 @@ const MOVIES = [
     ],
     "resume": "En France en 2039, des militants écologistes disparaissent mystérieusement après avoir été pourchassés par l'État. Julia Bombarth, l'une des activistes, se réveille emprisonnée dans un monde inconnu sans aucune explication. Ce film de science-fiction explore l'écoterrorisme et la répression étatique à travers ce dispositif carcéral déroutant.",
     "fichier_original": "Planete.B.mp4",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Platoon",
+    "annee": 1986,
+    "realisateur": "Oliver Stone",
+    "genres": [
+      "Guerre",
+      "Drame"
+    ],
+    "resume": "1967, Vietnam : Chris Taylor, jeune Américain qui s'est porté volontaire, rejoint une section d'infanterie près de la frontière cambodgienne. Confronté à l'épuisement, à la peur et aux exactions commises contre les civils, il voit sa compagnie se déchirer entre deux sergents aux conceptions opposées de la guerre, Barnes et Elias. Oliver Stone s'appuie sur sa propre expérience de combattant.",
+    "fichier_original": "Platoon_(1986)x265.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Point Break - Extrême limite",
+    "annee": 1991,
+    "realisateur": "Kathryn Bigelow",
+    "genres": [
+      "Action",
+      "Policier/Thriller"
+    ],
+    "resume": "Johnny Utah, jeune agent du FBI, est chargé d'enquêter sur une bande de braqueurs masqués surnommés les « Ex-Présidents », soupçonnés d'être des surfeurs. Il s'infiltre dans le milieu du surf californien et se lie d'amitié avec Bodhi, un gourou charismatique en quête de sensations extrêmes. Partagé entre sa mission et la fascination qu'exerce sur lui ce mode de vie, Utah voit sa loyauté mise à l'épreuve.",
+    "fichier_original": "Point_Break_(1991).mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -6778,6 +7304,49 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Sliver",
+    "annee": 1993,
+    "realisateur": "Phillip Noyce",
+    "genres": [
+      "Policier/Thriller"
+    ],
+    "resume": "Carly Norris, éditrice récemment divorcée, emménage dans un immeuble new-yorkais étroit et luxueux surnommé le « sliver ». Elle se laisse séduire par le jeune propriétaire Zeke Hawkins tout en étant courtisée par un écrivain à succès, alors que plusieurs locataires meurent dans des circonstances troubles. Carly découvre peu à peu que l'immeuble entier est truffé de caméras de surveillance.",
+    "fichier_original": "Sliver_1993_1080p_FR_EN_X264_AC3-Wawacity.beer.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Solaris",
+    "annee": 1972,
+    "realisateur": "Andreï Tarkovski",
+    "genres": [
+      "Science-fiction",
+      "Drame"
+    ],
+    "resume": "Le psychologue Kris Kelvin est envoyé sur une station orbitale tournant autour de la planète Solaris, où le petit équipage sombre dans la confusion mentale. L'océan qui recouvre la planète matérialise les souvenirs refoulés des occupants, et Kelvin voit réapparaître sa femme morte des années plus tôt. Adapté du roman de Stanislas Lem, le film interroge la mémoire, la culpabilité et les limites de la connaissance.",
+    "fichier_original": "Solaris_(1972).mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Soleil levant",
+    "annee": 1993,
+    "realisateur": "Philip Kaufman",
+    "genres": [
+      "Policier/Thriller"
+    ],
+    "resume": "À Los Angeles, le corps d'une jeune femme est découvert lors d'une réception donnée dans la tour d'un puissant groupe japonais. L'inspecteur Web Smith est chargé de l'enquête avec John Connor, un policier fin connaisseur des codes japonais. Les bandes de vidéosurveillance de la soirée se révèlent avoir été manipulées. Adapté du roman de Michael Crichton.",
+    "fichier_original": "Soleil.Levant.BDRip.TrueFrench.x264.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "Sonatine",
     "annee": 1993,
     "realisateur": "Takeshi Kitano",
@@ -6787,6 +7356,21 @@ const MOVIES = [
     ],
     "resume": "Un yakuza vétéran, las de la violence de son milieu, est envoyé à Okinawa avec ses hommes pour régler un conflit entre gangs rivaux. En attendant que la situation se dénoue, le groupe se retrouve isolé dans une maison de plage où l'ennui et les jeux enfantins côtoient la menace permanente de la mort.",
     "fichier_original": "Sonatine, Mélodie.Mortelle.1993.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Spawn",
+    "annee": 1997,
+    "realisateur": "Mark A. Z. Dippé",
+    "genres": [
+      "Action",
+      "Fantastique"
+    ],
+    "resume": "Al Simmons, agent d'élite d'une unité secrète, est assassiné par son propre supérieur au cours d'une mission. Envoyé en enfer, il passe un pacte avec le démon Malebolgia pour revoir sa femme et revient sur Terre défiguré, doté de pouvoirs infernaux, sous le nom de Spawn. Il découvre qu'il doit en échange prendre la tête des armées de l'enfer. Adapté de la bande dessinée de Todd McFarlane.",
+    "fichier_original": "Spawn DC . 1997.avi",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -6808,6 +7392,51 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Star Trek 5 : L'Ultime Frontière",
+    "annee": 1989,
+    "realisateur": "William Shatner",
+    "genres": [
+      "Science-fiction",
+      "Aventure"
+    ],
+    "resume": "Sybok, un Vulcain renégat qui a rejeté la logique au profit des émotions, prend en otage des diplomates sur la planète Nimbus III pour attirer un vaisseau. L'Enterprise, à peine remis en service et truffé de pannes, est dépêché sur place sous le commandement de Kirk. Sybok détourne alors l'équipage vers le centre de la galaxie, en quête de ce qu'il croit être la demeure de Dieu. Cinquième film de la saga, seul long métrage réalisé par William Shatner.",
+    "fichier_original": "star.trek.05.l.ultime.frontiere.1989h.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Star Trek : Générations",
+    "annee": 1994,
+    "realisateur": "David Carson",
+    "genres": [
+      "Science-fiction",
+      "Aventure"
+    ],
+    "resume": "Lors du voyage inaugural de l'Enterprise-B, le capitaine Kirk disparaît en sauvant le vaisseau d'un étrange ruban d'énergie, le Nexus. Soixante-dix-huit ans plus tard, le capitaine Picard affronte le savant el-aurien Soran, prêt à détruire une étoile entière pour rejoindre ce paradis temporel. La confrontation amène les deux capitaines à se rencontrer. Septième film de la saga Star Trek.",
+    "fichier_original": "Star_Trek__Générationso.mp4",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Star Trek : Insurrection",
+    "annee": 1998,
+    "realisateur": "Jonathan Frakes",
+    "genres": [
+      "Science-fiction",
+      "Aventure"
+    ],
+    "resume": "L'équipage de l'Enterprise découvre que la Fédération s'est associée aux Son'a pour déplacer en secret les quelques centaines d'habitants pacifiques de la planète Ba'ku. Les radiations de cette planète offrent en effet une jeunesse quasi éternelle. Le capitaine Picard choisit de désobéir à ses ordres pour défendre les Ba'ku. Neuvième film de la saga Star Trek.",
+    "fichier_original": "Star_Trek_09_Insurrection_1998.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "Star Wars, épisode IX : L'Ascension de Skywalker",
     "annee": 2019,
     "realisateur": "J.J. Abrams",
@@ -6818,6 +7447,21 @@ const MOVIES = [
     ],
     "resume": "Rey, Finn et Poe Dameron poursuivent leur combat contre les vestiges du Premier Ordre, tandis que l'empereur Palpatine, ressuscité, orchestre une menace ultime pour la galaxie. Ce dernier volet de la saga Skywalker referme neuf épisodes d'une histoire commencée plus de quarante ans auparavant.",
     "fichier_original": "Star Wars Episode IX The Rise of Skywalker.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Starfighter",
+    "annee": 1984,
+    "realisateur": "Nick Castle",
+    "genres": [
+      "Science-fiction",
+      "Aventure"
+    ],
+    "resume": "Alex Rogan, adolescent qui s'ennuie dans le parc de mobil-homes où il vit, bat le record de la borne d'arcade Starfighter installée devant l'épicerie. Le jeu se révèle être un test de recrutement mis en place par une civilisation extraterrestre en guerre. Alex est enlevé pour devenir pilote de combat, tandis qu'un androïde prend sa place sur Terre. Le film est l'un des premiers à recourir massivement aux images de synthèse.",
+    "fichier_original": "Starfighter.1984.mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -7108,6 +7752,35 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Tony Rome est dangereux",
+    "annee": 1967,
+    "realisateur": "Gordon Douglas",
+    "genres": [
+      "Policier/Thriller"
+    ],
+    "resume": "Tony Rome, détective privé de Miami qui vit sur un bateau et joue plus qu'il ne gagne, est chargé de ramener discrètement chez elle la fille ivre d'un riche promoteur. L'affaire se complique avec la disparition d'un collier de diamants et une série de meurtres. L'enquête l'entraîne aussi bien dans les bas-fonds que dans la haute société de Floride. Frank Sinatra reprendra le rôle l'année suivante dans La Femme en ciment.",
+    "fichier_original": "Tony_Rome_est_dangereux_1967.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Tous les matins du monde",
+    "annee": 1991,
+    "realisateur": "Alain Corneau",
+    "genres": [
+      "Drame",
+      "Musical"
+    ],
+    "resume": "Dans la France du XVIIe siècle, le janséniste Monsieur de Sainte-Colombe, violiste de génie retiré du monde après la mort de son épouse, vit dans l'austérité avec ses deux filles. Le jeune et ambitieux Marin Marais devient son élève et s'éprend de sa fille aînée Madeleine. Entre rigueur spirituelle et tentation de la gloire à la cour, le film interroge ce que la musique doit au silence et à la douleur. Adapté du roman de Pascal Quignard.",
+    "fichier_original": "Tous les matins du Monde.avi",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "Tron",
     "annee": 1982,
     "realisateur": "Steven Lisberger",
@@ -7198,6 +7871,21 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Une nuit en enfer",
+    "annee": 1996,
+    "realisateur": "Robert Rodriguez",
+    "genres": [
+      "Horreur",
+      "Action"
+    ],
+    "resume": "Les frères Seth et Richie Gecko, braqueurs en cavale après une série de meurtres, prennent en otage un pasteur veuf et ses deux enfants pour franchir la frontière mexicaine. Le rendez-vous est fixé dans un bar routier perdu, le Titty Twister, où ils doivent attendre l'aube. Mais l'établissement cache une tout autre clientèle que prévu. Scénario de Quentin Tarantino, qui tient également l'un des rôles principaux.",
+    "fichier_original": "Une Nuit en enfer.1996.avi",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "Une pointe d'amour",
     "annee": 2025,
     "realisateur": "Maël Piriou",
@@ -7212,6 +7900,21 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Vanilla Sky",
+    "annee": 2001,
+    "realisateur": "Cameron Crowe",
+    "genres": [
+      "Science-fiction",
+      "Drame"
+    ],
+    "resume": "David Aames, riche héritier new-yorkais séduisant et insouciant, dirige un groupe de presse et enchaîne les conquêtes. Sa rencontre avec Sofia bouleverse sa vie, jusqu'à ce qu'un accident provoqué par une ancienne maîtresse le défigure. Dès lors, David ne parvient plus à distinguer la réalité du rêve ni du cauchemar. Remake américain du film espagnol Ouvre les yeux d'Alejandro Amenábar.",
+    "fichier_original": "Vanilla.Sky.avi",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "Wake Up Dead Man : Une histoire à couteaux tirés",
     "annee": 2025,
     "realisateur": "Rian Johnson",
@@ -7220,6 +7923,20 @@ const MOVIES = [
     ],
     "resume": "Le détective Benoit Blanc s'associe à un jeune prêtre pour résoudre un meurtre en apparence impossible survenu dans l'église d'une petite ville au passé trouble. Cette enquête en huis clos multiplie les rebondissements et les secrets enfouis. Troisième volet de la saga « À couteaux tirés », le film prolonge les enquêtes du détective le plus fantasque du cinéma.",
     "fichier_original": "A couteaux tirés 3 - 2025.mp4",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Wayne's World 2",
+    "annee": 1993,
+    "realisateur": "Stephen Surjik",
+    "genres": [
+      "Comédie"
+    ],
+    "resume": "Wayne Campbell et son acolyte Garth Algar continuent d'animer leur émission de télévision amateur depuis Aurora, dans l'Illinois. À la suite d'un rêve où Jim Morrison lui apparaît, Wayne se lance dans l'organisation d'un gigantesque festival de rock, le Waynestock. Parallèlement, il voit d'un mauvais œil le producteur qui tourne autour de sa petite amie Cassandra. Suite de Wayne's World, issu des sketches du Saturday Night Live.",
+    "fichier_original": "Wayne's World 2.avi",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -7256,6 +7973,20 @@ const MOVIES = [
   },
   {
     "dossier": "a trier",
+    "titre": "Y a-t-il un pilote dans l'avion ?",
+    "annee": 1980,
+    "realisateur": "Jim Abrahams, David Zucker, Jerry Zucker",
+    "genres": [
+      "Comédie"
+    ],
+    "resume": "Ted Striker, ancien pilote de guerre traumatisé et désormais terrifié par les avions, monte à bord d'un vol de ligne pour reconquérir Elaine, hôtesse de l'air et ex-compagne. Quand une intoxication alimentaire met hors service l'équipage de pilotage, il est le seul à pouvoir prendre les commandes. Parodie déchaînée des films catastrophe, construite sur un empilement ininterrompu de gags absurdes.",
+    "fichier_original": "Y.A.T.Il.Un.Pilote.Dans.L.Avion.1980s.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
     "titre": "Youth",
     "annee": 2015,
     "realisateur": "Paolo Sorrentino",
@@ -7264,6 +7995,21 @@ const MOVIES = [
     ],
     "resume": "Deux amis de longue date, un compositeur retraité et un réalisateur en fin de carrière, séjournent dans un hôtel de luxe des Alpes suisses. Entre souvenirs, réflexions sur la vieillesse, la création artistique et le passage du temps, ils observent la vie des autres curistes tout en interrogeant le sens qu'ils donnent à leur propre existence.",
     "fichier_original": "Youth.2015.mp4",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "a trier",
+    "titre": "Zardoz",
+    "annee": 1974,
+    "realisateur": "John Boorman",
+    "genres": [
+      "Science-fiction",
+      "Fantastique"
+    ],
+    "resume": "En 2293, l'humanité est scindée entre les Brutes, qui survivent dans des terres dévastées, et les Éternels, une élite immortelle retranchée dans le Vortex. Les Brutes vénèrent Zardoz, une tête de pierre volante qui leur distribue des armes. Zed, un Exterminateur, parvient à se glisser à l'intérieur de l'idole et découvre la société des Éternels. Une fable de science-fiction ésotérique portée par Sean Connery.",
+    "fichier_original": "Zardoz_1974E.mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -7311,6 +8057,20 @@ const MOVIES = [
     "statut": "identifié",
     "vu": false,
     "affiche": "https://fr.web.img6.acsta.net/c_310_420/medias/nmedia/00/02/53/24/affiche.jpg"
+  },
+  {
+    "dossier": "Adultes",
+    "titre": "Crash",
+    "annee": 1996,
+    "realisateur": "David Cronenberg",
+    "genres": [
+      "Drame"
+    ],
+    "resume": "Après avoir survécu à un violent accident de voiture, le producteur James Ballard rencontre le docteur Helen Remington, blessée dans la même collision. Il est introduit par l'énigmatique Vaughan dans un cercle marginal dont les membres trouvent une excitation érotique dans les carambolages et les corps accidentés. Adapté du roman de J. G. Ballard, le film explore la fusion troublante entre désir, technologie et violence automobile.",
+    "fichier_original": "Crash.1996.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
   },
   {
     "dossier": "Adultes",
@@ -7386,6 +8146,21 @@ const MOVIES = [
   },
   {
     "dossier": "Adultes",
+    "titre": "L'Empire des sens",
+    "annee": 1976,
+    "realisateur": "Nagisa Ōshima",
+    "genres": [
+      "Drame",
+      "Romance"
+    ],
+    "resume": "Dans le Japon militariste de 1936, Sada, ancienne prostituée devenue servante dans une auberge, entame une liaison avec son patron Kichizo. Coupés du monde, les deux amants s'enferment dans une passion charnelle de plus en plus exclusive et destructrice. Inspiré d'un fait divers réel, le film d'Ōshima fit scandale à sa sortie pour la crudité de sa représentation du désir.",
+    "fichier_original": "L'Empire_des_Sens_(1976).mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "Adultes",
     "titre": "La Vie d'Adèle - Chapitres 1 et 2",
     "annee": 2013,
     "realisateur": "Abdellatif Kechiche",
@@ -7398,6 +8173,21 @@ const MOVIES = [
     "statut": "identifié",
     "vu": false,
     "affiche": "https://fr.web.img3.acsta.net/c_310_420/pictures/210/359/21035935_20130903173858999.jpg"
+  },
+  {
+    "dossier": "Adultes",
+    "titre": "Le Jeu avec le feu",
+    "annee": 1975,
+    "realisateur": "Alain Robbe-Grillet",
+    "genres": [
+      "Drame",
+      "Policier/Thriller"
+    ],
+    "resume": "Georges de Saxe, riche banquier veuf, redoute que sa fille Carolina soit la cible d'un enlèvement et engage le détective Franz pour la protéger. Celui-ci propose de la mettre à l'abri dans une maison close tenue par Erica, où les pensionnaires sont soumises à toutes sortes de violences. Fidèle à sa manière, Robbe-Grillet construit un récit labyrinthique où les pistes se brouillent et où le fantasme contamine l'enquête.",
+    "fichier_original": "Le.Jeu.Avec.Le.Feu.1975.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
   },
   {
     "dossier": "Adultes",
@@ -7468,7 +8258,7 @@ const MOVIES = [
       "Drame"
     ],
     "resume": "Ce film retrace le parcours d'une femme du début de sa vie jusqu'à 50 ans. La protagoniste Joe, qui s'auto-diagnostique nymphomane, confie son histoire à Seligman, un homme qui l'a recueillie après l'avoir trouvée blessée. Le récit se déploie en huit chapitres successifs.",
-    "fichier_original": "Nymphomaniac Vol_I.avi",
+    "fichier_original": "Nymphomaniac Vol_I.mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": "https://fr.web.img5.acsta.net/c_310_420/pictures/210/620/21062037_20131129102802768.jpg"
@@ -7514,6 +8304,20 @@ const MOVIES = [
     "statut": "identifié",
     "vu": false,
     "affiche": "https://fr.web.img4.acsta.net/c_310_420/pictures/17/05/23/16/52/469557.jpg"
+  },
+  {
+    "dossier": "Adultes",
+    "titre": "Portier de nuit",
+    "annee": 1974,
+    "realisateur": "Liliana Cavani",
+    "genres": [
+      "Drame"
+    ],
+    "resume": "Vienne, 1957. Max, portier de nuit dans un grand hôtel, est un ancien officier SS qui dissimule son passé avec l'aide d'un réseau de camarades. L'arrivée de Lucia, rescapée d'un camp dont il fut le bourreau, réveille entre eux une relation d'emprise ambiguë. Le film de Liliana Cavani explore, dans un climat de huis clos, la persistance du traumatisme et de la domination.",
+    "fichier_original": "Portier_De_Nuit_(1974).mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
   },
   {
     "dossier": "Adultes",
@@ -10452,7 +11256,7 @@ const MOVIES = [
     "resume": "En 2154, Jake Sully, un marine paralysé, se voit confier une mission sur Pandora : contrôler un corps Na'vi cloné pour négocier avec les autochtones. Au fil de son intégration dans la tribu, il tombe amoureux de Neytiri et se range du côté des Na'vis contre l'exploitation militaire de leur planète.",
     "fichier_original": "Avatar.mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -10467,7 +11271,7 @@ const MOVIES = [
     "resume": "Plus d'une décennie après la première guerre entre les Na'vi et les humains, Jake Sully et sa famille sont contraints de quitter leur territoire forestier pour chercher refuge auprès du clan Metkayina, une communauté Na'vi côtière. Ils doivent s'adapter à cette culture océanique tout en affrontant le retour des forces humaines dirigées par le Colonel Quaritch, revenu sous forme de clone Na'vi.",
     "fichier_original": "Avatar.The.Way.Of.Water.2022.mp4",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": null
   },
   {
@@ -17036,7 +17840,7 @@ const MOVIES = [
     "resume": "Un robot d'apparence humaine provenant d'un futur dystopique est envoyé pour éliminer Sarah Connor avant la naissance de son fils John, destiné à diriger la résistance humaine. La mère de John reçoit l'aide d'un soldat, Reese, envoyé pour la protéger contre ce cyborg impitoyable.",
     "fichier_original": "Terminator 1 1984.mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": "https://fr.web.img2.acsta.net/c_310_420/pictures/22/09/27/12/52/4744720.jpg"
   },
   {
@@ -17051,7 +17855,7 @@ const MOVIES = [
     "resume": "Après une apocalypse nucléaire, deux cyborgs sont envoyés dans le passé pour éliminer John Connor enfant, tandis qu'un Terminator protecteur est dépêché pour le défendre. Connor et sa mère Sarah tentent d'empêcher la création des machines intelligentes, dans un duel titanesque qui décide du sort de l'humanité.",
     "fichier_original": "Terminator 2 Le jugement dernier 1991.mkv",
     "statut": "identifié",
-    "vu": true,
+    "vu": false,
     "affiche": "https://fr.web.img5.acsta.net/c_310_420/img/b6/c9/b6c9f7af0a6bef0b88c1e1482ff2dcef.jpg"
   },
   {
@@ -17518,6 +18322,22 @@ const MOVIES = [
     ],
     "resume": "Le gouvernement américain crée une équipe secrète composée de super-criminels, dont Deadshot, Harley Quinn et Killer Croc, pour affronter des menaces extraordinaires. Lorsqu'une créature mystique et son frère menacent une ville, cette \"Force Spéciale X\" est déployée pour les arrêter.",
     "fichier_original": "Suicide.Squad.2016.mkv",
+    "statut": "identifié",
+    "vu": false,
+    "affiche": null
+  },
+  {
+    "dossier": "Supers héros/DC",
+    "titre": "Supergirl",
+    "annee": 2026,
+    "realisateur": "Craig Gillespie",
+    "genres": [
+      "Action",
+      "Science-fiction",
+      "Fantastique"
+    ],
+    "resume": "Kara Zor-El, cousine de Superman, voit son univers menacé par un ennemi aussi implacable qu'imprévu. Pour y faire face, elle s'associe à un compagnon de route improbable. Ensemble, ils se lancent dans un périple intergalactique mû par la soif de vengeance et de justice. Film DC Studios porté par Milly Alcock, sorti en salles en France le 1er juillet 2026.",
+    "fichier_original": "Supergirl.2026.mkv",
     "statut": "identifié",
     "vu": false,
     "affiche": null
@@ -18709,7 +19529,7 @@ const MOVIES = [
   }
 ];
 
-const LAST_UPDATE = "23/08/2026";
+const LAST_UPDATE = "25/10/2026";
 const DEFAULT_FOLDER = "Z:\\Films";
 
 // ======= RÉGLAGES PERSONNELS (mémorisés dans ce navigateur) =======
@@ -19231,13 +20051,61 @@ function norm(s){
     .normalize('NFD').replace(/[̀-ͯ]/g,'');
 }
 
-function groupByFolder(movies){
+// Mode de regroupement des sections : "dossier" (défaut), "nom", "date" ou "type".
+let groupMode = 'dossier';
+
+function stripAccents(s){
+  return (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '');
+}
+
+// Construit les sections affichées, déjà ordonnées. Chaque section porte une clé stable
+// (préfixée par le mode, pour que les sections dépliées d'un mode n'affectent pas les autres),
+// un libellé et sa liste de films.
+function buildGroups(list){
   const map = new Map();
-  movies.forEach(m => {
-    if(!map.has(m.dossier)) map.set(m.dossier, []);
-    map.get(m.dossier).push(m);
-  });
-  return map;
+  const add = (key, label, m) => {
+    if(!map.has(key)) map.set(key, { key, label, movies: [] });
+    map.get(key).movies.push(m);
+  };
+
+  if(groupMode === 'nom'){
+    list.forEach(m => {
+      const c = stripAccents(m.titre).trim().charAt(0).toUpperCase();
+      const k = /[A-Z]/.test(c) ? c : (/[0-9]/.test(c) ? '0-9' : '#');
+      add(k, k, m);
+    });
+    const rang = k => k === '0-9' ? 1 : (k === '#' ? 2 : 0);
+    return [...map.values()].sort((a, b) => rang(a.key) - rang(b.key) || a.key.localeCompare(b.key, 'fr'));
+  }
+
+  if(groupMode === 'date'){
+    list.forEach(m => {
+      if(!m.annee) return add('?', 'Année inconnue', m);
+      const d = Math.floor(m.annee / 10) * 10;
+      add(String(d), 'Années ' + d, m);
+    });
+    // Décennies les plus récentes en premier, « Année inconnue » à la fin.
+    return [...map.values()].sort((a, b) => {
+      if(a.key === '?') return 1;
+      if(b.key === '?') return -1;
+      return Number(b.key) - Number(a.key);
+    });
+  }
+
+  if(groupMode === 'type'){
+    // Un film ayant plusieurs genres apparaît dans chacune des sections correspondantes :
+    // le total des compteurs de sections dépasse donc volontairement le nombre de films.
+    list.forEach(m => (m.genres && m.genres.length ? m.genres : ['Non classé'])
+      .forEach(g => add(g, g, m)));
+    return [...map.values()].sort((a, b) => {
+      if(a.key === 'Non classé') return 1;
+      if(b.key === 'Non classé') return -1;
+      return a.label.localeCompare(b.label, 'fr');
+    });
+  }
+
+  list.forEach(m => add(m.dossier, m.dossier || 'Racine', m));
+  return [...map.values()].sort((a, b) => a.label.localeCompare(b.label, 'fr'));
 }
 
 function renderStats(list){
@@ -19269,6 +20137,21 @@ function setSortMode(mode){
 }
 sortAlphaBtn.addEventListener('click', () => setSortMode('alpha'));
 sortChronoBtn.addEventListener('click', () => setSortMode('chrono'));
+
+// Choix du mode de regroupement des sections.
+const groupBtns = {
+  dossier: document.getElementById('groupDossierBtn'),
+  nom: document.getElementById('groupNomBtn'),
+  date: document.getElementById('groupDateBtn'),
+  type: document.getElementById('groupTypeBtn')
+};
+function setGroupMode(mode){
+  if(groupMode === mode) return;
+  groupMode = mode;
+  Object.keys(groupBtns).forEach(k => groupBtns[k].classList.toggle('active', k === mode));
+  render(searchEl.value);
+}
+Object.keys(groupBtns).forEach(k => groupBtns[k].addEventListener('click', () => setGroupMode(k)));
 
 // Filtre sur le tag vu / pas vu : "all" (défaut), "seen" ou "unseen".
 let seenFilter = 'all';
@@ -19372,12 +20255,10 @@ function render(filterText){
   // pour que l'affichage reste rapide avec plus d'un millier de fiches.
   const autoExpand = isSearching || (filtered.length !== MOVIES.length && filtered.length <= 60);
 
-  const grouped = groupByFolder(filtered);
-  const folders = Array.from(grouped.keys()).sort((a,b)=>a.localeCompare(b,'fr'));
-
-  folders.forEach(folder => {
-    const movies = sortMovies(grouped.get(folder));
-    const isOpen = autoExpand || expandedFolders.has(folder);
+  buildGroups(filtered).forEach(groupe => {
+    const movies = sortMovies(groupe.movies);
+    const cle = groupMode + '::' + groupe.key;
+    const isOpen = autoExpand || expandedFolders.has(cle);
 
     const section = document.createElement('section');
     section.className = 'folder-section' + (isOpen ? ' open' : '');
@@ -19388,16 +20269,16 @@ function render(filterText){
     title.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     title.innerHTML = `
       <span class="folder-title-text">
-        <span>${escapeHtml(folder)}</span>
+        <span>${escapeHtml(groupe.label)}</span>
         <span class="folder-count">${movies.length} film${movies.length>1?'s':''}</span>
       </span>
       <svg class="folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
     `;
     title.addEventListener('click', () => {
-      if(expandedFolders.has(folder)){
-        expandedFolders.delete(folder);
+      if(expandedFolders.has(cle)){
+        expandedFolders.delete(cle);
       } else {
-        expandedFolders.add(folder);
+        expandedFolders.add(cle);
       }
       render(searchEl.value);
     });
