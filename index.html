@@ -629,14 +629,14 @@
   }
 </style>
 <link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><style lang="en" type="text/css" id="dark-mode-custom-style"></style><style lang="en" type="text/css" id="dark-mode-native-style"></style><style lang="en" type="text/css" id="dark-mode-native-sheet"></style><link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><style lang="en" type="text/css" id="dark-mode-custom-style"></style><style lang="en" type="text/css" id="dark-mode-native-style"></style><style lang="en" type="text/css" id="dark-mode-native-sheet"></style></head>
-<body style="background-size: cover; background-position: center center; background-repeat: no-repeat;" class="">
+<body style="background-image: url(&quot;https://images.pexels.com/photos/4608979/pexels-photo-4608979.jpeg&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; background-attachment: fixed;" class="has-bg-image">
 
 <header data-dashlane-rid="c9cde8c3f2fcd608" data-dashlane-classification="account">
   <h1>🎬 Ma bibliothèque de films</h1>
   <div class="stats" id="stats">1267 films au total · 1 vu · 20 non identifiés</div>
   <div class="search-wrap">
     <input id="search" type="search" placeholder="Rechercher un titre..." autocomplete="off" data-dashlane-rid="5e705d0ab2df0ac8" data-dashlane-classification="query">
-    <button class="clear-btn" id="clearBtn" aria-label="Effacer">✕</button>
+    <button class="clear-btn" id="clearBtn" aria-label="Effacer" style="display: none;">✕</button>
   </div>
   <!-- Ces trois rangées se mettent côte à côte sur un écran d'ordinateur (voir .toggle-rows). -->
   <div class="toggle-rows">
@@ -659,9 +659,9 @@
     <div class="sort-row">
       <span class="sort-label">Afficher :</span>
       <div class="sort-toggle" role="group" aria-label="Filtrer selon les films déjà vus">
-        <button class="sort-btn" id="seenAllBtn" type="button" data-seen="all" data-dashlane-label="true" data-dashlane-rid="f827fb356df8cb29" data-dashlane-classification="action">Tous</button>
+        <button class="sort-btn active" id="seenAllBtn" type="button" data-seen="all" data-dashlane-label="true" data-dashlane-rid="f827fb356df8cb29" data-dashlane-classification="action">Tous</button>
         <button class="sort-btn" id="seenYesBtn" type="button" data-seen="seen" data-dashlane-label="true" data-dashlane-rid="f5498e13b2bf6fa3" data-dashlane-classification="action">✅ Vus</button>
-        <button class="sort-btn active" id="seenNoBtn" type="button" data-seen="unseen" data-dashlane-label="true" data-dashlane-rid="ab7c7fe14b7177c0" data-dashlane-classification="action">👁️ Pas vus</button>
+        <button class="sort-btn" id="seenNoBtn" type="button" data-seen="unseen" data-dashlane-label="true" data-dashlane-rid="ab7c7fe14b7177c0" data-dashlane-classification="action">👁️ Pas vus</button>
       </div>
     </div>
   </div>
@@ -19570,11 +19570,36 @@ const DEFAULT_FOLDER = "Z:\\Films";
 // N'affecte pas les données des films : uniquement le fond, le dossier surveillé
 // et la configuration GitHub (jeton conservé UNIQUEMENT en local, jamais dans ce fichier).
 
+// Identifiant propre à CETTE page. Toutes les clés mémorisées par le navigateur en sont
+// préfixées. Sans cela, deux pages servies depuis la même origine — par exemple deux dépôts
+// GitHub Pages du même compte, ou deux fichiers ouverts en local — partagent le même espace
+// de stockage : la seconde écrase les réglages de la première, et la bibliothèque de films
+// finit par publier dans le dépôt de l'autre page.
+const APP_ID = 'bibliotheque-films';
+const K = nom => APP_ID + '.' + nom;
+
+// Reprise des réglages de l'ancienne version, qui utilisait des clés non préfixées.
+// Volontairement PAS la configuration GitHub : elle a pu être écrasée par une autre page,
+// donc on préfère la redemander une fois plutôt que de réimporter un dépôt erroné.
+function migrerAnciennesCles(){
+  [['movies_folder_path', K('folder')],
+   ['movies_colors_v1',   K('colors')],
+   ['movies_watched',     K('watched')],
+   ['movies_title_overrides', K('titles')]].forEach(([ancienne, nouvelle]) => {
+    try{
+      if(localStorage.getItem(nouvelle) === null){
+        const v = localStorage.getItem(ancienne);
+        if(v !== null) localStorage.setItem(nouvelle, v);
+      }
+    }catch(e){}
+  });
+}
+
 function getFolderPath(){
-  try{ return localStorage.getItem('movies_folder_path') || DEFAULT_FOLDER; }catch(e){ return DEFAULT_FOLDER; }
+  try{ return localStorage.getItem(K('folder')) || DEFAULT_FOLDER; }catch(e){ return DEFAULT_FOLDER; }
 }
 function setFolderPath(p){
-  try{ localStorage.setItem('movies_folder_path', p); }catch(e){}
+  try{ localStorage.setItem(K('folder'), p); }catch(e){}
 }
 
 /* ----- 🔄 Mise à jour ----- */
@@ -19595,7 +19620,7 @@ function handleUpdateClick(){
 // navigateur. Le navigateur ne retient que les changements faits DEPUIS la génération du
 // fichier (un écart : quoi ajouter, quoi retirer). Le bouton « 💾 Enregistrer » réécrit le
 // fichier avec ces changements intégrés, ce qui remet l'écart à zéro.
-const WATCHED_KEY = 'movies_watched';
+const WATCHED_KEY = K('watched');
 let WATCHED = new Set();
 
 function baseWatched(){
@@ -19661,18 +19686,27 @@ function updateSaveBtn(){
 // régulière ci-dessous — sinon un enregistrement ultérieur depuis le fichier produit
 // ne retrouverait plus les données. Renvoie null si le bloc est introuvable.
 function buildLibraryHtml(){
-  MOVIES.forEach(m => { m.vu = WATCHED.has(filmId(m)); });
-  const movies = JSON.stringify(MOVIES, null, 2)
+  // On sérialise une COPIE : modifier MOVIES ici ferait croire, en cas d'échec de la
+  // publication, que les films cochés sont déjà enregistrés. L'écart mémorisé par le
+  // navigateur serait alors recalculé à vide et ces marques seraient perdues au
+  // rechargement. La référence n'est validée qu'après une publication réussie.
+  const aEnregistrer = MOVIES.map(m => Object.assign({}, m, { vu: WATCHED.has(filmId(m)) }));
+  const movies = JSON.stringify(aEnregistrer, null, 2)
     .replace(/<\/script/gi, '<\\/script');   // sécurité : ne jamais clore la balise par accident
+  const apparence = JSON.stringify(COLORS).replace(/<\/script/gi, '<\\/script');
   const html = buildExportHtml();
   const bloc = /const MOVIES = \[[\s\S]*?\n\];/;
-  // On teste explicitement la présence du bloc. Comparer le avant/après ne marche pas :
+  const blocApparence = /const APPEARANCE = \{[^\n]*\};/;
+  // On teste explicitement la présence des blocs. Comparer le avant/après ne marche pas :
   // quand rien n'a changé depuis la génération du fichier, le remplacement redonne un texte
   // identique, ce qui serait pris à tort pour un bloc introuvable.
-  if(!bloc.test(html)) return null;
-  // Remplacement par fonction : sinon un « $& » ou « $1 » présent dans un titre ou un résumé
-  // serait interprété comme un motif de substitution et corromprait les données.
-  return html.replace(bloc, () => 'const MOVIES = ' + movies + ';');
+  if(!bloc.test(html) || !blocApparence.test(html)) return null;
+  // Remplacement par fonction : sinon un « $& » ou « $1 » présent dans un titre, un résumé
+  // ou une URL de fond serait interprété comme un motif de substitution et corromprait
+  // les données.
+  return html
+    .replace(bloc, () => 'const MOVIES = ' + movies + ';')
+    .replace(blocApparence, () => 'const APPEARANCE = ' + apparence + ';');
 }
 
 // Repli local : utilisé seulement si la publication GitHub échoue.
@@ -19698,7 +19732,7 @@ function downloadLibraryFile(){
 // Ne modifie jamais les données du film elles-mêmes (m.titre reste tel quel, issu du nom
 // de fichier) : c'est une piste que l'utilisateur ajoute localement pour aider une future
 // recherche, conservée uniquement dans ce navigateur.
-const TITLE_OVERRIDES_KEY = 'movies_title_overrides';
+const TITLE_OVERRIDES_KEY = K('titles');
 let TITLE_OVERRIDES = {};
 function filmId(m){ return (m.dossier || '') + '::' + (m.fichier_original || ''); }
 function loadTitleOverrides(){
@@ -19934,10 +19968,19 @@ function handleFolderClick(){
 }
 
 /* ----- 🎨 Fond personnalisé ----- */
+// Apparence inscrite EN DUR dans ce fichier, réécrite par « 💾 Enregistrer » : elle suit donc
+// le fichier quand il est publié ou copié. Sans cela, le fond n'existait que dans le
+// navigateur où il avait été choisi et disparaissait à la réouverture ailleurs.
+const APPEARANCE = {"bg":"#142442","bgImage":"https://images.pexels.com/photos/4608979/pexels-photo-4608979.jpeg","transparentCards":false};
 let COLORS = { bg: null, bgImage: null, transparentCards: false };
-const COLORS_KEY = 'movies_colors_v1';
+const COLORS_KEY = K('colors');
 function persistColors(){ try{ localStorage.setItem(COLORS_KEY, JSON.stringify(COLORS)); return true; }catch(e){ return false; } }
 function loadColors(){
+  // Le fichier donne la référence ; le navigateur ne porte qu'une préférence locale
+  // éventuelle, remise à zéro dès que l'apparence est enregistrée dans le fichier.
+  COLORS.bg = APPEARANCE.bg || null;
+  COLORS.bgImage = APPEARANCE.bgImage || null;
+  COLORS.transparentCards = !!APPEARANCE.transparentCards;
   try{
     const r = localStorage.getItem(COLORS_KEY);
     if(r){ const o = JSON.parse(r); COLORS.bg = o.bg || null; COLORS.bgImage = o.bgImage || null; COLORS.transparentCards = !!o.transparentCards; }
@@ -19983,44 +20026,65 @@ function b64Unicode(str){
   return btoa(bin);
 }
 function buildExportHtml(){
-  // On vide la liste affichée avant de sérialiser : elle est entièrement reconstruite au
-  // chargement, l'inclure ne ferait que gonfler le fichier (et y figer l'état d'un filtre).
+  // Le HTML sérialisé fige l'état VISUEL du moment. On remet donc l'interface dans l'état
+  // qu'elle aura au chargement du fichier produit, sinon celui-ci s'ouvrirait avec la
+  // fenêtre de réglages déployée, ou avec un bouton de filtre surligné alors que le code
+  // repart de « Dossier / A→Z / Tous » — un surlignage qui ne correspondrait à rien.
   const main = document.getElementById('main');
-  const saved = main.innerHTML;
-  main.innerHTML = '';
+  const listeAffichee = main.innerHTML;
+  const modal = document.getElementById('bgModal');
+  const modalEtait = modal.hidden;
+  const croixRecherche = clearBtn.style.display;
+  const classes = [...document.querySelectorAll('.sort-btn'), genreSelect, directorInput, directorClear]
+    .map(el => [el, el.className]);
+
+  main.innerHTML = '';                       // la liste est reconstruite au chargement
+  modal.hidden = true;
+  clearBtn.style.display = 'none';
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  ['groupDossierBtn', 'sortAlphaBtn', 'seenAllBtn']
+    .forEach(id => document.getElementById(id).classList.add('active'));
+  genreSelect.classList.remove('active');
+  directorInput.classList.remove('active');
+  directorClear.classList.remove('show');
+
   const html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-  main.innerHTML = saved;
+
+  classes.forEach(([el, c]) => { el.className = c; });
+  modal.hidden = modalEtait;
+  clearBtn.style.display = croixRecherche;
+  main.innerHTML = listeAffichee;
   render(searchEl.value);   // réinstalle les écouteurs perdus par la réécriture du HTML
   return html;
 }
 function ghConfig(reset){
-  if(reset){ ['gh_owner','gh_repo','gh_branch','gh_token'].forEach(k => { try{ localStorage.removeItem(k); }catch(e){} }); }
+  if(reset){ ['gh_owner','gh_repo','gh_branch','gh_token'].forEach(k => { try{ localStorage.removeItem(K(k)); }catch(e){} }); }
   let owner, repo, branch, token;
   try{
-    owner = localStorage.getItem('gh_owner') || '';
-    repo = localStorage.getItem('gh_repo') || '';
-    branch = localStorage.getItem('gh_branch') || '';
-    token = localStorage.getItem('gh_token') || '';
+    owner = localStorage.getItem(K('gh_owner')) || '';
+    repo = localStorage.getItem(K('gh_repo')) || '';
+    branch = localStorage.getItem(K('gh_branch')) || '';
+    token = localStorage.getItem(K('gh_token')) || '';
   }catch(e){ owner=repo=branch=token=''; }
   if(!owner){
     owner = (prompt("Compte GitHub (nom d'utilisateur, PAS l'e-mail) :", owner || '') || '').trim();
     if(!owner) return null;
     if(owner.indexOf('@') !== -1){ alert("Il faut le nom d'utilisateur GitHub, pas l'adresse e-mail."); return null; }
-    try{ localStorage.setItem('gh_owner', owner); }catch(e){}
+    try{ localStorage.setItem(K('gh_owner'), owner); }catch(e){}
   }
   if(!repo){
     repo = (prompt("Nom du dépôt GitHub :", repo || 'Films') || '').trim();
     if(!repo) return null;
-    try{ localStorage.setItem('gh_repo', repo); }catch(e){}
+    try{ localStorage.setItem(K('gh_repo'), repo); }catch(e){}
   }
   if(!branch){
     branch = (prompt("Branche (par défaut : main) :", branch || 'main') || 'main').trim() || 'main';
-    try{ localStorage.setItem('gh_branch', branch); }catch(e){}
+    try{ localStorage.setItem(K('gh_branch'), branch); }catch(e){}
   }
   if(!token){
     token = (prompt("Jeton d'accès personnel GitHub (droit « Contents »).\nIl reste UNIQUEMENT dans ce navigateur et n'est jamais inclus dans le fichier publié.", '') || '').trim();
     if(!token) return null;
-    try{ localStorage.setItem('gh_token', token); }catch(e){}
+    try{ localStorage.setItem(K('gh_token'), token); }catch(e){}
   }
   return { owner, repo, branch, token, path: 'index.html' };
 }
@@ -20047,9 +20111,14 @@ async function publishToGitHub(){
     if(sha) body.sha = sha;
     const putRes = await fetch(api, { method: 'PUT', headers: Object.assign({ 'Content-Type': 'application/json' }, authHeaders), body: JSON.stringify(body) });
     if(putRes.ok){
-      // MOVIES contient désormais exactement ce qui vient d'être publié : la référence en
-      // mémoire est à jour, l'écart conservé par le navigateur redevient donc vide.
+      // La publication a réussi : on valide seulement maintenant la référence en mémoire,
+      // qui correspond exactement à ce qui vient d'être publié. L'écart conservé par le
+      // navigateur redevient donc vide.
+      MOVIES.forEach(m => { m.vu = WATCHED.has(filmId(m)); });
       saveWatched();
+      // L'apparence est elle aussi inscrite dans la copie publiée : la préférence locale
+      // n'a plus lieu d'être, le fichier fait foi.
+      try{ localStorage.removeItem(COLORS_KEY); }catch(e){}
       updateSaveBtn();
       const pages = `https://${cfg.owner}.github.io/${cfg.repo}/`;
       const vus = MOVIES.filter(m => m.vu).length;
@@ -20604,7 +20673,10 @@ transCardsInput.addEventListener('change', (e) => {
 
 const bgImageFile = document.getElementById('bgImageFile');
 document.getElementById('bgImageBtn').addEventListener('click', () => {
-  const url = prompt("Adresse (URL) d'une image de fond.\nLaissez vide puis OK pour choisir un fichier sur votre ordinateur :", "");
+  // On pré-remplit avec l'adresse actuelle pour qu'elle soit visible et modifiable
+  // (sauf si le fond vient d'un fichier local : son contenu encodé est illisible ici).
+  const actuelle = (COLORS.bgImage && COLORS.bgImage.slice(0, 5) !== 'data:') ? COLORS.bgImage : '';
+  const url = prompt("Adresse (URL) d'une image de fond.\nLaissez vide puis OK pour choisir un fichier sur votre ordinateur :", actuelle);
   if(url === null) return;
   if(url.trim()){
     COLORS.bgImage = url.trim();
@@ -20648,6 +20720,7 @@ document.getElementById('bgReset').addEventListener('click', () => {
 });
 
 /* ----- Init ----- */
+migrerAnciennesCles();
 loadColors();
 applyGeneralBg();
 loadTitleOverrides();
